@@ -9,6 +9,7 @@ const createWindow = () => {
     mainWindow = new BrowserWindow({
         minWidth: 800,
         minHeight: 600,
+        frame: false,
     });
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, "index.html"),

@@ -2,6 +2,36 @@ body {
     margin: 0;
 }
 
+.nav {
+    display: flex;
+    justify-content: flex-end;
+    background-color: #fff;
+    border-bottom: 1px solid #F1F2F4;
+    height: 47px;
+    -webkit-app-region: drag;
+}
+
+.icon {
+    height: 48px;
+    width: 48px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+    -webkit-app-region: no-drag;
+}
+
+.minimize {
+    background-image: url("icons/minimize.svg");
+}
+
+.maximize {
+    background-image: url("icons/maximize.svg");
+}
+
+.close {
+    background-image: url("icons/close.svg");
+}
+
 .main {
     display: grid;
     grid-auto-rows: 256px;
