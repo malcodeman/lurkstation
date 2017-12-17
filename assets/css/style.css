@@ -1,14 +1,37 @@
+@font-face {
+    font-family: Avenir-Light;
+    src: url(fonts/Avenir-Light.otf);
+}
+
 body {
     margin: 0;
 }
 
 .nav {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     background-color: #fff;
     border-bottom: 1px solid #F1F2F4;
     height: 47px;
     -webkit-app-region: drag;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.link {
+    -webkit-app-region: no-drag;
+    text-transform: uppercase;
+    font-family: Avenir-Light;
+    color: rgba(0, 0, 0, .4);
+    font-size: .8rem;
+    margin-left: 1rem;
+}
+
+.nav-right {
+    display: flex;
 }
 
 .icon {
