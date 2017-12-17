@@ -19,40 +19,41 @@ body {
 .nav-left {
     display: flex;
     align-items: center;
+    -webkit-app-region: no-drag;
 }
 
 .link {
-    -webkit-app-region: no-drag;
     text-transform: uppercase;
     font-family: Avenir-Light;
     color: rgba(0, 0, 0, .4);
     font-size: .8rem;
     margin-left: 1rem;
+    letter-spacing: 1px;
 }
 
 .nav-right {
     display: flex;
-}
-
-.icon {
-    height: 48px;
-    width: 48px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20px;
+    align-items: center;
     -webkit-app-region: no-drag;
 }
 
+.icon {
+    border-radius: 50%;
+    height: 18px;
+    width: 18px;
+    margin-right: 1rem;
+}
+
 .minimize {
-    background-image: url("icons/minimize.svg");
+    background-color: rgba(255, 204, 0, .4);
 }
 
 .maximize {
-    background-image: url("icons/maximize.svg");
+    background-color: rgba(99, 218, 56, .4);
 }
 
 .close {
-    background-image: url("icons/close.svg");
+    background-color: rgba(255, 59, 48, .4);
 }
 
 .main {
