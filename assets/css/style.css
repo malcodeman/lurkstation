@@ -35,6 +35,8 @@ body {
     font-size: .8rem;
     margin-left: 1rem;
     letter-spacing: 1px;
+    cursor: default;
+    -webkit-user-select: none;
 }
 
 .nav-right {
