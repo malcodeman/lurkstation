@@ -16,29 +16,21 @@ function clearMain() {
 }
 
 function getPosts(choice) {
-    clearMain();
-    axios.get("https://www.reddit.com/r/art+food/" + choice + ".json?limit=25")
+    return axios.get("https://www.reddit.com/r/art/" + choice + ".json?limit=10")
         .then(response => {
-            for (let i = 0; i < response.data.data.children.length; ++i) {
-                let url = response.data.data.children[i].data.url;
-                console.log(i + "  -  " + url);
-                addImage(url);
-            }
+            return response.data.data;
         })
-        .catch(error => {
-            console.log(error);
-        });
 }
 
 function main() {
     document.getElementById("hot").addEventListener("click", () => {
-        getPosts("hot");
+        renderPosts(getPosts("hot"));
     });
     document.getElementById("new").addEventListener("click", () => {
-        getPosts("new");
+        renderPosts(getPosts("new"));
     });
     document.getElementById("top").addEventListener("click", () => {
-        getPosts("top");
+        renderPosts(getPosts("top"));
     });
     document.getElementById("minimize").addEventListener("click", minimizeWindow);
     document.getElementById("maximize").addEventListener("click", maximizeWindow);
@@ -55,6 +47,21 @@ function maximizeWindow() {
 
 function closeWindow() {
     remote.BrowserWindow.getFocusedWindow().close();
+}
+
+function renderPosts(promise) {
+    clearMain();
+    promise.then(response => {
+        for (let i = 0; i < response.children.length; ++i) {
+            let url = response.children[i].data.url;
+            if (response.children[i].data.domain === "imgur.com") {
+                url += ".jpg";
+            }
+            if (response.children[i].data.thumbnail !== "self") {
+                addImage(url);
+            }
+        }
+    })
 }
 
 main();

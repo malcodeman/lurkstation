@@ -37,6 +37,7 @@ body {
     letter-spacing: 1px;
     cursor: default;
     -webkit-user-select: none;
+    user-select: none;
 }
 
 .nav-right {
