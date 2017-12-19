@@ -19,11 +19,24 @@ function renderVideo(source) {
     post.classList.add("post");
     let video = document.createElement("video");
     video.src = source;
-    video.autoplay = "autoplay";
     video.loop = "loop";
     video.classList.add("video");
+    video.addEventListener("canplay", onCanPlay);
     post.appendChild(video);
     document.getElementById("main").appendChild(post);
+}
+
+function playVideo() {
+    this.play();
+}
+
+function pauseVideo() {
+    this.pause();
+}
+
+function onCanPlay() {
+    this.addEventListener("mouseover", playVideo);
+    this.addEventListener("mouseout", pauseVideo);
 }
 
 function clearMain() {
@@ -74,20 +87,21 @@ function renderPosts(promise) {
         for (let i = 0; i < response.children.length; ++i) {
             let render = true;
             let url = response.children[i].data.url;
-            let extension = getExtension(url);
-            if (extension !== "png" && extension !== "jpg" && extension !== "gif") {
-                render = false;
-            }
             if (response.children[i].data.domain === "imgur.com") {
                 url += ".jpg";
+            }
+            let extension = getExtension(url);
+            if (extension !== "png" && extension !== "jpg") {
+                render = false;
             }
             if (response.children[i].data.domain === "flickr.com") {
                 render = false;
             }
             if (response.children[i].data.domain === "gfycat.com") {
                 // Adds 'giant' before and '.webm' after link
-                url = url.substr(0, 8) + "giant." + url.substr(8) + ".webm";
-                renderVideo(output);
+                let temp = url;
+                temp = temp.substr(0, 8) + "giant." + temp.substr(8) + ".webm";
+                renderVideo(temp);
                 render = false;
             }
             if (response.children[i].data.is_video === true) {
@@ -98,6 +112,8 @@ function renderPosts(promise) {
             }
             if (render) {
                 renderImage(url);
+            } else {
+                console.log("Error - " + url);
             }
         }
     })
