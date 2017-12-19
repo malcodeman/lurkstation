@@ -114,6 +114,13 @@ function checkIfGifv(url) {
     return false;
 }
 
+function checkIfDirectArtstationLink(domain) {
+    if (domain === "cdnb.artstation.com") {
+        return true;
+    }
+    return false;
+}
+
 // Render formats
 
 function formatForImgur(url) {
@@ -145,6 +152,8 @@ function renderPosts(promise) {
                     renderVideo(formatForGfycat(url));
                 } else if (checkIfGifv(url)) {
                     renderVideo(formatForGifv(url));
+                } else if (checkIfDirectArtstationLink(domain)) {
+                    renderImage(url);
                 } else {
                     console.log("Error - " + url);
                 }
