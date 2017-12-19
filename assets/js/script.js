@@ -81,42 +81,78 @@ function getExtension(filename) {
     return filename.split('.').pop();
 }
 
+// Render checkers
+
+
+function checkIfDirectLink(url) {
+    let extension = getExtension(url);
+    if (extension === "png" || extension === "jpg") {
+        return true;
+    }
+    return false;
+}
+
+function checkIfIndirectImgurLink(domain) {
+    if (domain === "imgur.com") {
+        return true;
+    }
+    return false;
+}
+
+function checkIfGfycat(domain) {
+    if (domain === "gfycat.com") {
+        return true;
+    }
+    return false;
+}
+
+function checkIfGifv(url) {
+    let extension = getExtension(url);
+    if (extension === "gifv") {
+        return true;
+    }
+    return false;
+}
+
+// Render formats
+
+function formatForImgur(url) {
+    return url += ".jpg";
+}
+
+function formatForGfycat(url) {
+    // Adds 'giant' before and '.webm' after link
+    return url = url.substr(0, 8) + "giant." + url.substr(8) + ".webm";
+}
+
+function formatForGifv(url) {
+    // Replaces '.gifv' extension with '.mp4'
+    url = url.substr(0, url.lastIndexOf('.'));
+    return url += ".mp4";
+}
+
 function renderPosts(promise) {
     clearMain();
     promise.then(response => {
-        for (let i = 0; i < response.children.length; ++i) {
-            let render = true;
-            let url = response.children[i].data.url;
-            if (response.children[i].data.domain === "imgur.com") {
-                url += ".jpg";
+            for (let i = 0; i < response.children.length; ++i) {
+                let url = response.children[i].data.url;
+                let domain = response.children[i].data.domain;
+                if (checkIfDirectLink(url)) {
+                    renderImage(url);
+                } else if (checkIfIndirectImgurLink(domain)) {
+                    renderImage(formatForImgur(url));
+                } else if (checkIfGfycat(domain)) {
+                    renderVideo(formatForGfycat(url));
+                } else if (checkIfGifv(url)) {
+                    renderVideo(formatForGifv(url));
+                } else {
+                    console.log("Error - " + url);
+                }
             }
-            let extension = getExtension(url);
-            if (extension !== "png" && extension !== "jpg") {
-                render = false;
-            }
-            if (response.children[i].data.domain === "flickr.com") {
-                render = false;
-            }
-            if (response.children[i].data.domain === "gfycat.com") {
-                // Adds 'giant' before and '.webm' after link
-                let temp = url;
-                temp = temp.substr(0, 8) + "giant." + temp.substr(8) + ".webm";
-                renderVideo(temp);
-                render = false;
-            }
-            if (response.children[i].data.is_video === true) {
-                render = false;
-            }
-            if (response.children[i].data.thumbnail === "self") {
-                render = false;
-            }
-            if (render) {
-                renderImage(url);
-            } else {
-                console.log("Error - " + url);
-            }
-        }
-    })
+        })
+        .catch(error => {
+            console.log(error.message);
+        })
 }
 
 main();
