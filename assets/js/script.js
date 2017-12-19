@@ -112,7 +112,7 @@ function checkIfIndirectImgurLink(domain) {
 }
 
 function checkIfGfycat(domain) {
-    if (domain === "gfycat.com") {
+    if (domain === "gfycat.com" || domain === "giant.gfycat.com") {
         return true;
     }
     return false;
