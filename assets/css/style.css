@@ -31,6 +31,7 @@ body {
 .text {
     text-transform: uppercase;
     font-family: Avenir-Light;
+    color: rgba(0, 0, 0, .4);
     font-size: .8rem;
     margin-left: 1rem;
     letter-spacing: 1px;
@@ -47,7 +48,7 @@ body {
     color: rgba(0, 0, 0, .4);
 }
 
-.icon {
+.ic-window {
     border-radius: 50%;
     height: 18px;
     width: 18px;

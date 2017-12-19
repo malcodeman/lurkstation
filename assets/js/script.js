@@ -54,6 +54,11 @@ function getPosts(choice) {
         })
 }
 
+function renderSettings() {
+    clearMain();
+    document.getElementById("main").innerHTML = "Settings";
+}
+
 function main() {
     document.getElementById("hot").addEventListener("click", () => {
         renderPosts(getPosts("hot"));
@@ -66,6 +71,10 @@ function main() {
     document.getElementById("top").addEventListener("click", () => {
         renderPosts(getPosts("top"));
         changeTitle("top");
+    });
+    document.getElementById("settings").addEventListener("click", () => {
+        renderSettings();
+        changeTitle("settings");
     });
     document.getElementById("minimize").addEventListener("click", minimizeWindow);
     document.getElementById("maximize").addEventListener("click", maximizeWindow);
@@ -133,6 +142,16 @@ function checkIfDirectArtstationLink(domain) {
     return false;
 }
 
+function checkIfImgurAlbum(url) {
+    // Get string before slash
+    let beforeSlash = url.substr(url.lastIndexOf("/") - 1);
+    // If first character before slash equals letter 'a' then imgur link is album
+    if (beforeSlash.charAt(0) === "a") {
+        return true;
+    }
+    return false;
+}
+
 // Render formats
 
 function formatForImgur(url) {
@@ -160,11 +179,14 @@ function renderPosts(promise) {
                 let url = response.children[i].data.url;
                 let domain = response.children[i].data.domain;
                 let isVideo = response.children[i].data.is_video;
-                if (checkIfDirectLink(url)) {
-                    renderImage(url);
-                } else if (checkIfIndirectImgurLink(domain)) {
-                    renderImage(formatForImgur(url));
-                } else if (checkIfGfycat(domain)) {
+                if (!checkIfImgurAlbum(url)) {
+                    if (checkIfDirectLink(url)) {
+                        renderImage(url);
+                    } else if (checkIfIndirectImgurLink(domain)) {
+                        renderImage(formatForImgur(url));
+                    }
+                }
+                if (checkIfGfycat(domain)) {
                     let gfycatPromise = formatForGfycat(url);
                     gfycatPromise.then(response => {
                         renderVideo(response);
