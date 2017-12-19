@@ -84,12 +84,17 @@ function closeWindow() {
     remote.BrowserWindow.getFocusedWindow().close();
 }
 
-function getExtension(filename) {
-    return filename.split('.').pop();
+// Getters
+
+function getExtension(url) {
+    return url.split('.').pop();
+}
+
+function getGfycatId(url) {
+    return url.split("/").pop();
 }
 
 // Render checkers
-
 
 function checkIfDirectLink(url) {
     let extension = getExtension(url);
@@ -135,8 +140,11 @@ function formatForImgur(url) {
 }
 
 function formatForGfycat(url) {
-    // Adds 'giant' before and '.webm' after link
-    return url = url.substr(0, 8) + "giant." + url.substr(8) + ".webm";
+    let id = getGfycatId(url);
+    return axios.get("https://gfycat.com/cajax/get/" + id)
+        .then(response => {
+            return response.data.gfyItem.mp4Url;
+        })
 }
 
 function formatForGifv(url) {
@@ -151,16 +159,22 @@ function renderPosts(promise) {
             for (let i = 0; i < response.children.length; ++i) {
                 let url = response.children[i].data.url;
                 let domain = response.children[i].data.domain;
+                let isVideo = response.children[i].data.is_video;
                 if (checkIfDirectLink(url)) {
                     renderImage(url);
                 } else if (checkIfIndirectImgurLink(domain)) {
                     renderImage(formatForImgur(url));
                 } else if (checkIfGfycat(domain)) {
-                    renderVideo(formatForGfycat(url));
+                    let gfycatPromise = formatForGfycat(url);
+                    gfycatPromise.then(response => {
+                        renderVideo(response);
+                    })
                 } else if (checkIfGifv(url)) {
                     renderVideo(formatForGifv(url));
                 } else if (checkIfDirectArtstationLink(domain)) {
                     renderImage(url);
+                } else if (isVideo) {
+                    renderVideo(response.children[i].data.media.reddit_video.fallback_url);
                 } else {
                     console.log("Error - " + url);
                 }
