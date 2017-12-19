@@ -22,16 +22,15 @@ body {
     -webkit-app-region: drag;
 }
 
-.nav-left {
+.nav-content {
     display: flex;
     align-items: center;
     -webkit-app-region: no-drag;
 }
 
-.link {
+.text {
     text-transform: uppercase;
     font-family: Avenir-Light;
-    color: rgba(0, 0, 0, .4);
     font-size: .8rem;
     margin-left: 1rem;
     letter-spacing: 1px;
@@ -40,10 +39,12 @@ body {
     user-select: none;
 }
 
-.nav-right {
-    display: flex;
-    align-items: center;
-    -webkit-app-region: no-drag;
+.color-light {
+    color: rgba(0, 0, 0, .4);
+}
+
+.color-dark {
+    color: rgba(0, 0, 0, .4);
 }
 
 .icon {

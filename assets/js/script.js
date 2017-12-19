@@ -39,6 +39,10 @@ function onCanPlay() {
     this.addEventListener("mouseout", pauseVideo);
 }
 
+function changeTitle(newTitle) {
+    document.getElementById("title").textContent = newTitle;
+}
+
 function clearMain() {
     document.getElementById("main").innerHTML = "";
 }
@@ -53,12 +57,15 @@ function getPosts(choice) {
 function main() {
     document.getElementById("hot").addEventListener("click", () => {
         renderPosts(getPosts("hot"));
+        changeTitle("hot");
     });
     document.getElementById("new").addEventListener("click", () => {
         renderPosts(getPosts("new"));
+        changeTitle("new");
     });
     document.getElementById("top").addEventListener("click", () => {
         renderPosts(getPosts("top"));
+        changeTitle("top");
     });
     document.getElementById("minimize").addEventListener("click", minimizeWindow);
     document.getElementById("maximize").addEventListener("click", maximizeWindow);
