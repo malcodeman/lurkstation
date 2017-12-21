@@ -1,8 +1,5 @@
 "use strict"
 const axios = require("axios");
-const {
-    remote
-} = require('electron')
 
 function renderImage(source) {
     let post = document.createElement("div");
@@ -48,15 +45,10 @@ function clearMain() {
 }
 
 function getPosts(choice) {
-    return axios.get("https://www.reddit.com/r/pics/" + choice + ".json?limit=20")
+    return axios.get("https://www.reddit.com/r/pics/" + choice + ".json?limit=25")
         .then(response => {
             return response.data.data;
         })
-}
-
-function renderSettings() {
-    clearMain();
-    document.getElementById("main").innerHTML = "Settings";
 }
 
 function main() {
@@ -76,21 +68,6 @@ function main() {
         renderSettings();
         changeTitle("settings");
     });
-    document.getElementById("minimize").addEventListener("click", minimizeWindow);
-    document.getElementById("maximize").addEventListener("click", maximizeWindow);
-    document.getElementById("close").addEventListener("click", closeWindow);
-}
-
-function minimizeWindow() {
-    remote.BrowserWindow.getFocusedWindow().minimize();
-}
-
-function maximizeWindow() {
-    remote.BrowserWindow.getFocusedWindow().maximize();
-}
-
-function closeWindow() {
-    remote.BrowserWindow.getFocusedWindow().close();
 }
 
 // Getters
@@ -107,7 +84,7 @@ function getGfycatId(url) {
 
 function checkIfDirectLink(url) {
     let extension = getExtension(url);
-    if (extension === "png" || extension === "jpg") {
+    if (extension === "png" || extension === "jpg" || extension === "jpeg") {
         return true;
     }
     return false;
@@ -136,7 +113,7 @@ function checkIfGifv(url) {
 }
 
 function checkIfDirectArtstationLink(domain) {
-    if (domain === "cdnb.artstation.com") {
+    if (domain === "cdna.artstation.com" || domain === "cdnb.artstation.com") {
         return true;
     }
     return false;
@@ -146,7 +123,7 @@ function checkIfImgurAlbum(url) {
     // Get string before slash
     let beforeSlash = url.substr(url.lastIndexOf("/") - 1);
     // If first character before slash equals letter 'a' then imgur link is album
-    if (beforeSlash.charAt(0) === "a") {
+    if (beforeSlash.charAt(0) === "a" || beforeSlash.charAt(0) === "y") {
         return true;
     }
     return false;
@@ -172,6 +149,14 @@ function formatForGifv(url) {
     return url += ".mp4";
 }
 
+function checkIfGif(url) {
+    let extension = getExtension(url);
+    if (extension === "gif") {
+        return true;
+    }
+    return false;
+}
+
 function renderPosts(promise) {
     clearMain();
     promise.then(response => {
@@ -179,26 +164,29 @@ function renderPosts(promise) {
                 let url = response.children[i].data.url;
                 let domain = response.children[i].data.domain;
                 let isVideo = response.children[i].data.is_video;
-                if (!checkIfImgurAlbum(url)) {
-                    if (checkIfDirectLink(url)) {
-                        renderImage(url);
-                    } else if (checkIfIndirectImgurLink(domain)) {
-                        renderImage(formatForImgur(url));
-                    }
-                }
-                if (checkIfGfycat(domain)) {
+                if (isVideo) {
+                    console.log(i + " Reddit video - " + url);
+                    renderVideo(response.children[i].data.media.reddit_video.fallback_url);
+                } else if (checkIfDirectLink(url)) {
+                    console.log(i + " Direct link - " + url);
+                    renderImage(url);
+                } else if (checkIfIndirectImgurLink(domain) && !checkIfGif(url) && !checkIfImgurAlbum(url)) {
+                    console.log(i + " Indirect imgur link - " + url);
+                    renderImage(formatForImgur(url));
+                } else if (checkIfGfycat(domain)) {
                     let gfycatPromise = formatForGfycat(url);
                     gfycatPromise.then(response => {
+                        console.log(i + " Gfycat link - " + url);
                         renderVideo(response);
                     })
                 } else if (checkIfGifv(url)) {
+                    console.log(i + " Gifv video - " + url);
                     renderVideo(formatForGifv(url));
                 } else if (checkIfDirectArtstationLink(domain)) {
+                    console.log(i + " Artstation link - " + url);
                     renderImage(url);
-                } else if (isVideo) {
-                    renderVideo(response.children[i].data.media.reddit_video.fallback_url);
                 } else {
-                    console.log("Error - " + url);
+                    console.log(i + " Error - " + url)
                 }
             }
         })

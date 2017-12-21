@@ -33,11 +33,14 @@ body {
     font-family: Avenir-Light;
     color: rgba(0, 0, 0, .4);
     font-size: .8rem;
-    margin-left: 1rem;
     letter-spacing: 1px;
     cursor: default;
     -webkit-user-select: none;
     user-select: none;
+}
+
+.ml-1 {
+    margin-left: 1rem;
 }
 
 .color-light {
