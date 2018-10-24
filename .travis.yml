@@ -1,0 +1,20 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+  - docker build --tag ddit .
+  - docker images
+  - docker login -u=$DOCKER_USERNAME -p=$HEROKU_API_KEY registry.heroku.com
+  - docker tag ddit registry.heroku.com/ddit/web
+  - docker push registry.heroku.com/ddit/web
+
+before_deploy: npm install heroku --no-save
+
+deploy:
+  - provider: script
+    script: heroku container:release web -a ddit
+    skip_cleanup: true
+    on:
+      master: true
