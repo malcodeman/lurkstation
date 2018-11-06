@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
-import GetSubForm from "./GetSubForm";
 import Post from "../components/Post";
 
 const StyledPosts = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: #454469;
 `;
 
 const Grid = styled.div`
@@ -22,7 +22,6 @@ class Posts extends Component {
 
     return (
       <StyledPosts>
-        <GetSubForm />
         <Grid>
           {posts &&
             posts.map(post => {

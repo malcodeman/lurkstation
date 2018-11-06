@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { ThemeProvider } from "styled-components";
 
-import Posts from "./features/posts/containers/Posts";
-import defaultTheme from "./core/style/themes/default";
+import Home from "./features/homepage/components/Homepage";
+import imgurTheme from "./core/style/themes/imgur";
 
 class App extends Component {
   render() {
     return (
-      <ThemeProvider theme={defaultTheme}>
-        <Posts />
+      <ThemeProvider theme={imgurTheme}>
+        <Home />
       </ThemeProvider>
     );
   }
