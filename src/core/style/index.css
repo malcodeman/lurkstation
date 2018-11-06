@@ -7,6 +7,12 @@ html {
   box-sizing: inherit;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
 a {
   text-decoration: none;
   outline: 0;
@@ -20,10 +26,4 @@ h5,
 h6,
 p {
   margin: 0;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "Open Sans", sans-serif;
 }
