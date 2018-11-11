@@ -33,6 +33,8 @@ class Posts extends Component {
                   commentsCount={post.comments_count}
                   likesCount={post.likes_count}
                   videoUrl={post.video_url}
+                  isYoutubeVideo={post.is_youtube_video}
+                  youtubeVideoUrl={post.youtube_video_url}
                 />
               );
             })}

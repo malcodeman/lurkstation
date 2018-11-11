@@ -19,12 +19,33 @@ const Video = styled.video`
   height: 100%;
 `;
 
+const YoutubeVideo = styled.iframe`
+  max-width: 100%;
+  height: 100%;
+  width: 100%;
+`;
+
 const Post = props => {
-  const { picUrl, postUrl, videoUrl } = props;
+  const { picUrl, postUrl, videoUrl, isYoutubeVideo, youtubeVideoUrl } = props;
+  function renderPostContent() {
+    if (videoUrl) {
+      return <Video src={videoUrl} />;
+    } else if (isYoutubeVideo) {
+      return (
+        <YoutubeVideo
+          src={youtubeVideoUrl}
+          frameBorder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        />
+      );
+    } else {
+      return <Image src={picUrl} />;
+    }
+  }
   return (
     <StyledPost>
       <LinkWrapper href={postUrl} target={"_blank"}>
-        {videoUrl ? <Video src={videoUrl} /> : <Image src={picUrl} />}
+        {renderPostContent()}
       </LinkWrapper>
     </StyledPost>
   );
