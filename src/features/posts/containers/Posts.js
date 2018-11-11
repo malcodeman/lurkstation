@@ -28,12 +28,11 @@ class Posts extends Component {
               return (
                 <Post
                   key={post.id}
-                  picUrl={post.pic_url}
+                  url={post.url}
                   postUrl={post.post_url}
                   commentsCount={post.comments_count}
                   likesCount={post.likes_count}
                   videoUrl={post.video_url}
-                  isYoutubeVideo={post.is_youtube_video}
                   youtubeVideoUrl={post.youtube_video_url}
                 />
               );

@@ -26,11 +26,11 @@ const YoutubeVideo = styled.iframe`
 `;
 
 const Post = props => {
-  const { picUrl, postUrl, videoUrl, isYoutubeVideo, youtubeVideoUrl } = props;
+  const { url, postUrl, videoUrl, youtubeVideoUrl } = props;
   function renderPostContent() {
     if (videoUrl) {
       return <Video src={videoUrl} />;
-    } else if (isYoutubeVideo) {
+    } else if (youtubeVideoUrl) {
       return (
         <YoutubeVideo
           src={youtubeVideoUrl}
@@ -39,7 +39,7 @@ const Post = props => {
         />
       );
     } else {
-      return <Image src={picUrl} />;
+      return <Image src={url} />;
     }
   }
   return (
