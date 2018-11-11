@@ -12,12 +12,19 @@ const Image = styled.img`
   height: 100%;
 `;
 
+const Video = styled.video`
+  width: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  height: 100%;
+`;
+
 const Post = props => {
-  const { pic_url, post_url } = props;
+  const { picUrl, postUrl, videoUrl } = props;
   return (
     <StyledPost>
-      <LinkWrapper href={post_url} target={"_blank"}>
-        <Image src={pic_url} />
+      <LinkWrapper href={postUrl} target={"_blank"}>
+        {videoUrl ? <Video src={videoUrl} /> : <Image src={picUrl} />}
       </LinkWrapper>
     </StyledPost>
   );

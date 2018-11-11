@@ -16,8 +16,6 @@ const Header = styled.header`
   justify-content: center;
 `;
 
-const Main = styled.main``;
-
 const Homepage = () => {
   return (
     <Wrapper>

@@ -28,10 +28,11 @@ class Posts extends Component {
               return (
                 <Post
                   key={post.id}
-                  pic_url={post.pic_url}
-                  post_url={post.post_url}
-                  comments_count={post.comments_count}
-                  likes_count={post.likes_count}
+                  picUrl={post.pic_url}
+                  postUrl={post.post_url}
+                  commentsCount={post.comments_count}
+                  likesCount={post.likes_count}
+                  videoUrl={post.video_url}
                 />
               );
             })}
