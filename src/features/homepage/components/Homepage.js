@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import Posts from "../../posts/containers/Posts";
 import GetSubForm from "../../posts/containers/GetSubForm";
+import PopularSubs from "../../posts/containers/PopularSubs";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,7 +14,7 @@ const Header = styled.header`
   background-color: ${props => props.theme.background};
   padding: 48px 12px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 `;
 
 const Homepage = () => {
@@ -21,6 +22,7 @@ const Homepage = () => {
     <Wrapper>
       <Header>
         <GetSubForm />
+        <PopularSubs />
       </Header>
       <Posts />
     </Wrapper>

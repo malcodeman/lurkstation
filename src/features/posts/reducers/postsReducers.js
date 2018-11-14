@@ -1,7 +1,11 @@
-import { GET_POSTS_SUCCESS } from "../actions/postsActionTypes";
+import {
+  GET_POSTS_SUCCESS,
+  GET_POPULAR_SUBS_SUCCESS
+} from "../actions/postsActionTypes";
 
 const initialState = {
-  posts: null
+  posts: null,
+  popularSubs: null
 };
 
 export default (state = initialState, action) => {
@@ -11,6 +15,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         posts: action.payload
+      };
+    case GET_POPULAR_SUBS_SUCCESS:
+      return {
+        ...state,
+        popularSubs: action.payload
       };
     default:
       return state;

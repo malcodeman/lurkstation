@@ -10,7 +10,7 @@ import { getPosts } from "../actions/postsActions";
 
 const StyledForm = styled(Form)`
   display: flex;
-  maring-bottom: 24px;
+  margin: 0 auto;
 `;
 
 const FormItem = styled.div`
@@ -57,8 +57,9 @@ class FormikForm extends Component {
       <StyledForm>
         <FormItem>
           <Input type="text" name="subreddit" placeholder="Subreddit" />
-          {touched.subreddit &&
-            errors.subreddit && <ErrorMessage>{errors.subreddit}</ErrorMessage>}
+          {touched.subreddit && errors.subreddit && (
+            <ErrorMessage>{errors.subreddit}</ErrorMessage>
+          )}
         </FormItem>
         <Button disabled={isSubmitting}>
           {isSubmitting ? <Loader /> : "Search"}
