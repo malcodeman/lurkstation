@@ -17,13 +17,19 @@ class PopularSubs extends Component {
 
     getPopularSubs();
   }
+  getUniqueSubs = subs => {
+    const uniqueSubs = [...new Set(subs.map(sub => JSON.stringify(sub)))].map(
+      sub => JSON.parse(sub)
+    );
+    return uniqueSubs;
+  };
   render() {
     const { popularSubs } = this.props;
 
     return (
       <SubredditGrid>
         {popularSubs ? (
-          popularSubs.map(subreddit => {
+          this.getUniqueSubs(popularSubs).map(subreddit => {
             return (
               <Subreddit
                 key={subreddit.id}
