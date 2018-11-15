@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 
 import Subreddit from "./Subreddit";
+import Loader from "../../loader/components/Loader";
 import { getPopularSubs } from "../actions/postsActions";
 
 const SubredditGrid = styled.div`
@@ -21,7 +22,7 @@ class PopularSubs extends Component {
 
     return (
       <SubredditGrid>
-        {popularSubs &&
+        {popularSubs ? (
           popularSubs.map(subreddit => {
             return (
               <Subreddit
@@ -31,7 +32,10 @@ class PopularSubs extends Component {
                 subscribers_count={subreddit.subscribers_count}
               />
             );
-          })}
+          })
+        ) : (
+          <Loader message={"Fetching popular subreddits"} />
+        )}
       </SubredditGrid>
     );
   }

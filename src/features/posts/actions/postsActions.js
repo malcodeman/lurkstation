@@ -1,12 +1,12 @@
 import {
   GET_POSTS_REQUEST,
-  GET_POPULAR_SUBS_REQUEST
+  GET_POPULAR_SUBS_REQUEST,
+  SEARCH_POSTS_REQUEST
 } from "./postsActionTypes";
 
-export const getPosts = (payload, meta) => {
+export const getPosts = payload => {
   return {
     payload,
-    meta,
     type: GET_POSTS_REQUEST
   };
 };
@@ -14,5 +14,13 @@ export const getPosts = (payload, meta) => {
 export const getPopularSubs = () => {
   return {
     type: GET_POPULAR_SUBS_REQUEST
+  };
+};
+
+export const searchPosts = (payload, meta) => {
+  return {
+    payload,
+    meta,
+    type: SEARCH_POSTS_REQUEST
   };
 };

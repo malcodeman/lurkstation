@@ -23,7 +23,7 @@ class Subreddit extends Component {
     return (
       <StyledSubreddit>
         <span>{name}</span>
-        <SubsCount>{subscribers_count} subs</SubsCount>
+        <SubsCount>{new Intl.NumberFormat().format(subscribers_count)} subs</SubsCount>
       </StyledSubreddit>
     );
   }

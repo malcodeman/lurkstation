@@ -8,7 +8,8 @@ import {
   GET_POSTS_SUCCESS,
   GET_POPULAR_SUBS_FAILURE,
   GET_POPULAR_SUBS_REQUEST,
-  GET_POPULAR_SUBS_SUCCESS
+  GET_POPULAR_SUBS_SUCCESS,
+  SEARCH_POSTS_REQUEST
 } from "../actions/postsActionTypes";
 
 const get = subreddit => {
@@ -20,6 +21,17 @@ const getPopular = () => {
 };
 
 function* getSubreddit(action) {
+  try {
+    const subreddit = action.payload;
+    const data = yield call(get, subreddit);
+
+    yield put({ type: GET_POSTS_SUCCESS, payload: data.data.posts });
+  } catch (error) {
+    yield put({ type: GET_POSTS_FAILURE, error });
+  }
+}
+
+function* searchSubreddit(action) {
   const { setSubmitting } = action.meta;
   try {
     const { subreddit } = action.payload;
@@ -46,6 +58,7 @@ function* getPopularSubreddits(action) {
 const saga = function*() {
   yield takeLatest(GET_POSTS_REQUEST, getSubreddit);
   yield takeLatest(GET_POPULAR_SUBS_REQUEST, getPopularSubreddits);
+  yield takeLatest(SEARCH_POSTS_REQUEST, searchSubreddit);
 };
 
 export default saga;

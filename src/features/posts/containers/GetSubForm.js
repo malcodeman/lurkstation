@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import Loader from "../../loader/components/Loader";
 
-import { getPosts } from "../actions/postsActions";
+import { searchPosts } from "../actions/postsActions";
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -77,11 +77,11 @@ const GetSubForm = withFormik({
     subreddit: Yup.string().required("Subreddit is required")
   }),
   handleSubmit(payload, bag) {
-    bag.props.getPosts(payload, { setSubmitting: bag.setSubmitting });
+    bag.props.searchPosts(payload, { setSubmitting: bag.setSubmitting });
   }
 })(FormikForm);
 
 export default connect(
   null,
-  { getPosts }
+  { searchPosts }
 )(GetSubForm);

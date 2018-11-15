@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 
 import Post from "../components/Post";
+import Loader from "../../loader/components/Loader";
+import { getPosts } from "../actions/postsActions";
 
 const StyledPosts = styled.div`
   display: flex;
@@ -17,13 +19,21 @@ const Grid = styled.div`
 `;
 
 class Posts extends Component {
+  componentDidMount() {
+    const { getPosts } = this.props;
+
+    getPosts("popular");
+  }
   render() {
-    const { posts } = this.props;
+    const { posts, fetching } = this.props;
 
     return (
       <StyledPosts>
         <Grid>
-          {posts &&
+          {fetching ? (
+            <Loader message={"Fetching posts"} />
+          ) : (
+            posts &&
             posts.map(post => {
               return (
                 <Post
@@ -36,7 +46,8 @@ class Posts extends Component {
                   youtubeVideoUrl={post.youtube_video_url}
                 />
               );
-            })}
+            })
+          )}
         </Grid>
       </StyledPosts>
     );
@@ -45,11 +56,12 @@ class Posts extends Component {
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts.posts
+    posts: state.posts.posts,
+    fetching: state.posts.fetching
   };
 };
 
 export default connect(
   mapStateToProps,
-  null
+  { getPosts }
 )(Posts);
