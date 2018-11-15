@@ -44,6 +44,7 @@ class Posts extends Component {
                   likesCount={post.likes_count}
                   videoUrl={post.video_url}
                   youtubeVideoUrl={post.youtube_video_url}
+                  textPost={post.text_post}
                 />
               );
             })

@@ -25,8 +25,12 @@ const YoutubeVideo = styled.iframe`
   width: 100%;
 `;
 
+const TextPost = styled.span`
+  color: #fff;
+`;
+
 const Post = props => {
-  const { url, postUrl, videoUrl, youtubeVideoUrl } = props;
+  const { url, postUrl, videoUrl, youtubeVideoUrl, textPost } = props;
   function renderPostContent() {
     if (videoUrl) {
       return <Video src={videoUrl} />;
@@ -38,6 +42,8 @@ const Post = props => {
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         />
       );
+    } else if (textPost) {
+      return <TextPost>Go to post</TextPost>;
     } else {
       return <Image src={url} />;
     }
