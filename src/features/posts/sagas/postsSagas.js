@@ -9,11 +9,16 @@ import {
   GET_POPULAR_SUBS_FAILURE,
   GET_POPULAR_SUBS_REQUEST,
   GET_POPULAR_SUBS_SUCCESS,
-  SEARCH_POSTS_REQUEST
+  SEARCH_POSTS_REQUEST,
+  SEARCH_POSTS_SUCCESS
 } from "../actions/postsActionTypes";
 
 const get = subreddit => {
   return axios.get(`/subs/${subreddit}`);
+};
+
+const getWithAfter = (subreddit, after) => {
+  return axios.get(`/subs/${subreddit}?after=${after}`);
 };
 
 const getPopular = () => {
@@ -22,10 +27,19 @@ const getPopular = () => {
 
 function* getSubreddit(action) {
   try {
-    const subreddit = action.payload;
+    const { subreddit } = action.payload;
+    const afterRequest = action.payload.after;
+    if (afterRequest) {
+      const data = yield call(getWithAfter, subreddit, afterRequest);
+      const posts = data.data.posts;
+      const after = data.data.after;
+      yield put({ type: GET_POSTS_SUCCESS, payload: { posts, after } });
+      return;
+    }
     const data = yield call(get, subreddit);
-
-    yield put({ type: GET_POSTS_SUCCESS, payload: data.data.posts });
+    const posts = data.data.posts;
+    const after = data.data.after;
+    yield put({ type: GET_POSTS_SUCCESS, payload: { posts, after } });
   } catch (error) {
     yield put({ type: GET_POSTS_FAILURE, error });
   }
@@ -37,7 +51,7 @@ function* searchSubreddit(action) {
     const { subreddit } = action.payload;
     const data = yield call(get, subreddit);
 
-    yield put({ type: GET_POSTS_SUCCESS, payload: data.data.posts });
+    yield put({ type: SEARCH_POSTS_SUCCESS, payload: data.data.posts });
     setSubmitting(false);
   } catch (error) {
     yield put({ type: GET_POSTS_FAILURE, error });

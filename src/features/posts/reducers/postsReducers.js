@@ -2,13 +2,15 @@ import {
   GET_POSTS_SUCCESS,
   GET_POPULAR_SUBS_SUCCESS,
   GET_POSTS_REQUEST,
-  SEARCH_POSTS_REQUEST
+  SEARCH_POSTS_REQUEST,
+  SEARCH_POSTS_SUCCESS
 } from "../actions/postsActionTypes";
 
 const initialState = {
-  posts: null,
+  posts: [],
   popularSubs: null,
-  fetching: false
+  fetching: false,
+  after: null
 };
 
 export default (state = initialState, action) => {
@@ -17,8 +19,14 @@ export default (state = initialState, action) => {
     case GET_POSTS_SUCCESS:
       return {
         ...state,
-        posts: action.payload,
+        posts: [...state.posts, ...action.payload.posts],
+        after: action.payload.after,
         fetching: false
+      };
+    case SEARCH_POSTS_SUCCESS:
+      return {
+        ...state,
+        posts: action.payload
       };
     case GET_POPULAR_SUBS_SUCCESS:
       return {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import Observer from "@researchgate/react-intersection-observer";
 
 import Post from "../components/Post";
 import Loader from "../../loader/components/Loader";
@@ -22,19 +23,24 @@ class Posts extends Component {
   componentDidMount() {
     const { getPosts } = this.props;
 
-    getPosts("popular");
+    getPosts("popular", null);
   }
+  handleChange = ({ isIntersecting }) => {
+    const { getPosts, after } = this.props;
+
+    if (isIntersecting) {
+      getPosts("popular", after);
+    }
+  };
+
   render() {
     const { posts, fetching } = this.props;
 
     return (
       <StyledPosts>
         <Grid>
-          {fetching ? (
-            <Loader message={"Fetching posts"} />
-          ) : (
-            posts &&
-            posts.map(post => {
+          {posts.length > 0 &&
+            posts.map((post, index) => {
               return (
                 <Post
                   key={post.id}
@@ -47,9 +53,14 @@ class Posts extends Component {
                   textPost={post.text_post}
                 />
               );
-            })
-          )}
+            })}
         </Grid>
+        {fetching ? <Loader message={"Fetching posts"} /> : null}
+        {posts.length > 0 ? (
+          <Observer onChange={this.handleChange}>
+            <div />
+          </Observer>
+        ) : null}
       </StyledPosts>
     );
   }
@@ -58,6 +69,7 @@ class Posts extends Component {
 const mapStateToProps = state => {
   return {
     posts: state.posts.posts,
+    after: state.posts.after,
     fetching: state.posts.fetching
   };
 };

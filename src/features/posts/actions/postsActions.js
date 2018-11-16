@@ -4,9 +4,9 @@ import {
   SEARCH_POSTS_REQUEST
 } from "./postsActionTypes";
 
-export const getPosts = payload => {
+export const getPosts = (subreddit, after) => {
   return {
-    payload,
+    payload: { subreddit, after },
     type: GET_POSTS_REQUEST
   };
 };
