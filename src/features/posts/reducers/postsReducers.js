@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   posts: [],
+  subreddit: "popular",
   popularSubs: null,
   fetching: false,
   after: null
@@ -26,7 +27,9 @@ export default (state = initialState, action) => {
     case SEARCH_POSTS_SUCCESS:
       return {
         ...state,
-        posts: action.payload
+        posts: action.payload.posts,
+        after: action.payload.after,
+        fetching: false
       };
     case GET_POPULAR_SUBS_SUCCESS:
       return {
@@ -36,12 +39,14 @@ export default (state = initialState, action) => {
     case SEARCH_POSTS_REQUEST:
       return {
         ...state,
-        fetching: true
+        fetching: true,
+        subreddit: action.payload.subreddit
       };
     case GET_POSTS_REQUEST:
       return {
         ...state,
-        fetching: true
+        fetching: true,
+        subreddit: action.payload.subreddit
       };
     default:
       return state;

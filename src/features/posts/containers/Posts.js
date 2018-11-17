@@ -21,15 +21,15 @@ const Grid = styled.div`
 
 class Posts extends Component {
   componentDidMount() {
-    const { getPosts } = this.props;
+    const { subreddit, getPosts } = this.props;
 
-    getPosts("popular", null);
+    getPosts(subreddit, null);
   }
   handleChange = ({ isIntersecting }) => {
-    const { getPosts, after } = this.props;
+    const { subreddit, getPosts, after } = this.props;
 
     if (isIntersecting) {
-      getPosts("popular", after);
+      getPosts(subreddit, after);
     }
   };
 
@@ -54,13 +54,13 @@ class Posts extends Component {
                 />
               );
             })}
+          {posts.length > 0 && !fetching ? (
+            <Observer onChange={this.handleChange}>
+              <div />
+            </Observer>
+          ) : null}
         </Grid>
         {fetching ? <Loader message={"Fetching posts"} /> : null}
-        {posts.length > 0 ? (
-          <Observer onChange={this.handleChange}>
-            <div />
-          </Observer>
-        ) : null}
       </StyledPosts>
     );
   }
@@ -69,6 +69,7 @@ class Posts extends Component {
 const mapStateToProps = state => {
   return {
     posts: state.posts.posts,
+    subreddit: state.posts.subreddit,
     after: state.posts.after,
     fetching: state.posts.fetching
   };

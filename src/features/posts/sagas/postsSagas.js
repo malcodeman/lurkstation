@@ -50,8 +50,9 @@ function* searchSubreddit(action) {
   try {
     const { subreddit } = action.payload;
     const data = yield call(get, subreddit);
-
-    yield put({ type: SEARCH_POSTS_SUCCESS, payload: data.data.posts });
+    const posts = data.data.posts;
+    const after = data.data.after;
+    yield put({ type: SEARCH_POSTS_SUCCESS, payload: { posts, after } });
     setSubmitting(false);
   } catch (error) {
     yield put({ type: GET_POSTS_FAILURE, error });
