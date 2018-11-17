@@ -15,6 +15,7 @@ const LoaderWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 6px;
+  visibility: ${props => (props.hidden ? "hidden" : "visible")};
 `;
 
 const StyledLoader = styled.div`
@@ -33,10 +34,11 @@ const Message = styled.span`
 `;
 
 const Loader = props => {
+  const { hidden, message } = props;
   return (
-    <LoaderWrapper>
+    <LoaderWrapper hidden={hidden}>
       <StyledLoader />
-      {props.message && <Message>{props.message}</Message>}
+      {message && <Message>{message}</Message>}
     </LoaderWrapper>
   );
 };

@@ -17,6 +17,7 @@ const Grid = styled.div`
   display: grid;
   grid-auto-rows: 280px;
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  min-height: 100vh;
 `;
 
 class Posts extends Component {
@@ -54,13 +55,13 @@ class Posts extends Component {
                 />
               );
             })}
-          {posts.length > 0 && !fetching ? (
-            <Observer onChange={this.handleChange}>
-              <div />
-            </Observer>
-          ) : null}
         </Grid>
-        {fetching ? <Loader message={"Fetching posts"} /> : null}
+        {posts.length > 0 && !fetching ? (
+          <Observer onChange={this.handleChange}>
+            <div />
+          </Observer>
+        ) : null}
+        <Loader hidden={!fetching} message={"Fetching posts"} />
       </StyledPosts>
     );
   }
