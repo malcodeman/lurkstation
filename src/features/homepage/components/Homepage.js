@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Posts from "../../posts/containers/Posts";
 import GetSubForm from "../../posts/containers/GetSubForm";
 import PopularSubs from "../../posts/containers/PopularSubs";
+import Filters from "../../posts/containers/Filters";
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ const Homepage = () => {
       <Header>
         <GetSubForm />
         <PopularSubs />
+        <Filters />
       </Header>
       <Posts />
     </Wrapper>

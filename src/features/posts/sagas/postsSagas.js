@@ -10,15 +10,22 @@ import {
   GET_POPULAR_SUBS_REQUEST,
   GET_POPULAR_SUBS_SUCCESS,
   SEARCH_POSTS_REQUEST,
-  SEARCH_POSTS_SUCCESS
+  SEARCH_POSTS_SUCCESS,
+  SEARCH_POSTS_FAILURE,
+  CHANGE_FILTER
 } from "../actions/postsActionTypes";
 
-const get = subreddit => {
-  return axios.get(`/subs/${subreddit}`);
-};
-
-const getWithAfter = (subreddit, after) => {
-  return axios.get(`/subs/${subreddit}?after=${after}`);
+const get = (subreddit, sort, time, after) => {
+  if (time) {
+    if (after) {
+      return axios.get(`/subs/${subreddit}/${sort}?after=${after}&t=${time}`);
+    }
+    return axios.get(`/subs/${subreddit}/${sort}?t=${time}`);
+  }
+  if (after) {
+    return axios.get(`/subs/${subreddit}/${sort}?after=${after}`);
+  }
+  return axios.get(`/subs/${subreddit}/${sort}`);
 };
 
 const getPopular = () => {
@@ -27,18 +34,12 @@ const getPopular = () => {
 
 function* getSubreddit(action) {
   try {
-    const { subreddit } = action.payload;
-    const afterRequest = action.payload.after;
-    if (afterRequest) {
-      const data = yield call(getWithAfter, subreddit, afterRequest);
-      const posts = data.data.posts;
-      const after = data.data.after;
-      yield put({ type: GET_POSTS_SUCCESS, payload: { posts, after } });
-      return;
-    }
-    const data = yield call(get, subreddit);
+    const { subreddit, sort, time } = action.payload;
+    let { after } = action.payload;
+
+    const data = yield call(get, subreddit, sort, time, after);
     const posts = data.data.posts;
-    const after = data.data.after;
+    after = data.data.after;
     yield put({ type: GET_POSTS_SUCCESS, payload: { posts, after } });
   } catch (error) {
     yield put({ type: GET_POSTS_FAILURE, error });
@@ -46,17 +47,20 @@ function* getSubreddit(action) {
 }
 
 function* searchSubreddit(action) {
-  const { setSubmitting } = action.meta;
   try {
-    const { subreddit } = action.payload;
-    const data = yield call(get, subreddit);
+    const { subreddit, sort, time } = action.payload;
+    const data = yield call(get, subreddit, sort, time, null);
     const posts = data.data.posts;
     const after = data.data.after;
     yield put({ type: SEARCH_POSTS_SUCCESS, payload: { posts, after } });
-    setSubmitting(false);
+    if (action.meta && action.meta.setSubmitting) {
+      action.meta.setSubmitting(false);
+    }
   } catch (error) {
-    yield put({ type: GET_POSTS_FAILURE, error });
-    setSubmitting(false);
+    yield put({ type: SEARCH_POSTS_FAILURE, error });
+    if (action.meta && action.meta.setSubmitting) {
+      action.meta.setSubmitting(false);
+    }
   }
 }
 
@@ -73,7 +77,7 @@ function* getPopularSubreddits(action) {
 const saga = function*() {
   yield takeLatest(GET_POSTS_REQUEST, getSubreddit);
   yield takeLatest(GET_POPULAR_SUBS_REQUEST, getPopularSubreddits);
-  yield takeLatest(SEARCH_POSTS_REQUEST, searchSubreddit);
+  yield takeLatest([SEARCH_POSTS_REQUEST, CHANGE_FILTER], searchSubreddit);
 };
 
 export default saga;

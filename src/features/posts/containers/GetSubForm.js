@@ -70,18 +70,33 @@ class FormikForm extends Component {
 }
 
 const GetSubForm = withFormik({
+  enableReinitialize: true,
   mapPropsToValues: props => ({
-    subreddit: props.subreddit || ""
+    subreddit: props.subreddit || "",
+    sort: props.sort || null,
+    time: props.time || null
   }),
   validationSchema: Yup.object().shape({
     subreddit: Yup.string().required("Subreddit is required")
   }),
   handleSubmit(payload, bag) {
-    bag.props.searchPosts(payload, { setSubmitting: bag.setSubmitting });
+    bag.props.searchPosts(
+      payload.subreddit,
+      payload.sort,
+      payload.time,
+      bag.setSubmitting
+    );
   }
 })(FormikForm);
 
+const mapStateToProps = state => {
+  return {
+    sort: state.posts.sort,
+    time: state.posts.time
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { searchPosts }
 )(GetSubForm);

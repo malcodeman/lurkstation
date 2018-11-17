@@ -21,15 +21,15 @@ const Grid = styled.div`
 
 class Posts extends Component {
   componentDidMount() {
-    const { subreddit, getPosts } = this.props;
+    const { getPosts, subreddit, sort, time, after } = this.props;
 
-    getPosts(subreddit, null);
+    getPosts(subreddit, sort, time, after);
   }
   handleChange = ({ isIntersecting }) => {
-    const { subreddit, getPosts, after } = this.props;
+    const { getPosts, subreddit, sort, time, after } = this.props;
 
     if (isIntersecting) {
-      getPosts(subreddit, after);
+      getPosts(subreddit, sort, time, after);
     }
   };
 
@@ -70,6 +70,8 @@ const mapStateToProps = state => {
   return {
     posts: state.posts.posts,
     subreddit: state.posts.subreddit,
+    sort: state.posts.sort,
+    time: state.posts.time,
     after: state.posts.after,
     fetching: state.posts.fetching
   };

@@ -3,7 +3,8 @@ import {
   GET_POPULAR_SUBS_SUCCESS,
   GET_POSTS_REQUEST,
   SEARCH_POSTS_REQUEST,
-  SEARCH_POSTS_SUCCESS
+  SEARCH_POSTS_SUCCESS,
+  CHANGE_FILTER
 } from "../actions/postsActionTypes";
 
 const initialState = {
@@ -11,7 +12,9 @@ const initialState = {
   subreddit: "popular",
   popularSubs: null,
   fetching: false,
-  after: null
+  after: null,
+  sort: "hot",
+  time: "day"
 };
 
 export default (state = initialState, action) => {
@@ -47,6 +50,12 @@ export default (state = initialState, action) => {
         ...state,
         fetching: true,
         subreddit: action.payload.subreddit
+      };
+    case CHANGE_FILTER:
+      return {
+        ...state,
+        sort: action.payload.sort,
+        time: action.payload.time
       };
     default:
       return state;
