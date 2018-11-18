@@ -34,7 +34,7 @@ const Post = props => {
 
   function renderPostContent() {
     if (videoUrl) {
-      return <Video src={videoUrl} />;
+      return <Video src={videoUrl} controls={true} />;
     } else if (iframeVideo) {
       return (
         <IframeVideo
