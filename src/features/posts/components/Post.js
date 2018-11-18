@@ -30,7 +30,14 @@ const TextPost = styled.span`
 `;
 
 const Post = props => {
-  const { url, postUrl, videoUrl, youtubeVideoUrl, textPost } = props;
+  const {
+    url,
+    postUrl,
+    videoUrl,
+    youtubeVideoUrl,
+    textPost,
+    imgurAlbum
+  } = props;
   function renderPostContent() {
     if (videoUrl) {
       return <Video src={videoUrl} />;
@@ -44,6 +51,8 @@ const Post = props => {
       );
     } else if (textPost) {
       return <TextPost>Go to post</TextPost>;
+    } else if (imgurAlbum) {
+      return <Image src={imgurAlbum[0]} />;
     } else {
       return <Image src={url} />;
     }

@@ -52,6 +52,7 @@ class Posts extends Component {
                   videoUrl={post.video_url}
                   youtubeVideoUrl={post.youtube_video_url}
                   textPost={post.text_post}
+                  imgurAlbum={post.imgurAlbum}
                 />
               );
             })}
