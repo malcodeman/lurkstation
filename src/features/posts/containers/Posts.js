@@ -50,9 +50,9 @@ class Posts extends Component {
                   commentsCount={post.comments_count}
                   likesCount={post.likes_count}
                   videoUrl={post.video_url}
-                  youtubeVideoUrl={post.youtube_video_url}
                   textPost={post.text_post}
-                  imgurAlbum={post.imgurAlbum}
+                  imgurAlbum={post.imgur_album}
+                  iframeVideo={post.iframe_video}
                 />
               );
             })}

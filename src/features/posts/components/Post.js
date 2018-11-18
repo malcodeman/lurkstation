@@ -19,7 +19,7 @@ const Video = styled.video`
   height: 100%;
 `;
 
-const YoutubeVideo = styled.iframe`
+const IframeVideo = styled.iframe`
   max-width: 100%;
   height: 100%;
   width: 100%;
@@ -30,21 +30,15 @@ const TextPost = styled.span`
 `;
 
 const Post = props => {
-  const {
-    url,
-    postUrl,
-    videoUrl,
-    youtubeVideoUrl,
-    textPost,
-    imgurAlbum
-  } = props;
+  const { url, postUrl, videoUrl, textPost, imgurAlbum, iframeVideo } = props;
+
   function renderPostContent() {
     if (videoUrl) {
       return <Video src={videoUrl} />;
-    } else if (youtubeVideoUrl) {
+    } else if (iframeVideo) {
       return (
-        <YoutubeVideo
-          src={youtubeVideoUrl}
+        <IframeVideo
+          src={iframeVideo}
           frameBorder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         />
