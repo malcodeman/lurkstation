@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "39264d2f-3695-4579-91b4-a5553b93fa6b",
+		"name": "Micro reddit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get sub",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/subs/pics/hot",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"subs",
+						"pics",
+						"hot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get popular",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/popular",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"popular"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get sub with after query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/subs/pics/hot?after=t3_9ycyro",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"subs",
+						"pics",
+						"hot"
+					],
+					"query": [
+						{
+							"key": "after",
+							"value": "t3_9ycyro"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1f4c8e15-7942-4d70-9b16-1d4a499f6652",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0622cf53-57a5-4d84-9eef-0ec6209b5847",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "a571e6e6-a04d-4f1a-9012-2aa433c2fe5a",
+			"key": "url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"id": "8d5999fa-fdbf-443a-969b-58d897092ec4",
+			"key": "8d5999fa-fdbf-443a-969b-58d897092ec4",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
