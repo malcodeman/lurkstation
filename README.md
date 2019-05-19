@@ -7,22 +7,31 @@
 
 Reddit client is content oriented reddit client which aims to show reddit images and videos in most efficient way possible.
 
-## Usage
+![Screenshot](docs/images/screenshot.jpg)
 
-.env.development.local file should look like this:
+## Getting started
+
+First, clone and run the api:
+
+```
+git clone https://github.com/malcodeman/micro-reddit.git micro-reddit
+cd micro-reddit
+yarn install && yarn start
+```
+
+Next, you can clone and run the frontend:
+
+```
+git clone https://github.com/malcodeman/reddit-client.git reddit-client
+cd reddit-client
+yarn install && yarn start
+```
+
+.env.development.local:
 
 ```
 REACT_APP_API_URL = "http://localhost:8080"
 ```
-
-To start the app run:
-
-```
-yarn install
-yarn start
-```
-
-Api is located [here](https://github.com/malcodeman/micro-reddit).
 
 ## Design decisions
 
@@ -34,8 +43,8 @@ Why ... ?
 
 Huge ❤️ to:
 
-- [Luis Merino for his work on react-intersection-observer](https://github.com/Rendez)
+- [Luis Merino](https://github.com/Rendez) for his work on react-intersection-observer
 
 ## License
 
-Reddit client is [MIT licensed](./LICENSE).
+[MIT](./LICENSE)
