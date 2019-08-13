@@ -18,9 +18,9 @@ import {
 const get = (subreddit, sort, time, after) => {
   if (time) {
     if (after) {
-      return axios.get(`/subs/${subreddit}/${sort}?after=${after}&t=${time}`);
+      return axios.get(`/subs/${subreddit}/${sort}?after=${after}&time=${time}`);
     }
-    return axios.get(`/subs/${subreddit}/${sort}?t=${time}`);
+    return axios.get(`/subs/${subreddit}/${sort}?time=${time}`);
   }
   if (after) {
     return axios.get(`/subs/${subreddit}/${sort}?after=${after}`);
