@@ -38,7 +38,7 @@ function* getSubreddit(action) {
     let { after } = action.payload;
 
     const data = yield call(get, subreddit, sort, time, after);
-    const posts = data.data.posts;
+    const posts = data.data.posts.parsed;
     after = data.data.after;
     yield put({ type: GET_POSTS_SUCCESS, payload: { posts, after } });
   } catch (error) {
@@ -50,7 +50,7 @@ function* searchSubreddit(action) {
   try {
     const { subreddit, sort, time } = action.payload;
     const data = yield call(get, subreddit, sort, time, null);
-    const posts = data.data.posts;
+    const posts = data.data.posts.parsed;
     const after = data.data.after;
     yield put({ type: SEARCH_POSTS_SUCCESS, payload: { posts, after } });
     if (action.meta && action.meta.setSubmitting) {

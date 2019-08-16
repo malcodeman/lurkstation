@@ -19,38 +19,18 @@ const Video = styled.video`
   height: 100%;
 `;
 
-const IframeVideo = styled.iframe`
-  max-width: 100%;
-  height: 100%;
-  width: 100%;
-`;
-
-const TextPost = styled.span`
-  color: #fff;
-`;
-
-const Post = props => {
-  const { url, postUrl, videoUrl, textPost, imgurAlbum, iframeVideo } = props;
+function Post(props) {
+  const { url, postUrl } = props;
 
   function renderPostContent() {
-    if (videoUrl) {
-      return <Video src={videoUrl} controls={true} />;
-    } else if (iframeVideo) {
-      return (
-        <IframeVideo
-          src={iframeVideo}
-          frameBorder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        />
-      );
-    } else if (textPost) {
-      return <TextPost>Go to post</TextPost>;
-    } else if (imgurAlbum) {
-      return <Image src={imgurAlbum[0]} />;
-    } else {
-      return <Image src={url} />;
+    const extension = url.split(".").pop();
+
+    if (extension === "mp4") {
+      return <Video src={url} controls={true} />;
     }
+    return <Image src={url} />;
   }
+
   return (
     <StyledPost>
       <LinkWrapper href={postUrl} target={"_blank"}>
@@ -58,6 +38,6 @@ const Post = props => {
       </LinkWrapper>
     </StyledPost>
   );
-};
+}
 
 export default Post;
