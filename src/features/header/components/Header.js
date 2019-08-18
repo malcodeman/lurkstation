@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import Input from "../../commonComponents/Input";
 import Logo from "../../commonComponents/Logo";
+import SearchForm from "./SearchForm";
 
 const StyledHeader = styled.header`
   position: fixed;
@@ -22,7 +22,7 @@ function Header(props) {
   return (
     <StyledHeader>
       <Logo ml={1} mr={1} />
-      <Input placeholder="SEARCH" />
+      <SearchForm />
     </StyledHeader>
   );
 }

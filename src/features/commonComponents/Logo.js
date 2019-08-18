@@ -16,7 +16,7 @@ const BrandLink = styled(Link)`
 
 const BrandText = styled.span`
   font-size: 1rem;
-  margin-left: 10px;
+  margin-left: 0.5rem;
   cursor: pointer;
   font-weight: 500;
   color: ${props => props.theme.primary};

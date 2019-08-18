@@ -29,9 +29,20 @@ function Input(props) {
     type,
     onChange,
     onBlur,
+    onPressEnter,
     value,
     children
   } = props;
+
+  function handleOnPressEnter(event) {
+    const codes = {
+      enter: 13
+    };
+
+    if (event.code === codes.enter) {
+      onPressEnter();
+    }
+  }
 
   return (
     <StyledInput
@@ -41,6 +52,7 @@ function Input(props) {
       type={type}
       onChange={onChange}
       onBlur={onBlur}
+      onKeyDown={handleOnPressEnter}
       value={value}
     >
       {children}
@@ -55,6 +67,7 @@ Input.propTypes = {
   type: PropTypes.oneOf(["text", "email", "password"]),
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
+  onPressEnter: PropTypes.func,
   value: PropTypes.string
 };
 
