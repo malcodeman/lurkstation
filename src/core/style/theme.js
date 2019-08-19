@@ -11,6 +11,7 @@ const dark = {
   placeholder: "#b1b1b9",
   borderColor: brand,
   backgroundPrimary: "#06070d",
+  backgroundSecondary: "#15191f",
   backgroundInput: "transparent"
 };
 
@@ -22,6 +23,7 @@ const light = {
   placeholder: "#5d5d6c",
   borderColor: brand,
   backgroundPrimary: "#ffffff",
+  backgroundSecondary: "#fbfbfb",
   backgroundInput: "transparent"
 };
 

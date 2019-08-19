@@ -17,6 +17,7 @@
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
     "styled-components": "^4.3.2",
+    "use-popper": "^1.1.5",
     "yup": "^0.27.0"
   },
   "scripts": {
