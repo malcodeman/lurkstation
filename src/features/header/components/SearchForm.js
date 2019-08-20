@@ -1,11 +1,15 @@
 import React from "react";
 import { compose } from "redux";
-import { connect } from "react-redux";
 import { withFormik, Form } from "formik";
 import { object, string } from "yup";
 import styled from "styled-components";
+import { withRouter } from "react-router-dom";
 
-import { searchPosts } from "../../posts/actions/postsActions";
+import { getParam } from "../../../core/utils";
+import {
+  DEFAULT_SUBREDDIT,
+  DEFAULT_LISTING_SORT
+} from "../../../core/constants";
 import Input from "../../commonComponents/Input";
 
 const StyledForm = styled(Form)`
@@ -30,36 +34,27 @@ function SearchForm(props) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    subreddit: state.posts.subreddit,
-    sort: state.posts.sort,
-    time: state.posts.time
-  };
-};
-
-const withConnect = connect(
-  mapStateToProps,
-  { searchPosts }
-);
-
 const formEnhancer = withFormik({
   displayName: "SearchForm",
+  enableReinitialize: true,
   validationSchema: object().shape({
     subreddit: string().required()
   }),
   mapPropsToValues: props => ({
-    subreddit: props.subreddit || "",
-    sort: props.sort || null,
-    time: props.time || null
+    subreddit: props.match.params.subreddit || DEFAULT_SUBREDDIT
   }),
   handleSubmit(payload, bag) {
-    const { searchPosts } = bag.props;
-    const { subreddit, sort, time } = payload;
-    const { setSubmitting } = bag;
+    const { history, match } = bag.props;
+    const { subreddit } = payload;
+    const listing = match.params.listing || DEFAULT_LISTING_SORT;
+    const time = getParam("time");
 
-    searchPosts(subreddit, sort, time, setSubmitting);
+    if (time) {
+      history.push(`/${subreddit}/${listing}?time=${time}`);
+    } else {
+      history.push(`/${subreddit}/${listing}?`);
+    }
   }
 })(SearchForm);
 
-export default compose(withConnect)(formEnhancer);
+export default compose(withRouter)(formEnhancer);

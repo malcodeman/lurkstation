@@ -6,6 +6,7 @@ const LinkWrapper = styled.a``;
 const StyledPost = styled.div``;
 
 const Image = styled.img`
+  display: block;
   width: 100%;
   max-width: 100%;
   object-fit: cover;
@@ -13,6 +14,7 @@ const Image = styled.img`
 `;
 
 const Video = styled.video`
+  display: block;
   width: 100%;
   max-width: 100%;
   object-fit: cover;

@@ -18,7 +18,11 @@ function render() {
       <ThemeProvider theme={theme.dark}>
         <>
           <Router history={history}>
-            <Route exact path="/" component={Home} />
+            <Route
+              exact
+              path={["/", "/:subreddit", "/:subreddit/:listing"]}
+              component={Home}
+            />
           </Router>
           <GlobalStyles />
         </>

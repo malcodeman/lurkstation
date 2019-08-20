@@ -11,14 +11,15 @@ import {
   GET_POPULAR_SUBS_SUCCESS,
   SEARCH_POSTS_REQUEST,
   SEARCH_POSTS_SUCCESS,
-  SEARCH_POSTS_FAILURE,
-  CHANGE_FILTER
+  SEARCH_POSTS_FAILURE
 } from "../actions/postsActionTypes";
 
 const get = (subreddit, sort, time, after) => {
   if (time) {
     if (after) {
-      return axios.get(`/subs/${subreddit}/${sort}?after=${after}&time=${time}`);
+      return axios.get(
+        `/subs/${subreddit}/${sort}?after=${after}&time=${time}`
+      );
     }
     return axios.get(`/subs/${subreddit}/${sort}?time=${time}`);
   }
@@ -77,7 +78,7 @@ function* getPopularSubreddits(action) {
 const saga = function*() {
   yield takeLatest(GET_POSTS_REQUEST, getSubreddit);
   yield takeLatest(GET_POPULAR_SUBS_REQUEST, getPopularSubreddits);
-  yield takeLatest([SEARCH_POSTS_REQUEST, CHANGE_FILTER], searchSubreddit);
+  yield takeLatest(SEARCH_POSTS_REQUEST, searchSubreddit);
 };
 
 export default saga;
