@@ -39,12 +39,21 @@ function Dropdown(props) {
 
 Dropdown.propTypes = {
   placement: PropTypes.oneOf([
-    "bottomLeft",
-    "bottomCenter",
-    "bottomRight",
-    "topLeft",
-    "topCenter",
-    "topRight"
+    "auto",
+    "auto-start",
+    "auto-end",
+    "top",
+    "top-start",
+    "top-end",
+    "right",
+    "right-start",
+    "right-end",
+    "bottom",
+    "bottom-start",
+    "bottom-end",
+    "left",
+    "left-start",
+    "left-end"
   ]),
   overlay: PropTypes.object,
   visible: PropTypes.bool,
@@ -52,7 +61,7 @@ Dropdown.propTypes = {
 };
 
 Dropdown.defaultProps = {
-  placement: "bottomLeft",
+  placement: "bottom-start",
   overlay: null,
   visible: false,
   mr: 0
