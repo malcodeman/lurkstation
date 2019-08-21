@@ -99,13 +99,49 @@ function Filters(props) {
     listingSort === "controversial" || listingSort === "top";
   const timeSort = getParam("time") || DEFAULT_TIME_SORT;
 
+  function parseListingSortLabel(listing) {
+    switch (listing) {
+      case "hot":
+        return "What's Hot";
+      case "new":
+        return "Most recent";
+      case "controversial":
+        return "Controversial";
+      case "top":
+        return "Top";
+      case "rising":
+        return "Rising";
+      default:
+        return "";
+    }
+  }
+
+  function parseTimeSortLabel(listing) {
+    switch (listing) {
+      case "hour":
+        return "Now";
+      case "day":
+        return "Today";
+      case "week":
+        return "This week";
+      case "month":
+        return "This month";
+      case "year":
+        return "This year";
+      case "all":
+        return "All Time";
+      default:
+        return "";
+    }
+  }
+
   return (
     <StyledFilters>
       <Panel>
         <Dropdown overlay={listingMenu} mr={1}>
           <Filter>
             <Text size={1} mr={0.5}>
-              {listingSort}
+              {parseListingSortLabel(listingSort)}
             </Text>
             <ChevronDown />
           </Filter>
@@ -114,7 +150,7 @@ function Filters(props) {
           <Dropdown overlay={timeMenu} mr={1}>
             <Filter>
               <Text size={1} mr={0.5}>
-                {timeSort}
+                {parseTimeSortLabel(timeSort)}
               </Text>
               <ChevronDown />
             </Filter>
