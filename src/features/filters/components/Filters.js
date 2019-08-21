@@ -16,9 +16,11 @@ import ChevronDown from "../../commonAssets/icons/ChevronDown";
 const StyledFilters = styled.div`
   display: flex;
   justify-content: space-between;
+  position: sticky;
+  top: 54px;
   padding: 1rem;
   color: ${props => props.theme.primary};
-  background-color: ${props => props.theme.backgroundSecondary};
+  background-color: ${props => `${props.theme.backgroundSecondary}F2`};
 `;
 
 const Panel = styled.div`
