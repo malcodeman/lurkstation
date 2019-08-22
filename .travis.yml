@@ -1,20 +1,17 @@
-sudo: required
-
-services:
-  - docker
-
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+    - node_modules
 script:
-  - docker build --tag ddit .
-  - docker images
-  - docker login -u=$DOCKER_USERNAME -p=$HEROKU_API_KEY registry.heroku.com
-  - docker tag ddit registry.heroku.com/ddit/web
-  - docker push registry.heroku.com/ddit/web
-
-before_deploy: npm install heroku --no-save
-
+  - yarn test
+  - yarn build
+  - mv build/index.html build/200.html
 deploy:
-  - provider: script
-    script: heroku container:release web -a ddit
-    skip_cleanup: true
-    on:
-      master: true
+  provider: surge
+  skip_cleanup: true
+  domain: lurkershub.surge.sh
+  project: ./build/
+on:
+  branch: master
