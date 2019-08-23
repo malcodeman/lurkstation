@@ -9,28 +9,41 @@ const StyledDropdown = styled.div`
 `;
 
 function Dropdown(props) {
-  const { placement, overlay, mr, children } = props;
+  const {
+    placement,
+    overlay,
+    mr,
+    shouldCloseOnExternalClick,
+    isVisible,
+    children
+  } = props;
   const { reference, popper } = usePopper({ placement });
-  const [visible, setVisible] = useState(props.visible);
+  const [visible, setVisible] = useState(false);
+  const isShown = visible || isVisible;
 
-  function handleOnClick() {
+  function handleToggle() {
     const state = visible ? false : true;
 
     setVisible(state);
   }
 
+  function close() {
+    setVisible(false);
+  }
+
   return (
     <StyledDropdown mr={mr}>
-      <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
+      <OutsideClickHandler
+        onOutsideClick={() => shouldCloseOnExternalClick && close()}
+      >
         {cloneElement(children, {
           ref: reference.ref,
-          onClick: handleOnClick
+          onClick: handleToggle
         })}
-        {visible &&
-          cloneElement(overlay, {
+        {isShown &&
+          cloneElement(overlay({ close }), {
             ref: popper.ref,
-            style: popper.styles,
-            onClick: () => setVisible(false)
+            style: popper.styles
           })}
       </OutsideClickHandler>
     </StyledDropdown>
@@ -55,16 +68,17 @@ Dropdown.propTypes = {
     "left-start",
     "left-end"
   ]),
-  overlay: PropTypes.object,
-  visible: PropTypes.bool,
+  overlay: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]).isRequired,
+  isVisible: PropTypes.bool,
   mr: PropTypes.number
 };
 
 Dropdown.defaultProps = {
   placement: "bottom-start",
-  overlay: null,
-  visible: false,
-  mr: 0
+  isVisible: false,
+  mr: 0,
+  shouldCloseOnExternalClick: true
 };
 
 export default Dropdown;

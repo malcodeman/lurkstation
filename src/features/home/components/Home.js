@@ -6,7 +6,6 @@ import Filters from "../../filters/components/Filters";
 import Posts from "../../posts/components/Posts";
 
 const Main = styled.main`
-  padding-top: 54px;
   min-height: 100vh;
   background-color: ${props => props.theme.backgroundPrimary};
 `;
@@ -15,8 +14,8 @@ function Home() {
   return (
     <>
       <Header />
+      <Filters />
       <Main>
-        <Filters />
         <Posts />
       </Main>
     </>

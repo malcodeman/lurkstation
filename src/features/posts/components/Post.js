@@ -1,9 +1,13 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const LinkWrapper = styled.a``;
 
 const StyledPost = styled.div``;
+
+const filter = css`
+  filter: blur(1rem);
+`;
 
 const Image = styled.img`
   display: block;
@@ -11,6 +15,7 @@ const Image = styled.img`
   max-width: 100%;
   object-fit: cover;
   height: 100%;
+  ${props => props.censure && filter}
 `;
 
 const Video = styled.video`
@@ -19,18 +24,20 @@ const Video = styled.video`
   max-width: 100%;
   object-fit: cover;
   height: 100%;
+  ${props => props.censure && filter}
 `;
 
 function Post(props) {
-  const { url, postUrl } = props;
+  const { url, postUrl, nsfw, nsfwMode } = props;
+  const censure = nsfw && !nsfwMode;
 
   function renderPostContent() {
     const extension = url.split(".").pop();
 
     if (extension === "mp4") {
-      return <Video src={url} controls={true} />;
+      return <Video src={url} controls censure={censure} />;
     }
-    return <Image src={url} />;
+    return <Image src={url} censure={censure} />;
   }
 
   return (

@@ -15,10 +15,13 @@ import ChevronDown from "../../commonAssets/icons/ChevronDown";
 
 const StyledFilters = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 54px;
   padding: 1rem;
+  margin-top: 54px;
+  height: 60px;
   color: ${props => props.theme.primary};
   background-color: ${props => `${props.theme.backgroundSecondary}F2`};
 `;
@@ -55,47 +58,7 @@ const StyledLink = styled(Link)`
 function Filters(props) {
   const { match, location } = props;
   const subreddit = match.params.subreddit || DEFAULT_SUBREDDIT;
-  const listingMenu = (
-    <Menu>
-      <MenuItem>
-        <StyledLink to={`/${subreddit}/hot`}>What's Hot</StyledLink>
-      </MenuItem>
-      <MenuItem>
-        <StyledLink to={`/${subreddit}/new`}>Most recent</StyledLink>
-      </MenuItem>
-      <MenuItem>
-        <StyledLink to={`/${subreddit}/controversial`}>
-          Controversial
-        </StyledLink>
-      </MenuItem>
-      <MenuItem>
-        <StyledLink to={`/${subreddit}/top`}>Top</StyledLink>
-      </MenuItem>
-      <MenuItem>
-        <StyledLink to={`/${subreddit}/rising`}>Rising</StyledLink>
-      </MenuItem>
-    </Menu>
-  );
   const { pathname } = location;
-  const timeMenu = (
-    <Menu>
-      <MenuItem>
-        <StyledLink to={`${pathname}?time=hour`}>Hour</StyledLink>
-      </MenuItem>
-      <MenuItem>
-        <StyledLink to={`${pathname}?time=day`}>Day</StyledLink>
-      </MenuItem>
-      <MenuItem>
-        <StyledLink to={`${pathname}?time=week`}>Week</StyledLink>
-      </MenuItem>
-      <MenuItem>
-        <StyledLink to={`${pathname}?time=month`}>Month</StyledLink>
-      </MenuItem>
-      <MenuItem>
-        <StyledLink to={`${pathname}?time=all`}>All</StyledLink>
-      </MenuItem>
-    </Menu>
-  );
   const listingSort = match.params.listing || DEFAULT_LISTING_SORT;
   const renderTimeSort =
     listingSort === "controversial" || listingSort === "top";
@@ -140,7 +103,30 @@ function Filters(props) {
   return (
     <StyledFilters>
       <Panel>
-        <Dropdown overlay={listingMenu} mr={1}>
+        <Dropdown
+          mr={1}
+          overlay={({ close }) => (
+            <Menu>
+              <MenuItem onClick={close}>
+                <StyledLink to={`/${subreddit}/hot`}>What's Hot</StyledLink>
+              </MenuItem>
+              <MenuItem onClick={close}>
+                <StyledLink to={`/${subreddit}/new`}>Most recent</StyledLink>
+              </MenuItem>
+              <MenuItem onClick={close}>
+                <StyledLink to={`/${subreddit}/controversial`}>
+                  Controversial
+                </StyledLink>
+              </MenuItem>
+              <MenuItem onClick={close}>
+                <StyledLink to={`/${subreddit}/top`}>Top</StyledLink>
+              </MenuItem>
+              <MenuItem onClick={close}>
+                <StyledLink to={`/${subreddit}/rising`}>Rising</StyledLink>
+              </MenuItem>
+            </Menu>
+          )}
+        >
           <Filter>
             <Text size={1} mr={0.5}>
               {parseListingSortLabel(listingSort)}
@@ -149,7 +135,28 @@ function Filters(props) {
           </Filter>
         </Dropdown>
         {renderTimeSort && (
-          <Dropdown overlay={timeMenu} mr={1}>
+          <Dropdown
+            mr={1}
+            overlay={({ close }) => (
+              <Menu>
+                <MenuItem onClick={close}>
+                  <StyledLink to={`${pathname}?time=hour`}>Hour</StyledLink>
+                </MenuItem>
+                <MenuItem onClick={close}>
+                  <StyledLink to={`${pathname}?time=day`}>Day</StyledLink>
+                </MenuItem>
+                <MenuItem onClick={close}>
+                  <StyledLink to={`${pathname}?time=week`}>Week</StyledLink>
+                </MenuItem>
+                <MenuItem onClick={close}>
+                  <StyledLink to={`${pathname}?time=month`}>Month</StyledLink>
+                </MenuItem>
+                <MenuItem onClick={close}>
+                  <StyledLink to={`${pathname}?time=all`}>All</StyledLink>
+                </MenuItem>
+              </Menu>
+            )}
+          >
             <Filter>
               <Text size={1} mr={0.5}>
                 {parseTimeSortLabel(timeSort)}
