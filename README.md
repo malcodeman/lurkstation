@@ -1,11 +1,11 @@
-# [Reddit-client](https://ddit.herokuapp.com/)
+# [Lurkershub](http://lurkershub.surge.sh)
 
 [![Build Status](https://travis-ci.org/malcodeman/reddit-client.svg?branch=master)](https://travis-ci.org/malcodeman/reddit-client)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/malcodeman/micro-reddit/blob/master/LICENSE)
-[![style: styled-components](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg?colorB=daa357&colorA=db748e)](https://github.com/styled-components/styled-components)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![style: styled-components](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg?colorB=daa357&colorA=db748e)](https://github.com/styled-components/styled-components)
 
-Reddit client is content oriented reddit client which aims to show reddit images and videos in most efficient way possible.
+Lurkershub is content oriented reddit client which aims to show reddit images and videos in most efficient way possible.
 
 ![Screenshot](docs/images/screenshot.jpg)
 
@@ -31,6 +31,12 @@ yarn install && yarn start
 
 ```
 REACT_APP_API_URL = "http://localhost:8080"
+```
+
+.env.production.local:
+
+```
+REACT_APP_API_URL = "https://malcodeman-micro-reddit.glitch.me"
 ```
 
 ## Design decisions
