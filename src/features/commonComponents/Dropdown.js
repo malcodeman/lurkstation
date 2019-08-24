@@ -4,6 +4,8 @@ import usePopper from "use-popper";
 import OutsideClickHandler from "react-outside-click-handler";
 import styled from "styled-components";
 
+import { useKeyPress } from "../../core/hooks";
+
 const StyledDropdown = styled.div`
   margin-right: ${props => props.mr && `${props.mr}rem`};
 `;
@@ -20,6 +22,8 @@ function Dropdown(props) {
   const { reference, popper } = usePopper({ placement });
   const [visible, setVisible] = useState(false);
   const isShown = visible || isVisible;
+
+  useKeyPress("Escape", close);
 
   function handleToggle() {
     const state = visible ? false : true;
