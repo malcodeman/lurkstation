@@ -1,13 +1,16 @@
-import React, { cloneElement, useState } from "react";
+import React, { cloneElement, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import usePopper from "use-popper";
-import OutsideClickHandler from "react-outside-click-handler";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import { useKeyPress } from "../../core/hooks";
+import { useKeyPress, useOnClickOutside } from "../../core/hooks";
 
 const StyledDropdown = styled.div`
-  margin-right: ${props => props.mr && `${props.mr}rem`};
+  ${props =>
+    props.mr &&
+    css`
+      margin-right: ${props.mr}rem;
+    `}
 `;
 
 function Dropdown(props) {
@@ -22,8 +25,10 @@ function Dropdown(props) {
   const { reference, popper } = usePopper({ placement });
   const [visible, setVisible] = useState(false);
   const isShown = visible || isVisible;
+  const ref = useRef();
 
   useKeyPress("Escape", close);
+  useOnClickOutside(ref, shouldCloseOnExternalClick && close);
 
   function handleToggle() {
     const state = visible ? false : true;
@@ -36,20 +41,16 @@ function Dropdown(props) {
   }
 
   return (
-    <StyledDropdown mr={mr}>
-      <OutsideClickHandler
-        onOutsideClick={() => shouldCloseOnExternalClick && close()}
-      >
-        {cloneElement(children, {
-          ref: reference.ref,
-          onClick: handleToggle
+    <StyledDropdown ref={ref} mr={mr}>
+      {cloneElement(children, {
+        ref: reference.ref,
+        onClick: handleToggle
+      })}
+      {isShown &&
+        cloneElement(overlay({ close }), {
+          ref: popper.ref,
+          style: popper.styles
         })}
-        {isShown &&
-          cloneElement(overlay({ close }), {
-            ref: popper.ref,
-            style: popper.styles
-          })}
-      </OutsideClickHandler>
     </StyledDropdown>
   );
 }
