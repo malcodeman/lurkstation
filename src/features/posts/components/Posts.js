@@ -51,7 +51,7 @@ function Posts(props) {
                 url={post.url}
                 postUrl={post.post_url}
                 commentsCount={post.comments_count}
-                likesCount={post.likes_count}
+                upvotesCount={post.upvotes_count}
                 nsfw={post.nsfw}
                 nsfwMode={nsfwMode}
               />

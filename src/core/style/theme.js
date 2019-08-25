@@ -12,7 +12,8 @@ const dark = {
   borderColor: brand,
   backgroundPrimary: "#06070d",
   backgroundSecondary: "#15191f",
-  backgroundInput: "transparent"
+  backgroundInput: "transparent",
+  overlay: "rgba(0, 0, 0, 0.3)"
 };
 
 const light = {
@@ -24,7 +25,8 @@ const light = {
   borderColor: brand,
   backgroundPrimary: "#ffffff",
   backgroundSecondary: "#fbfbfb",
-  backgroundInput: "transparent"
+  backgroundInput: "transparent",
+  overlay: "rgba(255, 255, 255, 0.3)"
 };
 
 export default {
