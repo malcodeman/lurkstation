@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 import Heart from "../../commonAssets/icons/Heart";
 import MessageCircle from "../../commonAssets/icons/MessageCircle";
+import PostPopup from "./PostPopup";
 
 const Overlay = styled.div`
   display: none;
@@ -26,7 +28,7 @@ const Count = styled.span`
   margin-right: ${props => props.mr && `${props.mr}rem`};
 `;
 
-const StyledPost = styled.div`
+const StyledPost = styled(Link)`
   position: relative;
   cursor: pointer;
   &:hover ${Overlay} {
@@ -60,38 +62,59 @@ const Video = styled.video`
 `;
 
 function Post(props) {
-  const { url, nsfw, nsfwMode, upvotesCount, commentsCount } = props;
-
+  const {
+    id,
+    url,
+    nsfw,
+    nsfwMode,
+    upvotesCount,
+    commentsCount,
+    subreddit,
+    listing,
+    title
+  } = props;
   const censure = nsfw && !nsfwMode;
-
-  function renderPostContent() {
-    const extension = url.split(".").pop();
-
-    if (extension === "mp4") {
-      return <Video src={url} controls censure={censure} />;
-    }
-    return <Image src={url} censure={censure} />;
-  }
+  const extension = url.split(".").pop();
+  const video = extension === "mp4" ? true : false;
+  const [visible, setVisible] = useState(false);
 
   return (
-    <StyledPost>
-      {renderPostContent()}
-      <Overlay>
-        <Details>
-          <Heart />
-          <Count ml={0.5} mr={0.5}>
-            {upvotesCount}
-          </Count>
-          <MessageCircle />
-          <Count ml={0.5}>{commentsCount}</Count>
-        </Details>
-      </Overlay>
-    </StyledPost>
+    <>
+      <StyledPost
+        to={`/${subreddit}/${listing}/${id}`}
+        onClick={() => setVisible(true)}
+      >
+        {video ? (
+          <Video src={url} censure={censure} />
+        ) : (
+          <Image src={url} censure={censure} />
+        )}
+        <Overlay>
+          <Details>
+            <Heart />
+            <Count ml={0.5} mr={0.5}>
+              {upvotesCount}
+            </Count>
+            <MessageCircle />
+            <Count ml={0.5}>{commentsCount}</Count>
+          </Details>
+        </Overlay>
+      </StyledPost>
+      {visible && (
+        <PostPopup
+          onCancel={() => setVisible(false)}
+          url={url}
+          title={title}
+          video={video}
+        />
+      )}
+    </>
   );
 }
 
 Post.propTypes = {
   url: PropTypes.string,
+  title: PropTypes.string,
   nsfw: PropTypes.bool,
   nsfwMode: PropTypes.bool,
   upvotesCount: PropTypes.number,
@@ -100,6 +123,7 @@ Post.propTypes = {
 
 Post.defaultProps = {
   url: "",
+  title: "",
   nsfw: false,
   nsfwMode: false,
   upvotesCount: 0,

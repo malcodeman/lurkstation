@@ -16,7 +16,12 @@ function App(props) {
       <Router history={history}>
         <Route
           exact
-          path={["/", "/:subreddit", "/:subreddit/:listing"]}
+          path={[
+            "/",
+            "/:subreddit",
+            "/:subreddit/:listing",
+            "/:subreddit/:listing/:postId"
+          ]}
           component={Home}
         />
       </Router>

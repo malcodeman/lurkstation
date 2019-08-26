@@ -48,12 +48,16 @@ function Posts(props) {
             return (
               <Post
                 key={post.id}
+                id={post.id}
                 url={post.url}
                 postUrl={post.post_url}
                 commentsCount={post.comments_count}
                 upvotesCount={post.upvotes_count}
                 nsfw={post.nsfw}
                 nsfwMode={nsfwMode}
+                subreddit={subreddit}
+                listing={listing}
+                title={post.title}
               />
             );
           })}

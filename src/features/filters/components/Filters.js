@@ -19,6 +19,7 @@ const StyledFilters = styled.div`
   justify-content: space-between;
   position: sticky;
   top: 54px;
+  z-index: 1;
   padding: 1rem;
   margin-top: 54px;
   height: 60px;
