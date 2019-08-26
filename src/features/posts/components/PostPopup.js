@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import Modal from "../../commonComponents/Modal";
 
@@ -25,24 +25,26 @@ const Title = styled.h2`
   font-weight: 400;
 `;
 
-const Video = styled.video`
+const media = css`
   display: block;
   width: 100%;
   max-width: 100%;
-  object-fit: cover;
   height: 100%;
+  object-fit: cover;
+`;
+
+const Video = styled.video`
+  ${media};
+  ${props => props.censure && props.theme.filter}
 `;
 
 const Image = styled.img`
-  max-width: 100%;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+  ${media};
+  ${props => props.censure && props.theme.filter}
 `;
 
 function PostPopup(props) {
-  const { onCancel, url, title, video } = props;
+  const { onCancel, url, title, video, censure } = props;
 
   return (
     <Modal onCancel={onCancel} padding={1}>
@@ -51,7 +53,11 @@ function PostPopup(props) {
           <Title>{title}</Title>
         </Header>
         <div>
-          {video ? <Video src={url} controls /> : <Image src={url} alt="" />}
+          {video ? (
+            <Video src={url} controls loop censure={censure} />
+          ) : (
+            <Image src={url} alt="" censure={censure} />
+          )}
         </div>
       </StyledPostPopup>
     </Modal>
@@ -62,13 +68,15 @@ PostPopup.propTypes = {
   onCancel: PropTypes.func.isRequired,
   url: PropTypes.string,
   title: PropTypes.string,
-  video: PropTypes.bool
+  video: PropTypes.bool,
+  censure: PropTypes.bool
 };
 
 PostPopup.defaultProps = {
   url: "",
   title: "",
-  video: false
+  video: false,
+  censure: false
 };
 
 export default PostPopup;

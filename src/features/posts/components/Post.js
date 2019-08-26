@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import Heart from "../../commonAssets/icons/Heart";
-import MessageCircle from "../../commonAssets/icons/MessageCircle";
+import HeartIcon from "../../commonAssets/icons/Heart";
+import MessageCircleIcon from "../../commonAssets/icons/MessageCircle";
+import VideoIcon from "../../commonAssets/icons/Video";
 import PostPopup from "./PostPopup";
 
 const Overlay = styled.div`
@@ -14,7 +15,6 @@ const Overlay = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  color: ${props => props.theme.primary};
   background-color: ${props => props.theme.overlay};
 `;
 
@@ -37,10 +37,7 @@ const StyledPost = styled(Link)`
     justify-content: center;
     align-items: center;
   }
-`;
-
-const filter = css`
-  filter: blur(1rem);
+  color: ${props => props.theme.primary};
 `;
 
 const Image = styled.img`
@@ -49,7 +46,7 @@ const Image = styled.img`
   max-width: 100%;
   object-fit: cover;
   height: 100%;
-  ${props => props.censure && filter}
+  ${props => props.censure && props.theme.filter}
 `;
 
 const Video = styled.video`
@@ -58,7 +55,7 @@ const Video = styled.video`
   max-width: 100%;
   object-fit: cover;
   height: 100%;
-  ${props => props.censure && filter}
+  ${props => props.censure && props.theme.filter}
 `;
 
 function Post(props) {
@@ -71,6 +68,7 @@ function Post(props) {
     commentsCount,
     subreddit,
     listing,
+    time,
     title
   } = props;
   const censure = nsfw && !nsfwMode;
@@ -81,7 +79,11 @@ function Post(props) {
   return (
     <>
       <StyledPost
-        to={`/${subreddit}/${listing}/${id}`}
+        to={
+          time
+            ? `/${subreddit}/${listing}/${id}?time=${time}`
+            : `/${subreddit}/${listing}/${id}`
+        }
         onClick={() => setVisible(true)}
       >
         {video ? (
@@ -89,13 +91,18 @@ function Post(props) {
         ) : (
           <Image src={url} censure={censure} />
         )}
+        {video && (
+          <VideoIcon
+            style={{ position: "absolute", top: "1rem", right: "1rem" }}
+          />
+        )}
         <Overlay>
           <Details>
-            <Heart />
+            <HeartIcon />
             <Count ml={0.5} mr={0.5}>
               {upvotesCount}
             </Count>
-            <MessageCircle />
+            <MessageCircleIcon />
             <Count ml={0.5}>{commentsCount}</Count>
           </Details>
         </Overlay>
@@ -106,6 +113,7 @@ function Post(props) {
           url={url}
           title={title}
           video={video}
+          censure={censure}
         />
       )}
     </>

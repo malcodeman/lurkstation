@@ -3,9 +3,12 @@ const transitions = {
   easeIn: "0.085s all ease-in"
 };
 
+const filter = "filter: blur(1rem)";
+
 const dark = {
   brand,
   transitions,
+  filter,
   primary: "#dbdbe2",
   secondary: "#b1b1b9",
   placeholder: "#b1b1b9",
@@ -19,6 +22,7 @@ const dark = {
 const light = {
   brand,
   transitions,
+  filter,
   primary: "#0e0d20",
   secondary: "#5d5d6c",
   placeholder: "#5d5d6c",

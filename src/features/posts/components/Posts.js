@@ -57,6 +57,7 @@ function Posts(props) {
                 nsfwMode={nsfwMode}
                 subreddit={subreddit}
                 listing={listing}
+                time={time}
                 title={post.title}
               />
             );
