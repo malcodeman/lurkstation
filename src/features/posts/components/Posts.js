@@ -22,7 +22,15 @@ const Grid = styled.div`
 `;
 
 function Posts(props) {
-  const { searchPosts, getPosts, posts, fetching, match, nsfwMode } = props;
+  const {
+    searchPosts,
+    getPosts,
+    posts,
+    fetching,
+    match,
+    nsfwMode,
+    dataSaverMode
+  } = props;
   const subreddit = match.params.subreddit || DEFAULT_SUBREDDIT;
   const listing = match.params.listing || DEFAULT_LISTING_SORT;
   const time = getParam("time") || DEFAULT_TIME_SORT;
@@ -50,6 +58,7 @@ function Posts(props) {
                 key={post.id}
                 id={post.id}
                 url={post.url}
+                thumbnail={post.thumbnail}
                 postUrl={post.post_url}
                 commentsCount={post.comments_count}
                 upvotesCount={post.upvotes_count}
@@ -59,6 +68,7 @@ function Posts(props) {
                 listing={listing}
                 time={time}
                 title={post.title}
+                dataSaverMode={dataSaverMode}
               />
             );
           })}
@@ -76,7 +86,8 @@ const mapStateToProps = state => {
     posts: state.posts.posts,
     fetching: state.posts.fetching,
     after: state.posts.after,
-    nsfwMode: state.settings.nsfwMode
+    nsfwMode: state.settings.nsfwMode,
+    dataSaverMode: state.settings.dataSaverMode
   };
 };
 

@@ -62,6 +62,7 @@ function Post(props) {
   const {
     id,
     url,
+    thumbnail,
     nsfw,
     nsfwMode,
     upvotesCount,
@@ -69,12 +70,14 @@ function Post(props) {
     subreddit,
     listing,
     time,
-    title
+    title,
+    dataSaverMode
   } = props;
   const censure = nsfw && !nsfwMode;
   const extension = url.split(".").pop();
   const video = extension === "mp4" ? true : false;
   const [visible, setVisible] = useState(false);
+  const showThumbnail = dataSaverMode && thumbnail !== "nsfw";
 
   return (
     <>
@@ -87,9 +90,9 @@ function Post(props) {
         onClick={() => setVisible(true)}
       >
         {video ? (
-          <Video src={url} censure={censure} />
+          <Video src={showThumbnail ? thumbnail : url} censure={censure} />
         ) : (
-          <Image src={url} censure={censure} />
+          <Image src={showThumbnail ? thumbnail : url} censure={censure} />
         )}
         {video && (
           <VideoIcon
@@ -122,6 +125,7 @@ function Post(props) {
 
 Post.propTypes = {
   url: PropTypes.string,
+  thumbnail: PropTypes.string,
   title: PropTypes.string,
   nsfw: PropTypes.bool,
   nsfwMode: PropTypes.bool,
@@ -131,6 +135,7 @@ Post.propTypes = {
 
 Post.defaultProps = {
   url: "",
+  thumbnail: "",
   title: "",
   nsfw: false,
   nsfwMode: false,

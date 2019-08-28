@@ -3,7 +3,9 @@ export const loadState = () => {
     const serializedState = localStorage.getItem("state");
 
     if (serializedState === null) {
-      return { settings: { darkMode: true, nsfwMode: false } };
+      return {
+        settings: { darkMode: true, dataSaverMode: true, nsfwMode: false }
+      };
     }
     return JSON.parse(serializedState);
   } catch (error) {

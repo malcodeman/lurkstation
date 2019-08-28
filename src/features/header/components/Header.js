@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import {
   toggleDarkMode,
+  toggleDataSaverMode,
   toggleNsfwMode
 } from "../../settings/actions/settingsActionCreators";
 import Logo from "../../commonComponents/Logo";
@@ -59,7 +60,14 @@ const Profile = styled.div`
 `;
 
 function Header(props) {
-  const { darkMode, nsfwMode, toggleDarkMode, toggleNsfwMode } = props;
+  const {
+    darkMode,
+    dataSaverMode,
+    nsfwMode,
+    toggleDarkMode,
+    toggleDataSaverMode,
+    toggleNsfwMode
+  } = props;
 
   function toggleState(callback, currentState) {
     const newState = currentState ? false : true;
@@ -77,6 +85,12 @@ function Header(props) {
             <MenuItem onClick={() => toggleState(toggleDarkMode, darkMode)}>
               <MenuLabel>Dark mode</MenuLabel>
               <Switch state={darkMode} />
+            </MenuItem>
+            <MenuItem
+              onClick={() => toggleState(toggleDataSaverMode, dataSaverMode)}
+            >
+              <MenuLabel>Data saver</MenuLabel>
+              <Switch state={dataSaverMode} />
             </MenuItem>
             <MenuItem onClick={() => toggleState(toggleNsfwMode, nsfwMode)}>
               <MenuLabel>Display Mature Content</MenuLabel>
@@ -99,13 +113,14 @@ function Header(props) {
 const mapStateToProps = state => {
   return {
     darkMode: state.settings.darkMode,
+    dataSaverMode: state.settings.dataSaverMode,
     nsfwMode: state.settings.nsfwMode
   };
 };
 
 const withConnect = connect(
   mapStateToProps,
-  { toggleDarkMode, toggleNsfwMode }
+  { toggleDarkMode, toggleDataSaverMode, toggleNsfwMode }
 );
 
 export default compose(withConnect)(Header);

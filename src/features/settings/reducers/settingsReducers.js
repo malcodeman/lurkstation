@@ -1,5 +1,6 @@
 import {
   TOGGLE_DARK_MODE,
+  TOGGLE_DATA_SAVER_MODE,
   TOGGLE_NSFW_MODE
 } from "../actions/settingsActionTypes";
 
@@ -9,6 +10,11 @@ export default (state = {}, action) => {
       return {
         ...state,
         darkMode: action.payload
+      };
+    case TOGGLE_DATA_SAVER_MODE:
+      return {
+        ...state,
+        dataSaverMode: action.payload
       };
     case TOGGLE_NSFW_MODE:
       return {
