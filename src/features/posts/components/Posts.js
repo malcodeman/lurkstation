@@ -52,8 +52,9 @@ function Posts(props) {
     <>
       <Grid>
         {posts.length > 0 &&
-          posts.map(post => {
-            return (
+          posts.map((post, index) => {
+            const lastPost = index === posts.length - 1;
+            const postComponent = (
               <Post
                 key={post.id}
                 id={post.id}
@@ -71,11 +72,21 @@ function Posts(props) {
                 dataSaverMode={dataSaverMode}
               />
             );
+
+            if (lastPost) {
+              return (
+                <Observer
+                  key={post.id}
+                  onChange={handleIntersecting}
+                  disabled={disableObserver}
+                >
+                  <div>{postComponent}</div>
+                </Observer>
+              );
+            }
+            return postComponent;
           })}
       </Grid>
-      <Observer onChange={handleIntersecting} disabled={disableObserver}>
-        <div />
-      </Observer>
       <Spin paddingTop={1} paddingBottom={1} spinning={fetching} />
     </>
   );
