@@ -6,6 +6,7 @@ import {
   SEARCH_POSTS_SUCCESS
 } from "../actions/postsActionTypes";
 
+const { NODE_ENV } = process.env;
 const initialState = {
   posts: [],
   popularSubs: null,
@@ -14,7 +15,9 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  console.log(action);
+  if (NODE_ENV === "development") {
+    console.log(action);
+  }
   switch (action.type) {
     case GET_POSTS_SUCCESS:
       return {
