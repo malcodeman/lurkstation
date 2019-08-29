@@ -90,7 +90,7 @@ function Post(props) {
         onClick={() => setVisible(true)}
       >
         {video ? (
-          <Video src={showThumbnail ? thumbnail : url} censure={censure} />
+          <Video src={url} censure={censure} />
         ) : (
           <Image src={showThumbnail ? thumbnail : url} censure={censure} />
         )}
