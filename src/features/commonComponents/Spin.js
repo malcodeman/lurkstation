@@ -28,7 +28,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledSpin = styled.div`
-  border: 2px solid ${props => props.theme.brand};
+  border: 2px solid ${props => props.color};
   border-radius: 50%;
   border-top: 2px solid transparent;
   animation ${rotate360} 2s linear infinite;
@@ -60,7 +60,7 @@ const Tip = styled.span`
 `;
 
 function Spin(props) {
-  const { spinning, size, paddingTop, paddingBottom, tip } = props;
+  const { spinning, size, paddingTop, paddingBottom, tip, color } = props;
 
   return (
     <Wrapper
@@ -68,7 +68,7 @@ function Spin(props) {
       paddingBottom={paddingBottom}
       spinning={spinning}
     >
-      <StyledSpin size={size} />
+      <StyledSpin size={size} color={color} />
       {tip && <Tip>{tip}</Tip>}
     </Wrapper>
   );
@@ -79,7 +79,8 @@ Spin.propTypes = {
   size: PropTypes.oneOf(["small", "default", "large"]),
   spinning: PropTypes.bool,
   paddingTop: PropTypes.number,
-  paddingBottom: PropTypes.number
+  paddingBottom: PropTypes.number,
+  color: PropTypes.string
 };
 
 Spin.defaultProps = {
@@ -87,7 +88,8 @@ Spin.defaultProps = {
   size: "default",
   spinning: true,
   paddingTop: 0,
-  paddingBottom: 0
+  paddingBottom: 0,
+  color: "currentColor"
 };
 
 export default Spin;

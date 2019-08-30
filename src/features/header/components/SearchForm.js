@@ -11,6 +11,7 @@ import {
   DEFAULT_LISTING_SORT
 } from "../../../core/constants";
 import Input from "../../commonComponents/Input";
+import Button from "../../commonComponents/Button";
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -30,6 +31,7 @@ function SearchForm(props) {
         name="subreddit"
         placeholder="SEARCH"
       />
+      <Button type="primary" icon="search" htmlType="submit" />
     </StyledForm>
   );
 }
