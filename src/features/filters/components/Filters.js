@@ -153,6 +153,9 @@ function Filters(props) {
                   <StyledLink to={`${pathname}?time=month`}>Month</StyledLink>
                 </MenuItem>
                 <MenuItem onClick={close}>
+                  <StyledLink to={`${pathname}?time=year`}>Year</StyledLink>
+                </MenuItem>
+                <MenuItem onClick={close}>
                   <StyledLink to={`${pathname}?time=all`}>All</StyledLink>
                 </MenuItem>
               </Menu>
