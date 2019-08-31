@@ -78,6 +78,7 @@ function Posts(props) {
                 time={time}
                 title={post.title}
                 dataSaverMode={dataSaverMode}
+                isVideo={post.is_video}
               />
             );
 

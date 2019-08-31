@@ -71,11 +71,10 @@ function Post(props) {
     listing,
     time,
     title,
-    dataSaverMode
+    dataSaverMode,
+    isVideo
   } = props;
   const censure = nsfw && !nsfwMode;
-  const extension = url.split(".").pop();
-  const video = extension === "mp4" ? true : false;
   const [visible, setVisible] = useState(false);
   const showThumbnail = dataSaverMode && thumbnail !== "nsfw";
 
@@ -89,12 +88,12 @@ function Post(props) {
         }
         onClick={() => setVisible(true)}
       >
-        {video ? (
+        {isVideo ? (
           <Video src={url} censure={censure} />
         ) : (
           <Image src={showThumbnail ? thumbnail : url} censure={censure} />
         )}
-        {video && (
+        {isVideo && (
           <VideoIcon
             style={{ position: "absolute", top: "1rem", right: "1rem" }}
           />
@@ -115,7 +114,7 @@ function Post(props) {
           onCancel={() => setVisible(false)}
           url={url}
           title={title}
-          video={video}
+          video={isVideo}
           censure={censure}
         />
       )}
@@ -130,7 +129,8 @@ Post.propTypes = {
   nsfw: PropTypes.bool,
   nsfwMode: PropTypes.bool,
   upvotesCount: PropTypes.number,
-  commentsCount: PropTypes.number
+  commentsCount: PropTypes.number,
+  isVideo: PropTypes.bool
 };
 
 Post.defaultProps = {
@@ -140,7 +140,8 @@ Post.defaultProps = {
   nsfw: false,
   nsfwMode: false,
   upvotesCount: 0,
-  commentsCount: 0
+  commentsCount: 0,
+  isVideo: false
 };
 
 export default Post;
