@@ -17,8 +17,12 @@ import Spin from "../../commonComponents/Spin";
 
 const Grid = styled.div`
   display: grid;
-  grid-auto-rows: 280px;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  grid-auto-rows: 100vw;
+  grid-template-columns: 100%;
+  @media (min-width: 576px) {
+    grid-auto-rows: 280px;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  }
 `;
 
 function Posts(props) {
