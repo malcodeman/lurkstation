@@ -7,6 +7,7 @@ import Observer from "@researchgate/react-intersection-observer";
 
 import { searchPosts, getPosts } from "../actions/postsActions";
 import { getParam } from "../../../core/utils";
+import { useScrollToTop } from "../../../core/hooks";
 import {
   DEFAULT_SUBREDDIT,
   DEFAULT_LISTING_SORT,
@@ -39,6 +40,8 @@ function Posts(props) {
   const listing = match.params.listing || DEFAULT_LISTING_SORT;
   const time = getParam("time") || DEFAULT_TIME_SORT;
   const disableObserver = posts.length === 0 || fetching;
+
+  useScrollToTop(subreddit, listing, time);
 
   useEffect(() => {
     searchPosts(subreddit, listing, time);
