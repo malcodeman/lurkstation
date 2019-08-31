@@ -15,10 +15,14 @@ const BrandLink = styled(Link)`
 `;
 
 const BrandText = styled.span`
+  display: none;
   font-size: 1rem;
   margin-left: 0.5rem;
   cursor: pointer;
   font-weight: 500;
+  @media (min-width: 576px) {
+    display: inline;
+  }
   color: ${props => props.theme.primary};
 `;
 

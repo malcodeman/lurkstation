@@ -14,7 +14,6 @@ const commonStyle = css`
   padding: 0.5rem 1rem;
   font-size: 1rem;
   width: ${props => props.block && "100%"};
-  border-radius: ${props => props.theme.borderRadius};
   transition: ${props => props.theme.transitions.easeIn};
   margin-bottom: ${props => props.mb && `${props.mb}rem`};
   color: ${props => props.theme.button[props.styleType].color};
