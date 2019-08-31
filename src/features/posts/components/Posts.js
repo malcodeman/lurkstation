@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import styled from "styled-components";
+import styled, { withTheme } from "styled-components";
 import { withRouter } from "react-router-dom";
 import Observer from "@researchgate/react-intersection-observer";
 
@@ -34,7 +34,8 @@ function Posts(props) {
     fetching,
     match,
     nsfwMode,
-    dataSaverMode
+    dataSaverMode,
+    theme
   } = props;
   const subreddit = match.params.subreddit || DEFAULT_SUBREDDIT;
   const listing = match.params.listing || DEFAULT_LISTING_SORT;
@@ -94,7 +95,12 @@ function Posts(props) {
             return postComponent;
           })}
       </Grid>
-      <Spin paddingTop={1} paddingBottom={1} spinning={fetching} />
+      <Spin
+        paddingTop={1}
+        paddingBottom={1}
+        spinning={fetching}
+        color={theme.brand}
+      />
     </>
   );
 }
@@ -116,5 +122,6 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withRouter
+  withRouter,
+  withTheme
 )(Posts);

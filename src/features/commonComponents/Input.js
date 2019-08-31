@@ -10,6 +10,7 @@ const StyledInput = styled.input`
   text-overflow: ellipsis;
   width: 100%;
   line-height: 1.5;
+  outline: 0;
   color: ${props => props.theme.primary};
   transition: ${props => props.theme.transitions.easeIn};
   background-color: ${props => props.theme.backgroundInput};
