@@ -7,20 +7,19 @@ import Observer from "@researchgate/react-intersection-observer";
 
 import { searchPosts, getPosts } from "../actions/postsActions";
 import { getParam } from "../../../core/utils";
-import { useScrollToTop } from "../../../core/hooks";
+import { useScrollToTop, useWindowSize } from "../../../core/hooks";
 import {
   DEFAULT_SUBREDDIT,
   DEFAULT_LISTING_SORT,
   DEFAULT_TIME_SORT
 } from "../../../core/constants";
 import Post from "./Post";
+import PostMobile from "./PostMobile";
 import Spin from "../../commonComponents/Spin";
 
 const Grid = styled.div`
-  display: grid;
-  grid-auto-rows: 100vw;
-  grid-template-columns: 100%;
   @media (min-width: 576px) {
+    display: grid;
     grid-auto-rows: 280px;
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   }
@@ -41,6 +40,7 @@ function Posts(props) {
   const listing = match.params.listing || DEFAULT_LISTING_SORT;
   const time = getParam("time") || DEFAULT_TIME_SORT;
   const disableObserver = posts.length === 0 || fetching;
+  const { width } = useWindowSize();
 
   useScrollToTop(subreddit, listing, time);
 
@@ -62,25 +62,41 @@ function Posts(props) {
         {posts.length > 0 &&
           posts.map((post, index) => {
             const lastPost = index === posts.length - 1;
-            const postComponent = (
-              <Post
-                key={post.id}
-                id={post.id}
-                url={post.url}
-                thumbnail={post.thumbnail}
-                postUrl={post.post_url}
-                commentsCount={post.comments_count}
-                upvotesCount={post.upvotes_count}
-                nsfw={post.nsfw}
-                nsfwMode={nsfwMode}
-                subreddit={subreddit}
-                listing={listing}
-                time={time}
-                title={post.title}
-                dataSaverMode={dataSaverMode}
-                isVideo={post.is_video}
-              />
-            );
+            const censure = !nsfwMode && post.nsfw;
+            const showThumbnail = dataSaverMode && post.thumbnail !== "nsfw";
+            const postComponent =
+              width >= 576 ? (
+                <Post
+                  key={post.id}
+                  id={post.id}
+                  url={post.url}
+                  thumbnail={post.thumbnail}
+                  title={post.time}
+                  upvotesCount={post.upvotes_count}
+                  commentsCount={post.comments_count}
+                  isVideo={post.is_video}
+                  censure={censure}
+                  showThumbnail={showThumbnail}
+                  postUrl={post.post_url}
+                  subreddit={subreddit}
+                  listing={listing}
+                  time={time}
+                />
+              ) : (
+                <PostMobile
+                  key={post.id}
+                  url={post.url}
+                  thumbnail={post.thumbnail}
+                  title={post.title}
+                  upvotesCount={post.upvotes_count}
+                  commentsCount={post.comments_count}
+                  isVideo={post.is_video}
+                  createdAt={post.created_at}
+                  censure={censure}
+                  showThumbnail={showThumbnail}
+                  theme={theme}
+                />
+              );
 
             if (lastPost) {
               return (

@@ -63,20 +63,17 @@ function Post(props) {
     id,
     url,
     thumbnail,
-    nsfw,
-    nsfwMode,
+    censure,
     upvotesCount,
     commentsCount,
     subreddit,
     listing,
     time,
     title,
-    dataSaverMode,
+    showThumbnail,
     isVideo
   } = props;
-  const censure = nsfw && !nsfwMode;
   const [visible, setVisible] = useState(false);
-  const showThumbnail = dataSaverMode && thumbnail !== "nsfw";
 
   return (
     <>
@@ -126,8 +123,7 @@ Post.propTypes = {
   url: PropTypes.string,
   thumbnail: PropTypes.string,
   title: PropTypes.string,
-  nsfw: PropTypes.bool,
-  nsfwMode: PropTypes.bool,
+  censure: PropTypes.bool,
   upvotesCount: PropTypes.number,
   commentsCount: PropTypes.number,
   isVideo: PropTypes.bool
@@ -137,8 +133,7 @@ Post.defaultProps = {
   url: "",
   thumbnail: "",
   title: "",
-  nsfw: false,
-  nsfwMode: false,
+  censure: false,
   upvotesCount: 0,
   commentsCount: 0,
   isVideo: false
