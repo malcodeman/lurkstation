@@ -51,6 +51,13 @@ Huge ❤️ to:
 
 - [Luis Merino](https://github.com/Rendez) for his work on react-intersection-observer
 
+## Todos
+
+- Improve post details modal
+- Add comments
+- Add bookmarks
+- Add posts loadings state
+
 ## License
 
 [MIT](./LICENSE)
