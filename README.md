@@ -57,6 +57,7 @@ Huge ❤️ to:
 - Add comments
 - Add bookmarks
 - Add posts loadings state
+- Add data import/export
 
 ## License
 
