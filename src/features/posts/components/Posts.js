@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import styled, { withTheme } from "styled-components";
-import { withRouter } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import styled, { useTheme } from "styled-components";
+import { useRouteMatch } from "react-router-dom";
 import Observer from "@researchgate/react-intersection-observer";
 
 import { searchPosts, getPosts } from "../actions/postsActions";
@@ -11,7 +10,7 @@ import { useScrollToTop, useWindowSize } from "../../../core/hooks";
 import {
   DEFAULT_SUBREDDIT,
   DEFAULT_LISTING_SORT,
-  DEFAULT_TIME_SORT
+  DEFAULT_TIME_SORT,
 } from "../../../core/constants";
 import Post from "./Post";
 import PostMobile from "./PostMobile";
@@ -25,17 +24,15 @@ const Grid = styled.div`
   }
 `;
 
-function Posts(props) {
-  const {
-    searchPosts,
-    getPosts,
-    posts,
-    fetching,
-    match,
-    nsfwMode,
-    dataSaverMode,
-    theme
-  } = props;
+function Posts() {
+  const dispatch = useDispatch();
+  const theme = useTheme();
+  const match = useRouteMatch();
+  const posts = useSelector((state) => state.posts.posts);
+  const fetching = useSelector((state) => state.posts.fetching);
+  const after = useSelector((state) => state.posts.after);
+  const nsfwMode = useSelector((state) => state.settings.nsfwMode);
+  const dataSaverMode = useSelector((state) => state.settings.dataSaverMode);
   const subreddit = match.params.subreddit || DEFAULT_SUBREDDIT;
   const listing = match.params.listing || DEFAULT_LISTING_SORT;
   const time = getParam("time") || DEFAULT_TIME_SORT;
@@ -45,14 +42,12 @@ function Posts(props) {
   useScrollToTop(subreddit, listing, time);
 
   useEffect(() => {
-    searchPosts(subreddit, listing, time);
-  }, [searchPosts, subreddit, listing, time]);
+    dispatch(searchPosts(subreddit, listing, time));
+  }, [subreddit, listing, time, dispatch]);
 
   function handleIntersecting({ isIntersecting }) {
-    const { after } = props;
-
     if (isIntersecting) {
-      getPosts(subreddit, listing, time, after);
+      dispatch(getPosts(subreddit, listing, time, after));
     }
   }
 
@@ -122,23 +117,4 @@ function Posts(props) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    posts: state.posts.posts,
-    fetching: state.posts.fetching,
-    after: state.posts.after,
-    nsfwMode: state.settings.nsfwMode,
-    dataSaverMode: state.settings.dataSaverMode
-  };
-};
-
-const withConnect = connect(
-  mapStateToProps,
-  { searchPosts, getPosts }
-);
-
-export default compose(
-  withConnect,
-  withRouter,
-  withTheme
-)(Posts);
+export default Posts;

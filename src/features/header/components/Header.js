@@ -1,12 +1,11 @@
 import React from "react";
-import { compose } from "redux";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import {
   toggleDarkMode,
   toggleDataSaverMode,
-  toggleNsfwMode
+  toggleNsfwMode,
 } from "../../settings/actions/settingsActionCreators";
 import Logo from "../../commonComponents/Logo";
 import Dropdown from "../../commonComponents/Dropdown";
@@ -26,8 +25,8 @@ const StyledHeader = styled.header`
   padding: 0.5rem 0;
   height: 54px;
   z-index: 2;
-  color: ${props => props.theme.primary};
-  background-color: ${props => props.theme.backgroundPrimary};
+  color: ${(props) => props.theme.primary};
+  background-color: ${(props) => props.theme.backgroundPrimary};
 `;
 
 const Menu = styled.ul`
@@ -46,7 +45,7 @@ const MenuItem = styled.li`
   padding: 0.5rem 1rem;
   cursor: pointer;
   &:hover {
-    background-color: ${props => `${props.theme.brand}33`};
+    background-color: ${(props) => `${props.theme.brand}33`};
   }
 `;
 
@@ -59,20 +58,16 @@ const Profile = styled.div`
   cursor: pointer;
 `;
 
-function Header(props) {
-  const {
-    darkMode,
-    dataSaverMode,
-    nsfwMode,
-    toggleDarkMode,
-    toggleDataSaverMode,
-    toggleNsfwMode
-  } = props;
+function Header() {
+  const dispatch = useDispatch();
+  const darkMode = useSelector((state) => state.settings.darkMode);
+  const dataSaverMode = useSelector((state) => state.settings.dataSaverMode);
+  const nsfwMode = useSelector((state) => state.settings.nsfwMode);
 
   function toggleState(callback, currentState) {
     const newState = currentState ? false : true;
 
-    callback(newState);
+    dispatch(callback(newState));
   }
 
   return (
@@ -110,17 +105,4 @@ function Header(props) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    darkMode: state.settings.darkMode,
-    dataSaverMode: state.settings.dataSaverMode,
-    nsfwMode: state.settings.nsfwMode
-  };
-};
-
-const withConnect = connect(
-  mapStateToProps,
-  { toggleDarkMode, toggleDataSaverMode, toggleNsfwMode }
-);
-
-export default compose(withConnect)(Header);
+export default Header;

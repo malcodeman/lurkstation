@@ -1,13 +1,12 @@
 import React from "react";
-import { compose } from "redux";
-import { Link, withRouter } from "react-router-dom";
+import { Link, useRouteMatch, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { getParam } from "../../../core/utils";
 import {
   DEFAULT_SUBREDDIT,
   DEFAULT_LISTING_SORT,
-  DEFAULT_TIME_SORT
+  DEFAULT_TIME_SORT,
 } from "../../../core/constants";
 import Dropdown from "../../commonComponents/Dropdown";
 import Text from "../../commonComponents/Text";
@@ -23,8 +22,8 @@ const StyledFilters = styled.div`
   padding: 1rem;
   margin-top: 54px;
   height: 60px;
-  color: ${props => props.theme.primary};
-  background-color: ${props => `${props.theme.backgroundSecondary}F2`};
+  color: ${(props) => props.theme.primary};
+  background-color: ${(props) => `${props.theme.backgroundSecondary}F2`};
 `;
 
 const Panel = styled.div`
@@ -52,12 +51,13 @@ const StyledLink = styled(Link)`
   padding: 0.5rem 1rem;
   cursor: pointer;
   &:hover {
-    background-color: ${props => `${props.theme.brand}33`};
+    background-color: ${(props) => `${props.theme.brand}33`};
   }
 `;
 
-function Filters(props) {
-  const { match, location } = props;
+function Filters() {
+  const match = useRouteMatch();
+  const location = useLocation();
   const subreddit = match.params.subreddit || DEFAULT_SUBREDDIT;
   const { pathname } = location;
   const listingSort = match.params.listing || DEFAULT_LISTING_SORT;
@@ -174,4 +174,4 @@ function Filters(props) {
   );
 }
 
-export default compose(withRouter)(Filters);
+export default Filters;
