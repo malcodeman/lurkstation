@@ -1,33 +1,58 @@
 import React from "react";
-import { compose } from "redux";
-import { withFormik, Form } from "formik";
-import { object, string } from "yup";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import styled from "styled-components";
-import { withRouter } from "react-router-dom";
+import { useRouteMatch, useHistory } from "react-router-dom";
 
 import { getParam } from "../../../core/utils";
 import {
   DEFAULT_SUBREDDIT,
-  DEFAULT_LISTING_SORT
+  DEFAULT_LISTING_SORT,
 } from "../../../core/constants";
 import Input from "../../commonComponents/Input";
 import Button from "../../commonComponents/Button";
 
-const StyledForm = styled(Form)`
+const StyledForm = styled.form`
   display: flex;
   width: 100%;
 `;
 
-function SearchForm(props) {
-  const { handleSubmit, handleChange, handleBlur, values } = props;
+const validationSchema = Yup.object().shape({
+  subreddit: Yup.string().required(),
+});
+
+function SearchForm() {
+  const history = useHistory();
+  const match = useRouteMatch();
+  const initialValues = {
+    subreddit: match.params.subreddit || DEFAULT_SUBREDDIT,
+  };
+  const formik = useFormik({
+    validationSchema,
+    initialValues,
+    onSubmit,
+    enableReinitialize: true,
+  });
+
+  function onSubmit() {
+    const listing = match.params.listing || DEFAULT_LISTING_SORT;
+    const time = getParam("time");
+
+    if (time) {
+      return history.push(
+        `/${formik.values.subreddit}/${listing}?time=${time}`
+      );
+    }
+    return history.push(`/${formik.values.subreddit}/${listing}`);
+  }
 
   return (
-    <StyledForm>
+    <StyledForm onSubmit={formik.handleSubmit}>
       <Input
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onPressEnter={handleSubmit}
-        value={values.subreddit}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        onPressEnter={formik.handleSubmit}
+        value={formik.values.subreddit}
         name="subreddit"
         placeholder="SEARCH"
       />
@@ -36,27 +61,4 @@ function SearchForm(props) {
   );
 }
 
-const formEnhancer = withFormik({
-  displayName: "SearchForm",
-  enableReinitialize: true,
-  validationSchema: object().shape({
-    subreddit: string().required()
-  }),
-  mapPropsToValues: props => ({
-    subreddit: props.match.params.subreddit || DEFAULT_SUBREDDIT
-  }),
-  handleSubmit(payload, bag) {
-    const { history, match } = bag.props;
-    const { subreddit } = payload;
-    const listing = match.params.listing || DEFAULT_LISTING_SORT;
-    const time = getParam("time");
-
-    if (time) {
-      history.push(`/${subreddit}/${listing}?time=${time}`);
-    } else {
-      history.push(`/${subreddit}/${listing}?`);
-    }
-  }
-})(SearchForm);
-
-export default compose(withRouter)(formEnhancer);
+export default SearchForm;
