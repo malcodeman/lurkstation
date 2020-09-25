@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useRouteMatch, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { StatefulPopover } from "@malcodeman/react-popover";
 
 import { getParam } from "../../../core/utils";
 import {
@@ -8,7 +9,6 @@ import {
   DEFAULT_LISTING_SORT,
   DEFAULT_TIME_SORT,
 } from "../../../core/constants";
-import Dropdown from "../../commonComponents/Dropdown";
 import Text from "../../commonComponents/Text";
 import ChevronDown from "../../commonAssets/icons/ChevronDown";
 
@@ -34,6 +34,7 @@ const Filter = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin-right: 1rem;
 `;
 
 const Menu = styled.ul`
@@ -104,9 +105,8 @@ function Filters() {
   return (
     <StyledFilters>
       <Panel>
-        <Dropdown
-          mr={1}
-          overlay={({ close }) => (
+        <StatefulPopover
+          content={({ close }) => (
             <Menu>
               <MenuItem onClick={close}>
                 <StyledLink to={`/${subreddit}/hot`}>What's Hot</StyledLink>
@@ -134,11 +134,10 @@ function Filters() {
             </Text>
             <ChevronDown />
           </Filter>
-        </Dropdown>
+        </StatefulPopover>
         {renderTimeSort && (
-          <Dropdown
-            mr={1}
-            overlay={({ close }) => (
+          <StatefulPopover
+            content={({ close }) => (
               <Menu>
                 <MenuItem onClick={close}>
                   <StyledLink to={`${pathname}?time=hour`}>Hour</StyledLink>
@@ -167,7 +166,7 @@ function Filters() {
               </Text>
               <ChevronDown />
             </Filter>
-          </Dropdown>
+          </StatefulPopover>
         )}
       </Panel>
     </StyledFilters>

@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { StatefulPopover } from "@malcodeman/react-popover";
 
 import {
   toggleDarkMode,
@@ -8,7 +9,6 @@ import {
   toggleNsfwMode,
 } from "../../settings/actions/settingsActionCreators";
 import Logo from "../../commonComponents/Logo";
-import Dropdown from "../../commonComponents/Dropdown";
 import Switch from "../../commonComponents/Switch";
 import User from "../../commonAssets/icons/User";
 import SearchForm from "./SearchForm";
@@ -74,8 +74,8 @@ function Header() {
     <StyledHeader>
       <Logo ml={1} mr={1} />
       <SearchForm />
-      <Dropdown
-        overlay={({ close }) => (
+      <StatefulPopover
+        content={(close) => (
           <Menu>
             <MenuItem onClick={() => toggleState(toggleDarkMode, darkMode)}>
               <MenuLabel>Dark mode</MenuLabel>
@@ -100,7 +100,7 @@ function Header() {
         <Profile>
           <User size={24} />
         </Profile>
-      </Dropdown>
+      </StatefulPopover>
     </StyledHeader>
   );
 }
