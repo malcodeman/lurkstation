@@ -15,7 +15,7 @@ const Overlay = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: ${props => props.theme.overlay};
+  background-color: ${(props) => props.theme.overlay};
 `;
 
 const Details = styled.div`
@@ -24,8 +24,8 @@ const Details = styled.div`
 `;
 
 const Count = styled.span`
-  margin-left: ${props => props.ml && `${props.ml}rem`};
-  margin-right: ${props => props.mr && `${props.mr}rem`};
+  margin-left: ${(props) => props.ml && `${props.ml}rem`};
+  margin-right: ${(props) => props.mr && `${props.mr}rem`};
 `;
 
 const StyledPost = styled(Link)`
@@ -37,7 +37,7 @@ const StyledPost = styled(Link)`
     justify-content: center;
     align-items: center;
   }
-  color: ${props => props.theme.primary};
+  color: ${(props) => props.theme.primary};
 `;
 
 const Image = styled.img`
@@ -46,7 +46,7 @@ const Image = styled.img`
   max-width: 100%;
   object-fit: cover;
   height: 100%;
-  ${props => props.censure && props.theme.filter}
+  ${(props) => props.censure && props.theme.filter}
 `;
 
 const Video = styled.video`
@@ -55,7 +55,7 @@ const Video = styled.video`
   max-width: 100%;
   object-fit: cover;
   height: 100%;
-  ${props => props.censure && props.theme.filter}
+  ${(props) => props.censure && props.theme.filter}
 `;
 
 function Post(props) {
@@ -71,7 +71,7 @@ function Post(props) {
     time,
     title,
     showThumbnail,
-    isVideo
+    isVideo,
   } = props;
   const [visible, setVisible] = useState(false);
 
@@ -106,15 +106,14 @@ function Post(props) {
           </Details>
         </Overlay>
       </StyledPost>
-      {visible && (
-        <PostPopup
-          onCancel={() => setVisible(false)}
-          url={url}
-          title={title}
-          video={isVideo}
-          censure={censure}
-        />
-      )}
+      <PostPopup
+        onClose={() => setVisible(false)}
+        url={url}
+        title={title}
+        video={isVideo}
+        censure={censure}
+        isOpen={visible}
+      />
     </>
   );
 }
@@ -126,7 +125,7 @@ Post.propTypes = {
   censure: PropTypes.bool,
   upvotesCount: PropTypes.number,
   commentsCount: PropTypes.number,
-  isVideo: PropTypes.bool
+  isVideo: PropTypes.bool,
 };
 
 Post.defaultProps = {
@@ -136,7 +135,7 @@ Post.defaultProps = {
   censure: false,
   upvotesCount: 0,
   commentsCount: 0,
-  isVideo: false
+  isVideo: false,
 };
 
 export default Post;

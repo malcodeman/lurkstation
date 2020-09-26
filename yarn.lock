@@ -1368,6 +1368,11 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
+"@malcodeman/react-modal@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@malcodeman/react-modal/-/react-modal-1.0.6.tgz#cf21365ca980eeb62bf32b2d4a9e27d917b8bd09"
+  integrity sha512-DEQGLi4YUeHF50B3z/rqpPtGCLuF5Yis0hf8rL364TrORIYFi32ZXI2ZusPad2nzlTYSaEHBJ8+wTUjh+yC2XA==
+
 "@malcodeman/react-popover@^1.1.10":
   version "1.1.10"
   resolved "https://registry.yarnpkg.com/@malcodeman/react-popover/-/react-popover-1.1.10.tgz#6d3c99d3f6d1d185b508ab058906751ffb671ecf"

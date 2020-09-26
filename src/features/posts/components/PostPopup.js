@@ -1,8 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
+import { Modal } from "@malcodeman/react-modal";
 
-import Modal from "../../commonComponents/Modal";
+const MODAL_ROOT = document.getElementById("modal-root");
+
+const StyledModal = styled(Modal)`
+  padding: 1rem;
+  z-index: 2;
+`;
 
 const StyledPostPopup = styled.div`
   max-width: 768px;
@@ -16,8 +22,8 @@ const Header = styled.header`
   align-items: center;
   padding: 1rem;
   min-height: 60px;
-  color: ${props => props.theme.primary};
-  background-color: ${props => props.theme.backgroundPrimary};
+  color: ${(props) => props.theme.primary};
+  background-color: ${(props) => props.theme.backgroundPrimary};
 `;
 
 const Title = styled.h2`
@@ -35,19 +41,19 @@ const media = css`
 
 const Video = styled.video`
   ${media};
-  ${props => props.censure && props.theme.filter}
+  ${(props) => props.censure && props.theme.filter}
 `;
 
 const Image = styled.img`
   ${media};
-  ${props => props.censure && props.theme.filter}
+  ${(props) => props.censure && props.theme.filter}
 `;
 
 function PostPopup(props) {
-  const { onCancel, url, title, video, censure } = props;
+  const { onClose, url, title, video, censure, isOpen } = props;
 
   return (
-    <Modal onCancel={onCancel} padding={1}>
+    <StyledModal onClose={onClose} isOpen={isOpen} mountNode={MODAL_ROOT}>
       <StyledPostPopup>
         <Header>
           <Title>{title}</Title>
@@ -60,7 +66,7 @@ function PostPopup(props) {
           )}
         </div>
       </StyledPostPopup>
-    </Modal>
+    </StyledModal>
   );
 }
 
@@ -69,14 +75,16 @@ PostPopup.propTypes = {
   url: PropTypes.string,
   title: PropTypes.string,
   video: PropTypes.bool,
-  censure: PropTypes.bool
+  censure: PropTypes.bool,
+  isOpen: PropTypes.bool,
 };
 
 PostPopup.defaultProps = {
   url: "",
   title: "",
   video: false,
-  censure: false
+  censure: false,
+  isOpen: false,
 };
 
 export default PostPopup;
