@@ -22,6 +22,8 @@ const Header = styled.header`
   align-items: center;
   padding: 1rem;
   min-height: 60px;
+  position: sticky;
+  top: 0;
   color: ${(props) => props.theme.primary};
   background-color: ${(props) => props.theme.backgroundPrimary};
 `;
