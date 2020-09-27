@@ -66,7 +66,7 @@ function Posts() {
                   id={post.id}
                   url={post.url}
                   thumbnail={post.thumbnail}
-                  title={post.time}
+                  title={post.title}
                   upvotesCount={post.upvotes_count}
                   commentsCount={post.comments_count}
                   isVideo={post.is_video}

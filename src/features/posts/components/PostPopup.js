@@ -71,7 +71,7 @@ function PostPopup(props) {
 }
 
 PostPopup.propTypes = {
-  onCancel: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   url: PropTypes.string,
   title: PropTypes.string,
   video: PropTypes.bool,
