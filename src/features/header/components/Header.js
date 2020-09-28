@@ -75,7 +75,7 @@ function Header() {
       <Logo ml={1} mr={1} />
       <SearchForm />
       <StatefulPopover
-        content={(close) => (
+        content={() => (
           <Menu>
             <MenuItem onClick={() => toggleState(toggleDarkMode, darkMode)}>
               <MenuLabel>Dark mode</MenuLabel>
@@ -90,9 +90,6 @@ function Header() {
             <MenuItem onClick={() => toggleState(toggleNsfwMode, nsfwMode)}>
               <MenuLabel>Display Mature Content</MenuLabel>
               <Switch state={nsfwMode} />
-            </MenuItem>
-            <MenuItem onClick={close}>
-              <MenuLabel>Help and FAQ</MenuLabel>
             </MenuItem>
           </Menu>
         )}
