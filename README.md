@@ -1,4 +1,4 @@
-# [Lurkershub](http://lurkershub.surge.sh)
+# [Lurkershub](https://lurkershub.surge.sh)
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/malcodeman/reddit-client/blob/master/LICENSE)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
@@ -6,7 +6,7 @@
 
 Lurkershub is content oriented reddit client which aims to show reddit images and videos in most efficient way possible.
 
-![Screenshot](docs/images/screenshot.jpg)
+![Screenshot](readme/screenshot.jpg)
 
 ## Getting started
 
