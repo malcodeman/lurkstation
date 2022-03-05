@@ -5,6 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  REACT_APP_API_URL: ${{secrets.API_URL}}
+
 jobs:
   deployment:
     runs-on: ubuntu-latest
