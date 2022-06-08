@@ -11,6 +11,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FiLayers, FiChevronDown, FiUser } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 function Header() {
   const backgroundColor = useColorModeValue("white", "gray.800");
@@ -26,15 +27,17 @@ function Header() {
       zIndex="1"
     >
       <Flex as="nav" marginX="2">
-        <Flex width="full" mr="2">
-          <Button
-            leftIcon={<FiLayers />}
-            colorScheme="teal"
-            variant="link"
-            mr="2"
-          >
-            lurkershub
-          </Button>
+        <Flex alignItems="center" width="full" mr="2">
+          <Link to="/">
+            <Button
+              leftIcon={<FiLayers />}
+              colorScheme="teal"
+              variant="link"
+              mr="2"
+            >
+              lurkershub
+            </Button>
+          </Link>
           <Box as="form">
             <Input placeholder="Search and discover" />
           </Box>
