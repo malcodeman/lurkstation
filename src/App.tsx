@@ -29,7 +29,9 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route element={<Layout />}>
-              <Route path="/" element={<Posts />} />
+              <Route path="/" element={<Posts />}>
+                <Route path=":sub/:sort" element={<Posts />} />
+              </Route>
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

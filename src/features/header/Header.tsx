@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Button,
@@ -11,10 +12,27 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FiLayers, FiChevronDown, FiUser } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function Header() {
   const backgroundColor = useColorModeValue("white", "gray.800");
+  const navigate = useNavigate();
+  const params = useParams();
+  const sub = params.sub;
+  const sort = params.sort || "hot";
+  const [value, setValue] = React.useState("");
+
+  React.useEffect(() => {
+    if (!sub) {
+      setValue("");
+    }
+  }, [sub]);
+
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate(`/${value}/${sort}`);
+  };
+
   return (
     <Box
       backgroundColor={backgroundColor}
@@ -38,9 +56,13 @@ function Header() {
               lurkershub
             </Button>
           </Link>
-          <Box as="form">
-            <Input placeholder="Search and discover" />
-          </Box>
+          <form onSubmit={handleOnSubmit}>
+            <Input
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="Search and discover"
+            />
+          </form>
         </Flex>
         <Menu>
           <MenuButton as={Button} rightIcon={<FiChevronDown />}>
