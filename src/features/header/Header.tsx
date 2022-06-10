@@ -2,6 +2,7 @@ import React from "react";
 import {
   Box,
   Button,
+  ButtonGroup,
   Flex,
   Icon,
   Input,
@@ -13,24 +14,39 @@ import {
 } from "@chakra-ui/react";
 import { FiLayers, FiChevronDown, FiUser } from "react-icons/fi";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { equals } from "ramda";
+
+type Sort = "hot" | "new" | "top";
 
 function Header() {
   const backgroundColor = useColorModeValue("white", "gray.800");
   const navigate = useNavigate();
-  const params = useParams();
+  const params = useParams<{ sort: Sort; sub: string }>();
   const sub = params.sub;
   const sort = params.sort || "hot";
   const [value, setValue] = React.useState("");
 
   React.useEffect(() => {
-    if (!sub) {
-      setValue("");
+    if (sub) {
+      setValue(sub);
+    } else {
+      setValue("art");
     }
-  }, [sub]);
+  }, [sub, sort]);
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate(`/${value}/${sort}`);
+    if (value) {
+      navigate(`/${value}/${sort}`);
+    }
+  };
+
+  const handleOnChangeSort = (newSort: Sort) => {
+    if (value) {
+      navigate(`/${value}/${newSort}`);
+    } else {
+      navigate(`/${sub}/${newSort}`);
+    }
   };
 
   return (
@@ -56,13 +72,32 @@ function Header() {
               lurkershub
             </Button>
           </Link>
-          <form onSubmit={handleOnSubmit}>
-            <Input
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              placeholder="Search and discover"
-            />
+          <form
+            style={{ marginRight: "var(--chakra-space-2)" }}
+            onSubmit={handleOnSubmit}
+          >
+            <Input value={value} onChange={(e) => setValue(e.target.value)} />
           </form>
+          <ButtonGroup size="sm" variant="outline" isAttached>
+            <Button
+              onClick={() => handleOnChangeSort("hot")}
+              isActive={equals(sort, "hot")}
+            >
+              Hot
+            </Button>
+            <Button
+              onClick={() => handleOnChangeSort("new")}
+              isActive={equals(sort, "new")}
+            >
+              New
+            </Button>
+            <Button
+              onClick={() => handleOnChangeSort("top")}
+              isActive={equals(sort, "top")}
+            >
+              Top
+            </Button>
+          </ButtonGroup>
         </Flex>
         <Menu>
           <MenuButton as={Button} rightIcon={<FiChevronDown />}>
