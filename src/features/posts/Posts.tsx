@@ -1,7 +1,7 @@
 import { Grid } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { map } from "ramda";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 import queries from "../../api/queries";
 import Post from "./Post";
@@ -10,8 +10,10 @@ function Posts() {
   const params = useParams();
   const sub = params.sub || "art";
   const sort = params.sort || "hot";
-  const query = useQuery(["subs", sub, sort], () =>
-    queries.getSubs({ sub, sort })
+  const [searchParams] = useSearchParams({ t: "day" });
+  const time = searchParams.get("t") || "day";
+  const query = useQuery(["subs", sub, sort, time], () =>
+    queries.getSubs({ sub, sort, time })
   );
   const posts = query.data?.data.posts.parsed || [];
   return (

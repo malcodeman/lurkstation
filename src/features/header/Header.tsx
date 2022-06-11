@@ -13,39 +13,67 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FiLayers, FiChevronDown, FiUser } from "react-icons/fi";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { equals } from "ramda";
 
 type Sort = "hot" | "new" | "top";
+type Time = "hour" | "day" | "week" | "month" | "year" | "all";
 
 function Header() {
   const backgroundColor = useColorModeValue("white", "gray.800");
   const navigate = useNavigate();
   const params = useParams<{ sort: Sort; sub: string }>();
-  const sub = params.sub;
+  const sub = params.sub || "art";
   const sort = params.sort || "hot";
+  const [searchParams] = useSearchParams({ t: "day" });
+  const time = searchParams.get("t") || "day";
   const [value, setValue] = React.useState("");
 
   React.useEffect(() => {
     if (sub) {
       setValue(sub);
-    } else {
-      setValue("art");
     }
   }, [sub, sort]);
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value) {
-      navigate(`/${value}/${sort}`);
+      if (time) {
+        navigate(`/${value}/${sort}?t=${time}`);
+      } else {
+        navigate(`/${value}/${sort}`);
+      }
     }
   };
 
   const handleOnChangeSort = (newSort: Sort) => {
-    if (value) {
-      navigate(`/${value}/${newSort}`);
-    } else {
-      navigate(`/${sub}/${newSort}`);
+    navigate(`/${sub}/${newSort}`);
+  };
+
+  const handleOnChangeTime = (newTime: Time) => {
+    navigate(`/${sub}/${sort}?t=${newTime}`);
+  };
+
+  const renderTimeLabel = () => {
+    switch (time) {
+      case "hour":
+        return "Now";
+      case "day":
+      default:
+        return "Today";
+      case "week":
+        return "This week";
+      case "month":
+        return "This month";
+      case "year":
+        return "This year";
+      case "all":
+        return "All time";
     }
   };
 
@@ -97,6 +125,33 @@ function Header() {
             >
               Top
             </Button>
+            {equals(sort, "top") ? (
+              <Menu>
+                <MenuButton as={Button} rightIcon={<FiChevronDown />}>
+                  {renderTimeLabel()}
+                </MenuButton>
+                <MenuList>
+                  <MenuItem onClick={() => handleOnChangeTime("hour")}>
+                    Now
+                  </MenuItem>
+                  <MenuItem onClick={() => handleOnChangeTime("day")}>
+                    Today
+                  </MenuItem>
+                  <MenuItem onClick={() => handleOnChangeTime("week")}>
+                    This week
+                  </MenuItem>
+                  <MenuItem onClick={() => handleOnChangeTime("month")}>
+                    This month
+                  </MenuItem>
+                  <MenuItem onClick={() => handleOnChangeTime("year")}>
+                    This year
+                  </MenuItem>
+                  <MenuItem onClick={() => handleOnChangeTime("all")}>
+                    All time
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            ) : null}
           </ButtonGroup>
         </Flex>
         <Menu>
