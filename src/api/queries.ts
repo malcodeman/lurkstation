@@ -1,8 +1,18 @@
 import axios from "./instance";
 
-async function getSubs(data: { sub: string; sort: string; time: string }) {
-  const { sub, sort, time } = data;
-  return await axios.get(`/subs/${sub}/${sort}`, { params: { time } });
+async function getSubs(data: {
+  pageParam?: {
+    sub: string;
+    sort: string;
+    time: string | null;
+    after: string | null;
+  };
+}) {
+  const { pageParam = { sub: "art", sort: "hot", time: null, after: null } } =
+    data;
+  return await axios.get(`/subs/${pageParam.sub}/${pageParam.sort}`, {
+    params: { time: pageParam.time, after: pageParam.after },
+  });
 }
 
 const queries = {

@@ -5,7 +5,13 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Header from "./features/header/Header";
 import Posts from "./features/posts/Posts";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function Layout() {
   return (

@@ -30,8 +30,8 @@ function Header() {
   const params = useParams<{ sort: Sort; sub: string }>();
   const sub = params.sub || "art";
   const sort = params.sort || "hot";
-  const [searchParams] = useSearchParams({ t: "day" });
-  const time = searchParams.get("t") || "day";
+  const [searchParams] = useSearchParams();
+  const time = searchParams.get("t");
   const [value, setValue] = React.useState("");
 
   React.useEffect(() => {
