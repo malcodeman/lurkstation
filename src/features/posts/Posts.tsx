@@ -59,7 +59,9 @@ function Posts() {
       {map(
         (item) =>
           map(
-            (post) => <Post key={post.id} url={post.url} />,
+            (post) => (
+              <Post key={post.id} url={post.url} isVideo={post.is_video} />
+            ),
             item.data.posts.parsed
           ),
         pages
