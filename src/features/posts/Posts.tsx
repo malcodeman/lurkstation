@@ -29,7 +29,7 @@ function Posts() {
   const query = useInfiniteQuery(["posts", sub, sort, time], queries.getSubs, {
     initialData: {
       pages: initialData.pages,
-      pageParams: [{ sub, sort }],
+      pageParams: [{ sub, sort, time }],
     },
     getNextPageParam: (lastPage) => {
       return { sub, sort, time, after: lastPage.data.after };
