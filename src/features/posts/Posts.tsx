@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid } from "@chakra-ui/react";
+import { Box, Flex, Grid, Spinner } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { map } from "ramda";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -52,22 +52,34 @@ function Posts() {
   }, [intersection?.isIntersecting, query]);
 
   return (
-    <Grid
-      gridTemplateColumns="repeat(auto-fit, minmax(270px, 1fr))"
-      gridAutoRows="280px"
-    >
-      {map(
-        (item) =>
-          map(
-            (post) => (
-              <Post key={post.id} url={post.url} isVideo={post.is_video} />
+    <Box>
+      <Grid
+        gridTemplateColumns="repeat(auto-fit, minmax(270px, 1fr))"
+        gridAutoRows="280px"
+      >
+        {map(
+          (item) =>
+            map(
+              (post) => (
+                <Post key={post.id} url={post.url} isVideo={post.is_video} />
+              ),
+              item.data.posts.parsed
             ),
-            item.data.posts.parsed
-          ),
-        pages
-      )}
-      <Box ref={elementRef} />
-    </Grid>
+          pages
+        )}
+        <Box ref={elementRef} />
+      </Grid>
+      {query.isFetchingNextPage ? (
+        <Flex
+          position="fixed"
+          left="50%"
+          bottom="64px"
+          transform="translateX(-50%)"
+        >
+          <Spinner size="lg" color="teal.500" />
+        </Flex>
+      ) : null}
+    </Box>
   );
 }
 
