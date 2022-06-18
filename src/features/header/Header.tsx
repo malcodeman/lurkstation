@@ -4,7 +4,6 @@ import {
   Button,
   ButtonGroup,
   Flex,
-  Icon,
   Input,
   Menu,
   MenuButton,
@@ -12,7 +11,7 @@ import {
   MenuList,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { FiLayers, FiChevronDown, FiUser } from "react-icons/fi";
+import { FiLayers, FiChevronDown } from "react-icons/fi";
 import {
   Link,
   useNavigate,
@@ -20,6 +19,8 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { equals } from "ramda";
+
+import UserMenu from "./UserMenu";
 
 type Sort = "hot" | "new" | "top";
 type Time = "hour" | "day" | "week" | "month" | "year" | "all";
@@ -88,7 +89,7 @@ function Header() {
       right="0"
       zIndex="1"
     >
-      <Flex as="nav" marginX="2">
+      <Flex as="nav" marginX="2" alignItems="center">
         <Flex alignItems="center" width="full" mr="2">
           <Link to="/">
             <Button
@@ -104,7 +105,12 @@ function Header() {
             style={{ marginRight: "var(--chakra-space-2)" }}
             onSubmit={handleOnSubmit}
           >
-            <Input value={value} onChange={(e) => setValue(e.target.value)} />
+            <Input
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              size="sm"
+              borderRadius="md"
+            />
           </form>
           <ButtonGroup size="sm" variant="outline" isAttached>
             <Button
@@ -154,15 +160,7 @@ function Header() {
             ) : null}
           </ButtonGroup>
         </Flex>
-        <Menu>
-          <MenuButton as={Button} rightIcon={<FiChevronDown />}>
-            <Icon as={FiUser} />
-          </MenuButton>
-          <MenuList>
-            <MenuItem>Dark mode</MenuItem>
-            <MenuItem>Data saver</MenuItem>
-          </MenuList>
-        </Menu>
+        <UserMenu />
       </Flex>
     </Box>
   );
