@@ -3,7 +3,10 @@ import { Box, Flex, Grid, Spinner } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { map } from "ramda";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useIntersectionObserver } from "@react-hookz/web";
+import {
+  useIntersectionObserver,
+  useLocalStorageValue,
+} from "@react-hookz/web";
 
 import queries from "../../api/queries";
 import Post from "./Post";
@@ -40,6 +43,7 @@ function Posts() {
   const intersection = useIntersectionObserver(elementRef, {
     threshold: [0, 0.5],
   });
+  const [dataSaver] = useLocalStorageValue("dataSaver", false);
 
   React.useEffect(() => {
     if (
@@ -61,7 +65,11 @@ function Posts() {
           (item) =>
             map(
               (post) => (
-                <Post key={post.id} url={post.url} isVideo={post.is_video} />
+                <Post
+                  key={post.id}
+                  url={dataSaver ? post.thumbnail : post.url}
+                  isVideo={post.is_video}
+                />
               ),
               item.data.posts.parsed
             ),
