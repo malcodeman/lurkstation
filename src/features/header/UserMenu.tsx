@@ -17,6 +17,8 @@ import {
   FiMoon,
   FiWifi,
   FiWifiOff,
+  FiEye,
+  FiEyeOff,
 } from "react-icons/fi";
 import { equals } from "ramda";
 import { useLocalStorageValue } from "@react-hookz/web";
@@ -24,6 +26,10 @@ import { useLocalStorageValue } from "@react-hookz/web";
 function UserMenu() {
   const { colorMode, toggleColorMode } = useColorMode();
   const [dataSaver, setDataSaver] = useLocalStorageValue("dataSaver", false);
+  const [matureContent, setMatureContent] = useLocalStorageValue(
+    "matureContent",
+    false
+  );
   return (
     <Menu closeOnSelect={false}>
       <MenuButton as={Button} rightIcon={<FiChevronDown />} size="sm">
@@ -38,7 +44,7 @@ function UserMenu() {
         </MenuItem>
         <MenuItem
           onClick={() => setDataSaver(!dataSaver)}
-          icon={equals(dataSaver, true) ? <FiWifiOff /> : <FiWifi />}
+          icon={equals(dataSaver, true) ? <FiWifi /> : <FiWifiOff />}
         >
           {equals(dataSaver, true) ? (
             <Flex>
@@ -50,6 +56,26 @@ function UserMenu() {
           ) : (
             <Flex>
               <Text mr="2">Data saver</Text>
+              <Tag colorScheme="red" size="sm">
+                OFF
+              </Tag>
+            </Flex>
+          )}
+        </MenuItem>
+        <MenuItem
+          onClick={() => setMatureContent(!matureContent)}
+          icon={equals(matureContent, true) ? <FiEye /> : <FiEyeOff />}
+        >
+          {equals(matureContent, true) ? (
+            <Flex>
+              <Text mr="2">Mature content</Text>
+              <Tag colorScheme="green" size="sm">
+                ON
+              </Tag>
+            </Flex>
+          ) : (
+            <Flex>
+              <Text mr="2">Mature content</Text>
               <Tag colorScheme="red" size="sm">
                 OFF
               </Tag>

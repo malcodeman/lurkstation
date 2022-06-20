@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Flex, Grid, Spinner } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { map } from "ramda";
+import { and, map } from "ramda";
 import { useParams, useSearchParams } from "react-router-dom";
 import {
   useIntersectionObserver,
@@ -44,6 +44,7 @@ function Posts() {
     threshold: [0, 0.5],
   });
   const [dataSaver] = useLocalStorageValue("dataSaver", false);
+  const [matureContent] = useLocalStorageValue("matureContent", false);
 
   React.useEffect(() => {
     if (
@@ -69,6 +70,7 @@ function Posts() {
                   key={post.id}
                   url={dataSaver ? post.thumbnail : post.url}
                   isVideo={post.is_video}
+                  isBlurred={and(post.nsfw, !matureContent)}
                 />
               ),
               item.data.posts.parsed
