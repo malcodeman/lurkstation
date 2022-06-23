@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
 import Header from "./features/header/Header";
+import PostDetails from "./features/posts/PostDetails";
 import Posts from "./features/posts/Posts";
 
 const queryClient = new QueryClient({
@@ -38,6 +39,7 @@ function App() {
               <Route path="/" element={<Posts />}>
                 <Route path=":sub/:sort" element={<Posts />} />
               </Route>
+              <Route path=":sub/comments/:id" element={<PostDetails />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

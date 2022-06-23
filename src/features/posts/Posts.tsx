@@ -68,6 +68,7 @@ function Posts() {
               (post) => (
                 <Post
                   key={post.id}
+                  id={post.id}
                   url={dataSaver ? post.thumbnail : post.url}
                   isVideo={post.is_video}
                   isBlurred={and(post.nsfw, !matureContent)}

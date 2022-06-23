@@ -1,35 +1,43 @@
 import { Box, Image } from "@chakra-ui/react";
+import { Link, useParams } from "react-router-dom";
 
 type Props = {
+  id: string;
   url: string;
   isVideo: boolean;
   isBlurred: boolean;
 };
 
 function Post(props: Props) {
-  const { url, isVideo, isBlurred } = props;
+  const { id, url, isVideo, isBlurred } = props;
+  const params = useParams();
+  const sub = params.sub || "art";
+  const link = `/${sub}/comments/${id}`;
 
   if (isVideo) {
     return (
-      <Box
+      <Link to={link}>
+        <Box
+          src={url}
+          as="video"
+          height="full"
+          width="full"
+          objectFit="cover"
+          filter={isBlurred ? "blur(1rem)" : "none"}
+        />
+      </Link>
+    );
+  }
+  return (
+    <Link to={link}>
+      <Image
         src={url}
-        as="video"
         height="full"
         width="full"
         objectFit="cover"
         filter={isBlurred ? "blur(1rem)" : "none"}
-        controls
       />
-    );
-  }
-  return (
-    <Image
-      src={url}
-      height="full"
-      width="full"
-      objectFit="cover"
-      filter={isBlurred ? "blur(1rem)" : "none"}
-    />
+    </Link>
   );
 }
 

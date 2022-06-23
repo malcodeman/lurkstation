@@ -15,8 +15,13 @@ async function getSubs(data: {
   });
 }
 
+async function getPost(id: string) {
+  return await axios.get(`/posts/${id}`);
+}
+
 const queries = {
   getSubs,
+  getPost,
 };
 
 export default queries;
