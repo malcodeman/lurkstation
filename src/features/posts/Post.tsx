@@ -1,4 +1,5 @@
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Image, Icon } from "@chakra-ui/react";
+import { FiVideo } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 
 type Props = {
@@ -17,14 +18,18 @@ function Post(props: Props) {
   if (isVideo) {
     return (
       <Link to={link}>
-        <Box
-          src={url}
-          as="video"
-          height="full"
-          width="full"
-          objectFit="cover"
-          filter={isBlurred ? "blur(1rem)" : "none"}
-        />
+        <Box position="relative" height="full" width="full">
+          <Box
+            src={url}
+            as="video"
+            height="full"
+            width="full"
+            objectFit="cover"
+            filter={isBlurred ? "blur(1rem)" : "none"}
+            position="relative"
+          />
+          <Icon as={FiVideo} position="absolute" right="1rem" bottom="1rem" />
+        </Box>
       </Link>
     );
   }
