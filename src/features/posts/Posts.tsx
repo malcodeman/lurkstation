@@ -1,11 +1,12 @@
 import React from "react";
-import { Box, Flex, Grid, Spinner } from "@chakra-ui/react";
+import { AspectRatio, Box, Flex, Grid, Spinner } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { and, map } from "ramda";
 import { useParams, useSearchParams } from "react-router-dom";
 import {
   useIntersectionObserver,
   useLocalStorageValue,
+  useMediaQuery,
 } from "@react-hookz/web";
 
 import queries from "../../api/queries";
@@ -45,6 +46,7 @@ function Posts() {
   });
   const [dataSaver] = useLocalStorageValue("dataSaver", false);
   const [matureContent] = useLocalStorageValue("matureContent", false);
+  const isLarge = useMediaQuery("(min-width: 810px)");
 
   React.useEffect(() => {
     if (
@@ -59,21 +61,32 @@ function Posts() {
   return (
     <Box>
       <Grid
-        gridTemplateColumns="repeat(auto-fit, minmax(270px, 1fr))"
-        gridAutoRows="280px"
+        gridTemplateColumns={
+          isLarge ? "repeat(auto-fit, minmax(270px, 1fr))" : "1fr 1fr 1fr"
+        }
+        gridAutoRows={isLarge ? "280px" : "auto"}
       >
         {map(
           (item) =>
             map(
-              (post) => (
-                <Post
-                  key={post.id}
-                  id={post.id}
-                  url={dataSaver ? post.thumbnail : post.url}
-                  isVideo={post.is_video}
-                  isBlurred={and(post.nsfw, !matureContent)}
-                />
-              ),
+              (post) => {
+                const props = {
+                  key: post.id,
+                  id: post.id,
+                  url: dataSaver ? post.thumbnail : post.url,
+                  isVideo: post.is_video,
+                  isBlurred: and(post.nsfw, !matureContent),
+                };
+                if (isLarge) {
+                  return <Post {...props} />;
+                }
+                return (
+                  <AspectRatio>
+                    <Post {...props} />
+                  </AspectRatio>
+                );
+              },
+
               item.data.posts.parsed
             ),
           pages
