@@ -26,7 +26,6 @@ function Post(props: Props) {
             width="full"
             objectFit="cover"
             filter={isBlurred ? "blur(1rem)" : "none"}
-            position="relative"
           />
           <Icon as={FiVideo} position="absolute" right="1rem" bottom="1rem" />
         </Box>
