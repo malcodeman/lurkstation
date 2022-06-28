@@ -2,11 +2,16 @@ import { Box, Grid, Image, Skeleton, Icon } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { FiDownload, FiMaximize } from "react-icons/fi";
 import { useParams } from "react-router-dom";
+import { saveAs } from "file-saver";
 
 import queries from "../../api/queries";
 
-function Options(props: { url: string }) {
-  const { url } = props;
+function Options(props: { url: string; filename: string }) {
+  const { url, filename } = props;
+
+  const handleOnDownload = () => {
+    saveAs(url, filename);
+  };
 
   const handleOnMaximize = () => {
     window.open(url, "_blank")?.focus();
@@ -21,7 +26,12 @@ function Options(props: { url: string }) {
       bottom="6"
       transform="translateX(-50%)"
     >
-      <Icon as={FiDownload} mr="2" />
+      <Icon
+        as={FiDownload}
+        cursor="pointer"
+        mr="2"
+        onClick={handleOnDownload}
+      />
       <Icon as={FiMaximize} cursor="pointer" onClick={handleOnMaximize} />
     </Box>
   );
@@ -33,7 +43,8 @@ function PostDetails() {
   const query = useQuery(["post", id], () => queries.getPost(id), {
     enabled: Boolean(id),
   });
-  const details = query.data?.data || { url: "" };
+  const details = query.data?.data || { url: "", author: "" };
+  const filename = `${details.author}_${id}`;
 
   const renderContent = () => {
     if (query.isLoading) {
@@ -50,7 +61,7 @@ function PostDetails() {
             objectFit="contain"
             controls
           />
-          <Options url={details.url} />
+          <Options url={details.url} filename={filename} />
         </Box>
       );
     }
@@ -62,7 +73,7 @@ function PostDetails() {
           width="full"
           objectFit="contain"
         />
-        <Options url={details.url} />
+        <Options url={details.url} filename={filename} />
       </Box>
     );
   };
