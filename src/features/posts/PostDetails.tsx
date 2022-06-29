@@ -1,4 +1,12 @@
-import { Box, Grid, Image, Skeleton, Icon } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  Image,
+  Skeleton,
+  Icon,
+  Heading,
+  Tag,
+} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { FiDownload, FiMaximize } from "react-icons/fi";
 import { useParams } from "react-router-dom";
@@ -45,14 +53,16 @@ function PostDetails() {
   });
   const details = query.data?.data || { url: "", author: "" };
   const filename = `${details.author}_${id}`;
+  const height = ["auto", "auto", "calc(100vh - 56px)"];
+
+  if (query.isLoading) {
+    return <Skeleton height="calc(100vh - 56px)" />;
+  }
 
   const renderContent = () => {
-    if (query.isLoading) {
-      return <Skeleton height="calc(100vh - 56px)" />;
-    }
     if (details.is_video) {
       return (
-        <Box position="relative" role="group" height="calc(100vh - 56px)">
+        <Box position="relative" role="group" height={height}>
           <Box
             src={details.url}
             as="video"
@@ -66,7 +76,7 @@ function PostDetails() {
       );
     }
     return (
-      <Box position="relative" role="group" height="calc(100vh - 56px)">
+      <Box position="relative" role="group" height={height}>
         <Image
           src={details.url}
           height="full"
@@ -77,7 +87,17 @@ function PostDetails() {
       </Box>
     );
   };
-  return <Grid gridTemplateColumns="1fr auto">{renderContent()}</Grid>;
+  return (
+    <Grid gridTemplateColumns={["1fr", "1fr", "1fr 365px"]}>
+      {renderContent()}
+      <Box padding="2">
+        <Heading fontSize="2xl" mb="2">
+          {details.title}
+        </Heading>
+        <Tag>{details.author}</Tag>
+      </Box>
+    </Grid>
+  );
 }
 
 export default PostDetails;
