@@ -6,11 +6,15 @@ import {
   Icon,
   Heading,
   Tag,
+  Text,
+  Divider,
+  Stack,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { FiDownload, FiMaximize } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 import { saveAs } from "file-saver";
+import { map } from "ramda";
 
 import queries from "../../api/queries";
 
@@ -51,18 +55,17 @@ function PostDetails() {
   const query = useQuery(["post", id], () => queries.getPost(id), {
     enabled: Boolean(id),
   });
-  const details = query.data?.data || { url: "", author: "" };
+  const details = query.data?.data || { url: "", author: "", comments: [] };
   const filename = `${details.author}_${id}`;
-  const height = ["auto", "auto", "calc(100vh - 56px)"];
 
   if (query.isLoading) {
-    return <Skeleton height="calc(100vh - 56px)" />;
+    return <Skeleton />;
   }
 
   const renderContent = () => {
     if (details.is_video) {
       return (
-        <Box position="relative" role="group" height={height}>
+        <Box position="relative" role="group" overflow="hidden">
           <Box
             src={details.url}
             as="video"
@@ -76,7 +79,7 @@ function PostDetails() {
       );
     }
     return (
-      <Box position="relative" role="group" height={height}>
+      <Box position="relative" role="group" overflow="hidden">
         <Image
           src={details.url}
           height="full"
@@ -87,14 +90,33 @@ function PostDetails() {
       </Box>
     );
   };
+
   return (
-    <Grid gridTemplateColumns={["1fr", "1fr", "1fr 365px"]}>
+    <Grid
+      gridTemplateColumns={["1fr", "1fr", "1fr 365px"]}
+      height={["auto", "auto", "calc(100vh - 56px)"]}
+    >
       {renderContent()}
-      <Box padding="2">
+      <Box padding="2" overflowY="auto">
         <Heading fontSize="2xl" mb="2">
           {details.title}
         </Heading>
         <Tag>{details.author}</Tag>
+        <Divider marginY="4" />
+        <Box>
+          <Text mb="2">{details.comments_count} comments</Text>
+          <Stack>
+            {map(
+              (item) => (
+                <Box key={item.id}>
+                  <Tag>{item.author}</Tag>
+                  <Text opacity="0.8">{item.body}</Text>
+                </Box>
+              ),
+              details.comments
+            )}
+          </Stack>
+        </Box>
       </Box>
     </Grid>
   );
