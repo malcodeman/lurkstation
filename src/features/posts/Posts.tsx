@@ -71,17 +71,16 @@ function Posts() {
             map(
               (post) => {
                 const props = {
-                  key: post.id,
                   id: post.id,
                   url: dataSaver ? post.thumbnail : post.url,
                   isVideo: post.is_video,
                   isBlurred: and(post.nsfw, !matureContent),
                 };
                 if (isLarge) {
-                  return <Post {...props} />;
+                  return <Post key={post.id} {...props} />;
                 }
                 return (
-                  <AspectRatio>
+                  <AspectRatio key={post.id}>
                     <Post {...props} />
                   </AspectRatio>
                 );
