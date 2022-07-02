@@ -34,6 +34,10 @@ function Header() {
   const [searchParams] = useSearchParams();
   const time = searchParams.get("t");
   const [value, setValue] = React.useState("");
+  const boxShadow = useColorModeValue(
+    "rgba(0, 0, 0, 0.03) 0px 2px 0px 0px",
+    "rgba(255, 255, 255, 0.03) 0px 2px 0px 0px"
+  );
 
   React.useEffect(() => {
     if (sub) {
@@ -80,6 +84,7 @@ function Header() {
 
   return (
     <Box
+      boxShadow={boxShadow}
       backgroundColor={backgroundColor}
       as="header"
       paddingY="2"

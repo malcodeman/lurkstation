@@ -65,7 +65,13 @@ function PostDetails() {
   const renderContent = () => {
     if (details.is_video) {
       return (
-        <Box position="relative" role="group" overflow="hidden">
+        <Box
+          position="relative"
+          role="group"
+          overflow="hidden"
+          backgroundColor="var(--chakra-colors-blackAlpha-50)"
+          padding="2"
+        >
           <Box
             src={details.url}
             as="video"
@@ -79,7 +85,13 @@ function PostDetails() {
       );
     }
     return (
-      <Box position="relative" role="group" overflow="hidden">
+      <Box
+        position="relative"
+        role="group"
+        overflow="hidden"
+        backgroundColor="var(--chakra-colors-blackAlpha-50)"
+        padding="2"
+      >
         <Image
           src={details.url}
           height="full"
@@ -94,7 +106,7 @@ function PostDetails() {
   return (
     <Grid
       gridTemplateColumns={["1fr", "1fr", "1fr 365px"]}
-      height={["auto", "auto", "calc(100vh - 56px)"]}
+      height={["auto", "auto", "calc(100vh - 48px)"]}
     >
       {renderContent()}
       <Box padding="2" overflowY="auto">

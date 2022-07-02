@@ -18,7 +18,7 @@ function Layout() {
   return (
     <Box>
       <Header />
-      <Box marginTop="56px">
+      <Box marginTop="48px">
         <Outlet />
       </Box>
     </Box>
