@@ -111,6 +111,7 @@ function Header() {
             onSubmit={handleOnSubmit}
           >
             <Input
+              data-cy="search-input"
               value={value}
               onChange={(e) => setValue(e.target.value)}
               size="sm"
