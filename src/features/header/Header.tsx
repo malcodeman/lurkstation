@@ -85,6 +85,18 @@ function Header() {
     }
   };
 
+  const renderSortLabel = () => {
+    switch (sort) {
+      default:
+      case "hot":
+        return "Hot";
+      case "new":
+        return "New";
+      case "top":
+        return "Top";
+    }
+  };
+
   return (
     <Box
       boxShadow={boxShadow}
@@ -121,7 +133,30 @@ function Header() {
               borderRadius="md"
             />
           </form>
-          <ButtonGroup size="sm" variant="outline" isAttached>
+          <Menu>
+            <MenuButton
+              as={Button}
+              rightIcon={<FiChevronDown />}
+              size="sm"
+              variant="outline"
+              mr="2"
+              display={["inline-flex", "inline-flex", "none"]}
+            >
+              {renderSortLabel()}
+            </MenuButton>
+            <MenuList>
+              <MenuItem onClick={() => handleOnChangeSort("hot")}>Hot</MenuItem>
+              <MenuItem onClick={() => handleOnChangeSort("new")}>New</MenuItem>
+              <MenuItem onClick={() => handleOnChangeSort("top")}>Top</MenuItem>
+            </MenuList>
+          </Menu>
+          <ButtonGroup
+            display={["none", "none", "inline-flex"]}
+            size="sm"
+            variant="outline"
+            mr="2"
+            isAttached
+          >
             <Button
               onClick={() => handleOnChangeSort("hot")}
               isActive={equals(sort, "hot")}
@@ -140,34 +175,39 @@ function Header() {
             >
               Top
             </Button>
-            {equals(sort, "top") ? (
-              <Menu>
-                <MenuButton as={Button} rightIcon={<FiChevronDown />}>
-                  {renderTimeLabel()}
-                </MenuButton>
-                <MenuList>
-                  <MenuItem onClick={() => handleOnChangeTime("hour")}>
-                    Now
-                  </MenuItem>
-                  <MenuItem onClick={() => handleOnChangeTime("day")}>
-                    Today
-                  </MenuItem>
-                  <MenuItem onClick={() => handleOnChangeTime("week")}>
-                    This week
-                  </MenuItem>
-                  <MenuItem onClick={() => handleOnChangeTime("month")}>
-                    This month
-                  </MenuItem>
-                  <MenuItem onClick={() => handleOnChangeTime("year")}>
-                    This year
-                  </MenuItem>
-                  <MenuItem onClick={() => handleOnChangeTime("all")}>
-                    All time
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            ) : null}
           </ButtonGroup>
+          {equals(sort, "top") ? (
+            <Menu>
+              <MenuButton
+                as={Button}
+                rightIcon={<FiChevronDown />}
+                size="sm"
+                variant="outline"
+              >
+                {renderTimeLabel()}
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => handleOnChangeTime("hour")}>
+                  Now
+                </MenuItem>
+                <MenuItem onClick={() => handleOnChangeTime("day")}>
+                  Today
+                </MenuItem>
+                <MenuItem onClick={() => handleOnChangeTime("week")}>
+                  This week
+                </MenuItem>
+                <MenuItem onClick={() => handleOnChangeTime("month")}>
+                  This month
+                </MenuItem>
+                <MenuItem onClick={() => handleOnChangeTime("year")}>
+                  This year
+                </MenuItem>
+                <MenuItem onClick={() => handleOnChangeTime("all")}>
+                  All time
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          ) : null}
         </Flex>
         <UserMenu />
       </Flex>
