@@ -33,4 +33,14 @@ describe("Index page", () => {
         expect(localStorage.getItem("matureContent")).to.eq("true");
       });
   });
+  it("Time menu", () => {
+    cy.get("[data-cy=top-button]").click();
+    cy.get("[data-cy=time-menu-button]").should("exist");
+  });
+  it("Time menu - all", () => {
+    cy.get("[data-cy=top-button]").click();
+    cy.get("[data-cy=time-menu-button]").click();
+    cy.get("[data-cy=all-menu-item").click();
+    cy.url().should("eq", `${Cypress.config().baseUrl}/art/top?t=all`);
+  });
 });

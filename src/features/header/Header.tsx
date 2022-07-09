@@ -160,18 +160,21 @@ function Header() {
             <Button
               onClick={() => handleOnChangeSort("hot")}
               isActive={equals(sort, "hot")}
+              data-cy="hot-button"
             >
               Hot
             </Button>
             <Button
               onClick={() => handleOnChangeSort("new")}
               isActive={equals(sort, "new")}
+              data-cy="new-button"
             >
               New
             </Button>
             <Button
               onClick={() => handleOnChangeSort("top")}
               isActive={equals(sort, "top")}
+              data-cy="top-button"
             >
               Top
             </Button>
@@ -183,26 +186,45 @@ function Header() {
                 rightIcon={<FiChevronDown />}
                 size="sm"
                 variant="outline"
+                data-cy="time-menu-button"
               >
                 {renderTimeLabel()}
               </MenuButton>
               <MenuList>
-                <MenuItem onClick={() => handleOnChangeTime("hour")}>
+                <MenuItem
+                  onClick={() => handleOnChangeTime("hour")}
+                  data-cy="hour-menu-item"
+                >
                   Now
                 </MenuItem>
-                <MenuItem onClick={() => handleOnChangeTime("day")}>
+                <MenuItem
+                  onClick={() => handleOnChangeTime("day")}
+                  data-cy="day-menu-item"
+                >
                   Today
                 </MenuItem>
-                <MenuItem onClick={() => handleOnChangeTime("week")}>
+                <MenuItem
+                  onClick={() => handleOnChangeTime("week")}
+                  data-cy="week-menu-item"
+                >
                   This week
                 </MenuItem>
-                <MenuItem onClick={() => handleOnChangeTime("month")}>
+                <MenuItem
+                  onClick={() => handleOnChangeTime("month")}
+                  data-cy="month-menu-item"
+                >
                   This month
                 </MenuItem>
-                <MenuItem onClick={() => handleOnChangeTime("year")}>
+                <MenuItem
+                  onClick={() => handleOnChangeTime("year")}
+                  data-cy="year-menu-item"
+                >
                   This year
                 </MenuItem>
-                <MenuItem onClick={() => handleOnChangeTime("all")}>
+                <MenuItem
+                  onClick={() => handleOnChangeTime("all")}
+                  data-cy="all-menu-item"
+                >
                   All time
                 </MenuItem>
               </MenuList>
