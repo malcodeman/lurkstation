@@ -37,6 +37,36 @@ describe("Index page", () => {
     cy.get("[data-cy=top-button]").click();
     cy.get("[data-cy=time-menu-button]").should("exist");
   });
+  it("Time menu - hour", () => {
+    cy.get("[data-cy=top-button]").click();
+    cy.get("[data-cy=time-menu-button]").click();
+    cy.get("[data-cy=hour-menu-item").click();
+    cy.url().should("eq", `${Cypress.config().baseUrl}/art/top?t=hour`);
+  });
+  it("Time menu - day", () => {
+    cy.get("[data-cy=top-button]").click();
+    cy.get("[data-cy=time-menu-button]").click();
+    cy.get("[data-cy=day-menu-item").click();
+    cy.url().should("eq", `${Cypress.config().baseUrl}/art/top?t=day`);
+  });
+  it("Time menu - week", () => {
+    cy.get("[data-cy=top-button]").click();
+    cy.get("[data-cy=time-menu-button]").click();
+    cy.get("[data-cy=week-menu-item").click();
+    cy.url().should("eq", `${Cypress.config().baseUrl}/art/top?t=week`);
+  });
+  it("Time menu - month", () => {
+    cy.get("[data-cy=top-button]").click();
+    cy.get("[data-cy=time-menu-button]").click();
+    cy.get("[data-cy=month-menu-item").click();
+    cy.url().should("eq", `${Cypress.config().baseUrl}/art/top?t=month`);
+  });
+  it("Time menu - year", () => {
+    cy.get("[data-cy=top-button]").click();
+    cy.get("[data-cy=time-menu-button]").click();
+    cy.get("[data-cy=year-menu-item").click();
+    cy.url().should("eq", `${Cypress.config().baseUrl}/art/top?t=year`);
+  });
   it("Time menu - all", () => {
     cy.get("[data-cy=top-button]").click();
     cy.get("[data-cy=time-menu-button]").click();
