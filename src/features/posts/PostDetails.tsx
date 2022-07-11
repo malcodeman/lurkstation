@@ -109,7 +109,7 @@ function PostDetails() {
       height={["auto", "auto", "calc(100vh - 48px)"]}
     >
       {renderContent()}
-      <Box padding="2" overflowY="auto">
+      <Box padding="2" overflowY="auto" style={{ scrollbarWidth: "thin" }}>
         <Heading fontSize="2xl" mb="2">
           {details.title}
         </Heading>
