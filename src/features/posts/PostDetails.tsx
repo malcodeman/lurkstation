@@ -9,12 +9,15 @@ import {
   Text,
   Divider,
   Stack,
+  Link,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { FiDownload, FiMaximize } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 import { saveAs } from "file-saver";
 import { map } from "ramda";
+
+import { REDDIT_URL } from "../../constants";
 
 import queries from "../../api/queries";
 
@@ -113,7 +116,9 @@ function PostDetails() {
         <Heading fontSize="2xl" mb="2">
           {details.title}
         </Heading>
-        <Tag>{details.author}</Tag>
+        <Link href={`${REDDIT_URL}/user/${details.author}`} isExternal>
+          <Tag>{details.author}</Tag>
+        </Link>
         <Divider marginY="4" />
         <Box>
           <Text mb="2">{details.comments_count} comments</Text>
