@@ -16,6 +16,7 @@ import { FiDownload, FiMaximize } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 import { saveAs } from "file-saver";
 import { map } from "ramda";
+import { formatDistanceToNow } from "date-fns";
 
 import { REDDIT_URL } from "../../constants";
 
@@ -128,6 +129,10 @@ function PostDetails() {
                 <Box key={item.id}>
                   <Tag>{item.author}</Tag>
                   <Text opacity="0.8">{item.body}</Text>
+                  <Text opacity="0.6" fontSize="sm">
+                    {formatDistanceToNow(item.created_at, { addSuffix: true })}{" "}
+                    {new Intl.NumberFormat().format(item.upvotes_count)} ups
+                  </Text>
                 </Box>
               ),
               details.comments
