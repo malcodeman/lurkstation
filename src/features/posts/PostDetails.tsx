@@ -15,8 +15,9 @@ import { useQuery } from "@tanstack/react-query";
 import { FiDownload, FiMaximize } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 import { saveAs } from "file-saver";
-import { map } from "ramda";
+import { and, map } from "ramda";
 import { formatDistanceToNow } from "date-fns";
+import { useLocalStorageValue } from "@react-hookz/web";
 
 import { REDDIT_URL } from "../../constants";
 
@@ -59,8 +60,15 @@ function PostDetails() {
   const query = useQuery(["post", id], () => queries.getPost(id), {
     enabled: Boolean(id),
   });
-  const details = query.data?.data || { url: "", author: "", comments: [] };
+  const details = query.data?.data || {
+    url: "",
+    author: "",
+    comments: [],
+    nsfw: false,
+  };
   const filename = `${details.author}_${id}`;
+  const [matureContent] = useLocalStorageValue("matureContent", false);
+  const isBlurred = and(details.nsfw, !matureContent);
 
   if (query.isLoading) {
     return <Skeleton />;
@@ -82,7 +90,8 @@ function PostDetails() {
             height="full"
             width="full"
             objectFit="contain"
-            controls
+            controls={isBlurred ? false : true}
+            filter={isBlurred ? "blur(1rem)" : "none"}
           />
           <Options url={details.url} filename={filename} />
         </Box>
@@ -101,6 +110,7 @@ function PostDetails() {
           height="full"
           width="full"
           objectFit="contain"
+          filter={isBlurred ? "blur(1rem)" : "none"}
         />
         <Options url={details.url} filename={filename} />
       </Box>
