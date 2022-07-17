@@ -16,7 +16,7 @@ import { FiDownload, FiMaximize } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 import { saveAs } from "file-saver";
 import { and, map } from "ramda";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNowStrict } from "date-fns";
 import { useLocalStorageValue } from "@react-hookz/web";
 
 import { REDDIT_URL } from "../../constants";
@@ -124,12 +124,19 @@ function PostDetails() {
     >
       {renderContent()}
       <Box padding="2" overflowY="auto" style={{ scrollbarWidth: "thin" }}>
+        <Link mb="2" href={`${REDDIT_URL}/user/${details.author}`} isExternal>
+          <Tag>{details.author}</Tag>
+        </Link>
         <Heading fontSize="2xl" mb="2">
           {details.title}
         </Heading>
-        <Link href={`${REDDIT_URL}/user/${details.author}`} isExternal>
-          <Tag>{details.author}</Tag>
-        </Link>
+        <Text opacity="0.6" fontSize="sm">
+          Posted{" "}
+          {formatDistanceToNowStrict(details.created_at, { addSuffix: true })}
+        </Text>
+        <Text opacity="0.6" fontSize="sm">
+          {new Intl.NumberFormat().format(details.upvotes_count)} ups
+        </Text>
         <Divider marginY="4" />
         <Box>
           <Text mb="2">{details.comments_count} comments</Text>
@@ -140,7 +147,9 @@ function PostDetails() {
                   <Tag>{item.author}</Tag>
                   <Text opacity="0.8">{item.body}</Text>
                   <Text opacity="0.6" fontSize="sm">
-                    {formatDistanceToNow(item.created_at, { addSuffix: true })}{" "}
+                    {formatDistanceToNowStrict(item.created_at, {
+                      addSuffix: true,
+                    })}{" "}
                     {new Intl.NumberFormat().format(item.upvotes_count)} ups
                   </Text>
                 </Box>
