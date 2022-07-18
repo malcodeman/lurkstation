@@ -10,10 +10,11 @@ import {
   Divider,
   Stack,
   Link,
+  Flex,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { FiDownload, FiMaximize } from "react-icons/fi";
-import { useParams } from "react-router-dom";
+import { FiDownload, FiMaximize, FiX } from "react-icons/fi";
+import { useNavigate, useParams } from "react-router-dom";
 import { saveAs } from "file-saver";
 import { and, map } from "ramda";
 import { formatDistanceToNowStrict } from "date-fns";
@@ -69,6 +70,7 @@ function PostDetails() {
   const filename = `${details.author}_${id}`;
   const [matureContent] = useLocalStorageValue("matureContent", false);
   const isBlurred = and(details.nsfw, !matureContent);
+  const navigate = useNavigate();
 
   if (query.isLoading) {
     return <Skeleton />;
@@ -124,9 +126,12 @@ function PostDetails() {
     >
       {renderContent()}
       <Box padding="2" overflowY="auto" style={{ scrollbarWidth: "thin" }}>
-        <Link mb="2" href={`${REDDIT_URL}/user/${details.author}`} isExternal>
-          <Tag>{details.author}</Tag>
-        </Link>
+        <Flex justifyContent="space-between">
+          <Link mb="2" href={`${REDDIT_URL}/user/${details.author}`} isExternal>
+            <Tag>{details.author}</Tag>
+          </Link>
+          <Icon as={FiX} onClick={() => navigate(-1)} cursor="pointer" />
+        </Flex>
         <Heading fontSize="2xl" mb="2">
           {details.title}
         </Heading>
