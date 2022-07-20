@@ -80,42 +80,24 @@ function PostDetails() {
     if (details.is_video) {
       return (
         <Box
-          position="relative"
-          role="group"
-          overflow="hidden"
-          backgroundColor="var(--chakra-colors-blackAlpha-50)"
-          padding="2"
-        >
-          <Box
-            src={details.url}
-            as="video"
-            height="full"
-            width="full"
-            objectFit="contain"
-            controls={isBlurred ? false : true}
-            filter={isBlurred ? "blur(1rem)" : "none"}
-          />
-          <Options url={details.url} filename={filename} />
-        </Box>
-      );
-    }
-    return (
-      <Box
-        position="relative"
-        role="group"
-        overflow="hidden"
-        backgroundColor="var(--chakra-colors-blackAlpha-50)"
-        padding="2"
-      >
-        <Image
           src={details.url}
+          as="video"
           height="full"
           width="full"
           objectFit="contain"
+          controls={isBlurred ? false : true}
           filter={isBlurred ? "blur(1rem)" : "none"}
         />
-        <Options url={details.url} filename={filename} />
-      </Box>
+      );
+    }
+    return (
+      <Image
+        src={details.url}
+        height="full"
+        width="full"
+        objectFit="contain"
+        filter={isBlurred ? "blur(1rem)" : "none"}
+      />
     );
   };
 
@@ -124,7 +106,16 @@ function PostDetails() {
       gridTemplateColumns={["1fr", "1fr", "1fr 365px"]}
       height={["auto", "auto", "calc(100vh - 48px)"]}
     >
-      {renderContent()}
+      <Box
+        position="relative"
+        role="group"
+        overflow="hidden"
+        backgroundColor="var(--chakra-colors-blackAlpha-50)"
+        padding="2"
+      >
+        {renderContent()}
+        <Options url={details.url} filename={filename} />
+      </Box>
       <Box padding="2" overflowY="auto" style={{ scrollbarWidth: "thin" }}>
         <Flex justifyContent="space-between">
           <Link mb="2" href={`${REDDIT_URL}/user/${details.author}`} isExternal>
