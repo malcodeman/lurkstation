@@ -17,7 +17,7 @@ function Post(props: Props) {
 
   if (isVideo) {
     return (
-      <Link to={link}>
+      <Link to={link} data-cy="post">
         <Box position="relative" height="full" width="full">
           <Box
             src={url}
@@ -33,7 +33,7 @@ function Post(props: Props) {
     );
   }
   return (
-    <Link to={link}>
+    <Link to={link} data-cy="post">
       <Image
         src={url}
         height="full"

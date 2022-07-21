@@ -130,7 +130,12 @@ function PostDetails() {
           <Link mb="2" href={`${REDDIT_URL}/user/${details.author}`} isExternal>
             <Tag>{details.author}</Tag>
           </Link>
-          <Icon as={FiX} onClick={() => navigate(-1)} cursor="pointer" />
+          <Icon
+            as={FiX}
+            onClick={() => navigate(-1)}
+            cursor="pointer"
+            data-cy="x-icon"
+          />
         </Flex>
         <Heading fontSize="2xl" mb="2">
           {details.title}

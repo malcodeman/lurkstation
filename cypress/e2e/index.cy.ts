@@ -73,4 +73,13 @@ describe("Index page", () => {
     cy.get("[data-cy=all-menu-item").click();
     cy.url().should("eq", `${Cypress.config().baseUrl}/art/top?t=all`);
   });
+  it.only("Go to post", () => {
+    cy.get("[data-cy=post]").first().click();
+    cy.url().should("include", "/art/comments/");
+  });
+  it.only("Post - go back", () => {
+    cy.get("[data-cy=post]").first().click();
+    cy.get("[data-cy=x-icon]").click();
+    cy.url().should("eq", `${Cypress.config().baseUrl}/`);
+  });
 });
