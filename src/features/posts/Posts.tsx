@@ -65,6 +65,7 @@ function Posts() {
           isLarge ? "repeat(auto-fit, minmax(270px, 1fr))" : "1fr 1fr 1fr"
         }
         gridAutoRows={isLarge ? "280px" : "auto"}
+        data-cy="posts-grid"
       >
         {map(
           (item) =>

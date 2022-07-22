@@ -73,13 +73,18 @@ describe("Index page", () => {
     cy.get("[data-cy=all-menu-item").click();
     cy.url().should("eq", `${Cypress.config().baseUrl}/art/top?t=all`);
   });
-  it.only("Go to post", () => {
+  it("Go to post", () => {
     cy.get("[data-cy=post]").first().click();
     cy.url().should("include", "/art/comments/");
   });
-  it.only("Post - go back", () => {
+  it("Post - go back", () => {
     cy.get("[data-cy=post]").first().click();
     cy.get("[data-cy=x-icon]").click();
     cy.url().should("eq", `${Cypress.config().baseUrl}/`);
+  });
+  it("Posts grid", () => {
+    cy.get("[data-cy=posts-grid]")
+      .children()
+      .should("have.length.at.least", 10);
   });
 });
