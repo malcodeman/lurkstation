@@ -1,5 +1,5 @@
 import React from "react";
-import { AspectRatio, Box, Flex, Grid, Spinner } from "@chakra-ui/react";
+import { AspectRatio, Box, Code, Flex, Grid, Spinner } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { and, map } from "ramda";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -52,7 +52,8 @@ function Posts() {
     if (
       intersection?.isIntersecting &&
       query.hasNextPage &&
-      !query.isFetching
+      !query.isFetching &&
+      !query.isError
     ) {
       query.fetchNextPage();
     }
@@ -60,6 +61,9 @@ function Posts() {
 
   return (
     <Box>
+      {query.isError ? (
+        <Code colorScheme="red">{JSON.stringify(query.error)}</Code>
+      ) : null}
       <Grid
         gridTemplateColumns={
           isLarge ? "repeat(auto-fit, minmax(270px, 1fr))" : "1fr 1fr 1fr"
