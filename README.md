@@ -6,7 +6,7 @@
 
 Lurkershub is content oriented reddit client which aims to show reddit images and videos in most efficient way possible.
 
-![Screenshot](readme/screenshot.jpg)
+![Screenshot](readme/screenshot.png)
 
 ## Getting started
 
