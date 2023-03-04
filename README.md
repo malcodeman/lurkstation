@@ -38,26 +38,6 @@ REACT_APP_API_URL = "http://localhost:8080"
 REACT_APP_API_URL = "https://malcodeman-micro-reddit.glitch.me"
 ```
 
-## Design decisions
-
-Why ... ?
-
-- [react-intersection-observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
-
-## Credits
-
-Huge ❤️ to:
-
-- [Luis Merino](https://github.com/Rendez) for his work on react-intersection-observer
-
-## Todos
-
-- Improve post details modal
-- Add comments
-- Add bookmarks
-- Add posts loadings state
-- Add data import/export
-
 ## License
 
 [MIT](./LICENSE)
