@@ -40,7 +40,7 @@ function Header() {
     "rgba(255, 255, 255, 0.03) 0px 2px 0px 0px"
   );
 
-  useDocumentTitle(`${sub} | lurkershub`);
+  useDocumentTitle(`${sub} | lurkstation`);
 
   React.useEffect(() => {
     if (sub) {
@@ -118,7 +118,7 @@ function Header() {
               variant="link"
               mr="2"
             >
-              lurkershub
+              lurkstation
             </Button>
           </Link>
           <form
