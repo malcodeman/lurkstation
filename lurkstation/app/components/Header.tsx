@@ -1,7 +1,10 @@
 "use client";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+import { DEFAULT_SUBREDDIT } from "../lib/constants";
 
 const defaultValues = {
   subreddit: "",
@@ -12,8 +15,16 @@ type Values = {
 };
 
 export default function Header() {
-  const form = useForm({ defaultValues });
+  const params = useParams();
+  const subreddit = params.subreddit || DEFAULT_SUBREDDIT;
+  const form = useForm({
+    defaultValues,
+  });
   const { push } = useRouter();
+
+  useEffect(() => {
+    form.reset({ subreddit });
+  }, [subreddit]);
 
   const handleOnSubmit = (values: Values) => {
     push(`/${values.subreddit}/hot`);

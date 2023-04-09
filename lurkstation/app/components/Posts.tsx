@@ -7,6 +7,8 @@ import { useIntersectionObserver } from "@react-hookz/web";
 import Post from "@/app/components/Post";
 import { Sort } from "@/types";
 
+import { DEFAULT_SORT, DEFAULT_SUBREDDIT } from "../lib/constants";
+
 const getSubreddit = async (props: {
   pageParam?: {
     subreddit: string;
@@ -27,8 +29,8 @@ const getSubreddit = async (props: {
 
 export default function Posts() {
   const params = useParams();
-  const subreddit = params.subreddit || "art";
-  const sort = params.sort || "hot";
+  const subreddit = params.subreddit || DEFAULT_SUBREDDIT;
+  const sort = params.sort || DEFAULT_SORT;
   const searchParams = useSearchParams();
   const time = searchParams.get("t");
   const { data, hasNextPage, isFetching, isError, fetchNextPage } =
