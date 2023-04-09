@@ -59,7 +59,7 @@ export default function Posts() {
   }, [intersection?.isIntersecting, hasNextPage, isFetching, isError]);
 
   return (
-    <main className="mt-[46px] grid auto-rows-[280px] grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
+    <main className="mt-[46px] grid auto-rows-auto md:auto-rows-[280px] grid-cols-[1fr_1fr_1fr] md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
       {map(
         (item) =>
           map(

@@ -11,20 +11,14 @@ type Props = {
 export default function Post(props: Props) {
   const { url, isVideo, href } = props;
 
-  if (isVideo) {
-    return (
-      <Link href={href}>
-        <div className="relative w-full h-full">
-          <video src={url} className="w-full h-full object-cover" />
-        </div>
-      </Link>
-    );
-  }
-
   return (
     <Link href={href}>
-      <div className="relative w-full h-full">
-        <Image src={url} alt="" fill className="w-full h-full object-cover" />
+      <div className="relative w-full h-full aspect-square">
+        {isVideo ? (
+          <video src={url} className="w-full h-full object-cover" />
+        ) : (
+          <Image src={url} alt="" fill className="w-full h-full object-cover" />
+        )}
       </div>
     </Link>
   );
