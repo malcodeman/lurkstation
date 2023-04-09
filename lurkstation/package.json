@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-hookz/web": "^23.0.0",
     "@tanstack/react-query": "^4.28.0",
     "next": "13.3.0",
     "ramda": "^0.29.0",

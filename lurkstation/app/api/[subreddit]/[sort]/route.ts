@@ -31,14 +31,18 @@ type Data = {
 };
 
 export async function GET(
-  _request: NextResponse,
+  request: NextResponse,
   { params }: { params: Params }
 ) {
   try {
-    const res = await fetch(
-      `${REDDIT_API}/r/${params.subreddit}/${params.sort}.json`
+    const { searchParams } = new URL(request.url);
+    const t = searchParams.get("t");
+    const after = searchParams.get("after");
+    const limit = searchParams.get("limit");
+    const response = await fetch(
+      `${REDDIT_API}/r/${params.subreddit}/${params.sort}.json?&t=${t}&after=${after}&limit${limit}`
     );
-    const data: Data = await res.json();
+    const data: Data = await response.json();
     const filtered = filter(
       (item) => not(isEmpty(getExtension(item.data.url))),
       data.data.children
