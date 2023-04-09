@@ -7,18 +7,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "i.redd.it",
-      },
-      {
-        protocol: "https",
-        hostname: "www.reddit.com",
-      },
-      {
-        hostname: "i.imgur.com",
-      },
-      {
-        protocol: "https",
-        hostname: "imgur.com",
+        hostname: "*",
       },
     ],
   },
