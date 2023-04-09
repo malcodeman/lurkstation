@@ -31,7 +31,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center p-2 fixed top-0 w-full z-10 bg-white">
+    <header className="flex items-center p-2 fixed top-0 w-full z-10 bg-white text-black/80">
       <Link href="/" className="mr-2 text-sm">
         lurkstation
       </Link>
