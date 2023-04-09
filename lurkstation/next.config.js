@@ -10,6 +10,10 @@ const nextConfig = {
         hostname: "i.redd.it",
       },
       {
+        protocol: "https",
+        hostname: "www.reddit.com",
+      },
+      {
         hostname: "i.imgur.com",
       },
     ],
