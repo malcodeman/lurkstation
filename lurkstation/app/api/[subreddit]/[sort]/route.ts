@@ -1,16 +1,8 @@
 import { REDDIT_API } from "@/app/lib/constants";
-import { Sort } from "@/types";
+import { getExtension, parsePost } from "@/app/lib/utils";
+import { Post, Sort } from "@/types";
 import { NextResponse } from "next/server";
-import { parse } from "path";
-import { filter, map, replace, isEmpty, not } from "ramda";
-
-function getExtension(path: string) {
-  return parse(path).ext;
-}
-
-function parseGifv(url: string) {
-  return replace("gifv", "mp4", url);
-}
+import { filter, map, isEmpty, not } from "ramda";
 
 type Params = {
   subreddit: string;
@@ -20,13 +12,7 @@ type Data = {
   data: {
     after: string;
     before: string | null;
-    children: {
-      data: {
-        url: string;
-        is_video: boolean;
-      };
-      kind: string;
-    }[];
+    children: Post[];
   };
 };
 
@@ -47,19 +33,7 @@ export async function GET(
       (item) => not(isEmpty(getExtension(item.data.url))),
       data.data.children
     );
-    const posts = map((item) => {
-      if (getExtension(item.data.url) === ".gifv") {
-        return {
-          ...item,
-          data: {
-            ...item.data,
-            is_video: true,
-            url: parseGifv(item.data.url),
-          },
-        };
-      }
-      return item;
-    }, filtered);
+    const posts = map((item) => parsePost(item), filtered);
     return NextResponse.json({ ...data.data, children: posts });
   } catch (error) {
     if (error instanceof Error) {

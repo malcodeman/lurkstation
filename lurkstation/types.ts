@@ -1,6 +1,10 @@
 export type Sort = "hot" | "new" | "top" | "controversial";
 
 export type Post = {
-  url: string;
-  isVideo: boolean;
+  kind: string;
+  data: {
+    id: string;
+    url: string;
+    is_video: boolean;
+  };
 };

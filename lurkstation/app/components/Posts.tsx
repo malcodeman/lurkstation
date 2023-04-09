@@ -68,6 +68,7 @@ export default function Posts() {
                 key={item.data.id}
                 url={item.data.url}
                 isVideo={item.data.is_video}
+                href={`${subreddit}/comments/${item.data.id}`}
               />
             ),
             item.children

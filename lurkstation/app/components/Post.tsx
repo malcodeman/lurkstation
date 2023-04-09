@@ -1,26 +1,31 @@
 import { Post } from "@/types";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Post(props: Post) {
-  const { url, isVideo, ...rest } = props;
+type Props = {
+  url: string;
+  isVideo: boolean;
+  href: string;
+};
+
+export default function Post(props: Props) {
+  const { url, isVideo, href } = props;
 
   if (isVideo) {
     return (
-      <div className="relative w-full h-full" {...rest}>
-        <video src={url} className="w-full h-full object-cover" />
-      </div>
+      <Link href={href}>
+        <div className="relative w-full h-full">
+          <video src={url} className="w-full h-full object-cover" />
+        </div>
+      </Link>
     );
   }
 
   return (
-    <div className="relative w-full h-full" {...rest}>
-      <Image
-        src={url}
-        alt=""
-        fill
-        sizes="280px"
-        className="w-full h-full object-cover"
-      />
-    </div>
+    <Link href={href}>
+      <div className="relative w-full h-full">
+        <Image src={url} alt="" fill className="w-full h-full object-cover" />
+      </div>
+    </Link>
   );
 }
