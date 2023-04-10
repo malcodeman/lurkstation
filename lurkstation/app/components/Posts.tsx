@@ -22,7 +22,7 @@ const getSubreddit = async (props: {
     return { children: [], after: null };
   }
   const resp = await fetch(
-    `/api/${pageParam.subreddit}/${pageParam.sort}?after=${pageParam.after}&time=${pageParam.time}`
+    `/api/${pageParam.subreddit}/${pageParam.sort}?after=${pageParam.after}&t=${pageParam.time}`
   );
   return resp.json();
 };
