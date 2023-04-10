@@ -23,11 +23,15 @@ export default function Header() {
   const { push } = useRouter();
 
   useEffect(() => {
-    form.reset({ subreddit });
-  }, [subreddit]);
+    if (username) {
+      form.reset(defaultValues);
+    } else {
+      form.reset({ subreddit });
+    }
+  }, [subreddit, username]);
 
   const handleOnSubmit = (values: Values) => {
-    push(`/${values.subreddit}/hot`);
+    push(`/r/${values.subreddit}/hot`);
   };
 
   return (
@@ -44,14 +48,14 @@ export default function Header() {
       </form>
       <div className="inline-flex">
         <Link
-          href={username ? `user/${username}?sort=hot` : `${subreddit}/hot`}
+          href={username ? `user/${username}?sort=hot` : `r/${subreddit}/hot`}
         >
           <button className="p-1 text-sm border rounded-md rounded-r-none me-[-1px] border-[#d6d6d6]">
             Hot
           </button>
         </Link>
         <Link
-          href={username ? `user/${username}?sort=new` : `${subreddit}/new`}
+          href={username ? `user/${username}?sort=new` : `r/${subreddit}/new`}
         >
           <button className="p-1 text-sm border me-[-1px] border-[#d6d6d6]">
             New
@@ -61,7 +65,7 @@ export default function Header() {
           href={
             username
               ? `user/${username}?sort=top&t=all`
-              : `${subreddit}/top?t=all`
+              : `r/${subreddit}/top?t=all`
           }
         >
           <button className="p-1 text-sm border rounded-md rounded-l-none border-[#d6d6d6]">

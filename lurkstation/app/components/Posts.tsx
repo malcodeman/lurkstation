@@ -85,7 +85,7 @@ export default function Posts(props: Props) {
                 key={item.data.id}
                 url={item.data.url}
                 isVideo={item.data.is_video}
-                href={`${item.data.subreddit}/comments/${item.data.id}`}
+                href={item.data.permalink}
               />
             ),
             item.children
