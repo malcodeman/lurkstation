@@ -14,6 +14,8 @@ type Data = {
     before: string | null;
     children: Post[];
   };
+  error: string;
+  message: string;
 };
 
 // https://www.reddit.com/dev/api/#GET_user_{username}_{where}
@@ -31,6 +33,11 @@ export async function GET(
       `${REDDIT_API}/user/${params.username}/submitted.json?sort=${sort}&t=${t}&after=${after}&limit${limit}`
     );
     const data: Data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+
     const filtered = filter(
       (item) => not(isEmpty(getExtension(item.data.url))),
       data.data.children

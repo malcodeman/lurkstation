@@ -8,3 +8,8 @@ export type Post = {
     is_video: boolean;
   };
 };
+
+export type ErrorComponent = {
+  error: Error;
+  reset: () => void;
+};

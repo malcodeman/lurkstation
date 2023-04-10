@@ -14,6 +14,8 @@ type Data = {
     before: string | null;
     children: Post[];
   };
+  error: string;
+  message: string;
 };
 
 // https://www.reddit.com/dev/api/#GET_{sort}
@@ -30,6 +32,11 @@ export async function GET(
       `${REDDIT_API}/r/${params.subreddit}/${params.sort}.json?&t=${t}&after=${after}&limit${limit}`
     );
     const data: Data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+
     const filtered = filter(
       (item) => not(isEmpty(getExtension(item.data.url))),
       data.data.children

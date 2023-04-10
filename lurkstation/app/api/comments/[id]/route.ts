@@ -13,6 +13,11 @@ export async function GET(
   try {
     const response = await fetch(`${REDDIT_API}/comments/${params.id}.json`);
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+
     const post = parsePost(data[0].data.children[0]);
     const comments = data[1].data;
     return NextResponse.json({ post, comments });
