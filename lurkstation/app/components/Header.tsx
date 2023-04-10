@@ -3,8 +3,6 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Sort } from "@/types";
-
 import { DEFAULT_SUBREDDIT } from "../lib/constants";
 
 const defaultValues = {
@@ -18,6 +16,7 @@ type Values = {
 export default function Header() {
   const params = useParams();
   const subreddit = params.subreddit || DEFAULT_SUBREDDIT;
+  const username = params.username;
   const form = useForm({
     defaultValues,
   });
@@ -29,14 +28,6 @@ export default function Header() {
 
   const handleOnSubmit = (values: Values) => {
     push(`/${values.subreddit}/hot`);
-  };
-
-  const handleOnChangeSort = (sort: Sort) => {
-    if (sort === "top") {
-      push(`/${subreddit}/${sort}?t=all`);
-    } else {
-      push(`/${subreddit}/${sort}`);
-    }
   };
 
   return (
@@ -52,24 +43,31 @@ export default function Header() {
         />
       </form>
       <div className="inline-flex">
-        <button
-          className="p-1 text-sm border rounded-md rounded-r-none me-[-1px] border-[#d6d6d6]"
-          onClick={() => handleOnChangeSort("hot")}
+        <Link
+          href={username ? `user/${username}?sort=hot` : `${subreddit}/hot`}
         >
-          Hot
-        </button>
-        <button
-          className="p-1 text-sm border me-[-1px] border-[#d6d6d6]"
-          onClick={() => handleOnChangeSort("new")}
+          <button className="p-1 text-sm border rounded-md rounded-r-none me-[-1px] border-[#d6d6d6]">
+            Hot
+          </button>
+        </Link>
+        <Link
+          href={username ? `user/${username}?sort=new` : `${subreddit}/new`}
         >
-          New
-        </button>
-        <button
-          className="p-1 text-sm border rounded-md rounded-l-none border-[#d6d6d6]"
-          onClick={() => handleOnChangeSort("top")}
+          <button className="p-1 text-sm border me-[-1px] border-[#d6d6d6]">
+            New
+          </button>
+        </Link>
+        <Link
+          href={
+            username
+              ? `user/${username}?sort=top&t=all`
+              : `${subreddit}/top?t=all`
+          }
         >
-          Top
-        </button>
+          <button className="p-1 text-sm border rounded-md rounded-l-none border-[#d6d6d6]">
+            Top
+          </button>
+        </Link>
       </div>
     </header>
   );

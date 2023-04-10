@@ -2,6 +2,7 @@
 import { Post } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { length, map } from "ramda";
 
@@ -42,7 +43,9 @@ export default function Post() {
       </div>
       <div className="p-2 overflow-y-auto">
         <div className="mb-2">
-          <span className="text-xs">{post.author}</span>
+          <Link href={`/user/${post.author}`} className="text-xs">
+            {post.author}
+          </Link>
           <h1 className="text-xl">{post.title}</h1>
           <span className="text-xs">{post.ups} ups</span>
         </div>

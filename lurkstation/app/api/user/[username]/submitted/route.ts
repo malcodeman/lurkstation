@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import { filter, map, isEmpty, not } from "ramda";
 
 type Params = {
-  subreddit: string;
+  username: string;
   sort: Sort;
 };
 type Data = {
@@ -16,18 +16,19 @@ type Data = {
   };
 };
 
-// https://www.reddit.com/dev/api/#GET_{sort}
+// https://www.reddit.com/dev/api/#GET_user_{username}_{where}
 export async function GET(
   request: NextResponse,
   { params }: { params: Params }
 ) {
   try {
     const { searchParams } = new URL(request.url);
+    const sort = searchParams.get("sort");
     const t = searchParams.get("t");
     const after = searchParams.get("after");
     const limit = searchParams.get("limit");
     const response = await fetch(
-      `${REDDIT_API}/r/${params.subreddit}/${params.sort}.json?&t=${t}&after=${after}&limit${limit}`
+      `${REDDIT_API}/user/${params.username}/submitted.json?sort=${sort}&t=${t}&after=${after}&limit${limit}`
     );
     const data: Data = await response.json();
     const filtered = filter(

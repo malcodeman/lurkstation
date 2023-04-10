@@ -1,21 +1,21 @@
 import Posts from "@/app/components/Posts";
 
 type Props = {
-  params: { subreddit: string; sort: string };
-  searchParams: { t: string };
+  params: { username: string };
+  searchParams: { sort: string; t: string };
 };
 
-export default function Sort(props: Props) {
+export default function User(props: Props) {
   const { params, searchParams } = props;
-  const subreddit = params.subreddit;
-  const sort = params.sort;
+  const username = params.username;
+  const sort = searchParams.sort;
   const time = searchParams.t;
   const getNextPageParamReturn = {
-    subreddit,
+    username,
     sort,
     time,
   };
-  const queryKey = ["posts", subreddit, sort, time];
+  const queryKey = ["users", username, sort, time];
 
   return (
     <Posts
