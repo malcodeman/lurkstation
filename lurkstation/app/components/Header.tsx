@@ -35,14 +35,14 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center p-2 fixed top-0 w-full z-10 shadow bg-white text-black/80">
+    <header className="flex items-center p-2 fixed top-0 w-full z-10 bg-white dark:bg-black">
       <Link href="/" className="mr-2 text-sm">
         lurkstation
       </Link>
       <form className="mr-2" onSubmit={form.handleSubmit(handleOnSubmit)}>
         <input
           type="text"
-          className="w-full rounded-md border p-1 text-sm border-[#d6d6d6]"
+          className="w-full rounded-md border p-1 text-sm bg-transparent outline-none border-[#163300]"
           {...form.register("subreddit")}
         />
       </form>
@@ -50,14 +50,14 @@ export default function Header() {
         <Link
           href={username ? `user/${username}?sort=hot` : `r/${subreddit}/hot`}
         >
-          <button className="p-1 text-sm border rounded-md rounded-r-none me-[-1px] border-[#d6d6d6]">
+          <button className="p-1 text-sm border rounded-md rounded-r-none me-[-1px] border-[#163300]">
             Hot
           </button>
         </Link>
         <Link
           href={username ? `user/${username}?sort=new` : `r/${subreddit}/new`}
         >
-          <button className="p-1 text-sm border me-[-1px] border-[#d6d6d6]">
+          <button className="p-1 text-sm border me-[-1px] border-[#163300]">
             New
           </button>
         </Link>
@@ -68,7 +68,7 @@ export default function Header() {
               : `r/${subreddit}/top?t=all`
           }
         >
-          <button className="p-1 text-sm border rounded-md rounded-l-none border-[#d6d6d6]">
+          <button className="p-1 text-sm border rounded-md rounded-l-none border-[#163300]">
             Top
           </button>
         </Link>
