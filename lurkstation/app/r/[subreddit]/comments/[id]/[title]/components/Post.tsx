@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { length, map } from "ramda";
+import { formatDistanceToNowStrict } from "date-fns";
 
 const getComments = async (id: string) => {
   const response = await fetch(`/api/comments/${id}`);
@@ -19,7 +20,7 @@ export default function Post() {
     queryFn: () => getComments(id),
   });
   const post = data?.post.data;
-  const comments = data?.comments.children;
+  const comments = data?.comments;
   const mediaClassName = "w-full h-full object-cover md:object-contain";
 
   if (!post) {
@@ -43,9 +44,11 @@ export default function Post() {
       </div>
       <div className="p-2 overflow-y-auto">
         <div className="mb-2">
-          <Link href={`/user/${post.author}`} className="text-xs">
-            {post.author}
-          </Link>
+          {post.author === "[deleted]" ? null : (
+            <Link href={`/user/${post.author}`} className="text-xs">
+              {post.author}
+            </Link>
+          )}
           <h1 className="text-xl">{post.title}</h1>
           <span className="text-xs">{post.ups} ups</span>
         </div>
@@ -59,7 +62,14 @@ export default function Post() {
                   <p className="text-sm break-words text-white/80">
                     {item.data.body}
                   </p>
-                  <span className="text-xs">{item.data.ups} ups</span>
+                  <div>
+                    <span className="text-xs">{item.data.ups} ups</span>{" "}
+                    <span className="text-xs">
+                      {formatDistanceToNowStrict(item.data.created_utc * 1000, {
+                        addSuffix: true,
+                      })}
+                    </span>
+                  </div>
                 </div>
               ),
               comments

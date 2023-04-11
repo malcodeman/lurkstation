@@ -35,11 +35,11 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center p-2 fixed top-0 w-full z-10 bg-white text-black/80">
+    <header className="flex items-center p-2 fixed top-0 w-full z-10 shadow bg-white text-black/80">
       <Link href="/" className="mr-2 text-sm">
         lurkstation
       </Link>
-      <form className="mr-1" onSubmit={form.handleSubmit(handleOnSubmit)}>
+      <form className="mr-2" onSubmit={form.handleSubmit(handleOnSubmit)}>
         <input
           type="text"
           className="w-full rounded-md border p-1 text-sm border-[#d6d6d6]"

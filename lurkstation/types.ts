@@ -9,6 +9,15 @@ export type Post = {
   };
 };
 
+export type Comment = {
+  kind: string;
+  data: {
+    author: string;
+    id: string;
+    body: string;
+  };
+};
+
 export type ErrorComponent = {
   error: Error;
   reset: () => void;
