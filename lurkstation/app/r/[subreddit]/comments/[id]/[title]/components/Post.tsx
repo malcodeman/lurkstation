@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { length, map } from "ramda";
 import { formatDistanceToNowStrict } from "date-fns";
+import { Options } from "./Options";
 
 const getComments = async (id: string) => {
   const response = await fetch(`/api/comments/${id}`);
@@ -29,7 +30,7 @@ export default function Post() {
 
   return (
     <main className="mt-[46px] md:grid md:gap-2 md:grid-cols-[1fr_365px] md:h-[calc(100vh_-_46px)]">
-      <div className="relative w-full h-full aspect-square overflow-y-hidden">
+      <div className="group relative w-full h-full aspect-square overflow-y-hidden">
         {post.is_video ? (
           <video src={post.url} controls className={mediaClassName} />
         ) : (
@@ -41,6 +42,7 @@ export default function Post() {
             className={mediaClassName}
           />
         )}
+        <Options url={post.url} filename={post.id} />
       </div>
       <div className="p-2 overflow-y-auto">
         <div className="mb-2">

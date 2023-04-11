@@ -1,7 +1,7 @@
 import { Post } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import { FcPicture, FcVideoCall } from "react-icons/fc";
+import { FiVideo, FiImage } from "react-icons/fi";
 
 type Props = {
   url: string;
@@ -21,9 +21,9 @@ export default function Post(props: Props) {
           <Image src={url} alt="" fill className="w-full h-full object-cover" />
         )}
         {isVideo ? (
-          <FcVideoCall className="absolute right-2 bottom-2" />
+          <FiVideo className="absolute right-2 bottom-2" />
         ) : (
-          <FcPicture className="absolute right-2 bottom-2" />
+          <FiImage className="absolute right-2 bottom-2" />
         )}
       </div>
     </Link>
