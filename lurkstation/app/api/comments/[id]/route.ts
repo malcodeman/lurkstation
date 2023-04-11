@@ -29,7 +29,8 @@ export async function GET(
       (item) =>
         item.kind !== "more" &&
         item.data.author !== "AutoModerator" &&
-        item.data.body !== "[removed]",
+        item.data.body !== "[removed]" &&
+        item.data.body !== "[deleted]",
       data[1].data.children
     );
 
