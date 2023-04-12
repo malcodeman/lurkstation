@@ -3,8 +3,9 @@ import { Post } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { length, map } from "ramda";
+import { FiX } from "react-icons/fi";
 import { Options } from "./Options";
 import { Details } from "./Details";
 
@@ -23,6 +24,7 @@ export default function Post() {
   const post = data?.post.data;
   const comments = data?.comments;
   const mediaClassName = "p-2 w-full h-full object-cover md:object-contain";
+  const router = useRouter();
 
   if (!post) {
     return null;
@@ -52,13 +54,19 @@ export default function Post() {
         <Options url={post.url} filename={post.id} />
       </div>
       <div className="p-2 overflow-y-auto bg-white dark:bg-black">
-        <div className="mb-2">
-          {post.author === "[deleted]" ? null : (
-            <Link href={`/user/${post.author}`} className="text-xs">
-              {post.author}
-            </Link>
-          )}
-          <h1 className="text-xl">{post.title}</h1>
+        <div className="mb-4 pb-4 border-b border-[#0e0f0c1f] dark:border-[#f1f0f31f]">
+          <div className="flex items-center">
+            {post.author === "[deleted]" ? null : (
+              <Link href={`/user/${post.author}`} className="text-xs">
+                {post.author}
+              </Link>
+            )}
+            <FiX
+              className="cursor-pointer ml-auto"
+              onClick={() => router.back()}
+            />
+          </div>
+          <h1 className="text-2xl">{post.title}</h1>
           <Details ups={post.ups} createdAt={post.created_utc} />
         </div>
         <div>
