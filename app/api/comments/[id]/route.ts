@@ -12,10 +12,7 @@ type Data = [
   { kind: string; data: { children: Comment[] } }
 ];
 
-export async function GET(
-  _request: NextResponse,
-  { params }: { params: Params }
-) {
+export async function GET(_request: Request, { params }: { params: Params }) {
   try {
     const response = await fetch(`${REDDIT_API}/comments/${params.id}.json`);
     const data: Data = await response.json();

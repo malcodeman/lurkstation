@@ -19,10 +19,7 @@ type Data = {
 };
 
 // https://www.reddit.com/dev/api/#GET_user_{username}_{where}
-export async function GET(
-  request: NextResponse,
-  { params }: { params: Params }
-) {
+export async function GET(request: Request, { params }: { params: Params }) {
   try {
     const { searchParams } = new URL(request.url);
     const sort = searchParams.get("sort");

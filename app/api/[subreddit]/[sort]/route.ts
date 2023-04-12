@@ -19,10 +19,7 @@ type Data = {
 };
 
 // https://www.reddit.com/dev/api/#GET_{sort}
-export async function GET(
-  request: NextResponse,
-  { params }: { params: Params }
-) {
+export async function GET(request: Request, { params }: { params: Params }) {
   try {
     const { searchParams } = new URL(request.url);
     const t = searchParams.get("t");
