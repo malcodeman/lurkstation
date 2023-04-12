@@ -5,6 +5,7 @@ import { map } from "ramda";
 import { useIntersectionObserver } from "@react-hookz/web";
 import Post from "@/app/components/Post";
 import { Sort } from "@/types";
+import { FiLoader } from "react-icons/fi";
 
 const getSubreddit = async (props: {
   pageParam?: {
@@ -50,14 +51,20 @@ type Props = {
 export default function Posts(props: Props) {
   const { queryKey, getNextPageParamReturn } = props;
   const isPosts = queryKey[0] === "posts";
-  const { data, hasNextPage, isFetching, isError, fetchNextPage } =
-    useInfiniteQuery({
-      queryKey,
-      queryFn: isPosts ? getSubreddit : getUser,
-      getNextPageParam: ({ after }) => {
-        return { ...getNextPageParamReturn, after };
-      },
-    });
+  const {
+    data,
+    hasNextPage,
+    isFetching,
+    isError,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey,
+    queryFn: isPosts ? getSubreddit : getUser,
+    getNextPageParam: ({ after }) => {
+      return { ...getNextPageParamReturn, after };
+    },
+  });
   const pages = data?.pages || [];
   const elementRef = useRef<HTMLDivElement>(null);
   const intersection = useIntersectionObserver(elementRef, {
@@ -76,23 +83,30 @@ export default function Posts(props: Props) {
   }, [intersection?.isIntersecting, hasNextPage, isFetching, isError]);
 
   return (
-    <main className="mt-[46px] grid auto-rows-auto md:auto-rows-[280px] grid-cols-[1fr_1fr_1fr] md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
-      {map(
-        (item) =>
-          map(
-            (item) => (
-              <Post
-                key={item.data.id}
-                url={item.data.url}
-                isVideo={item.data.is_video}
-                href={item.data.permalink}
-              />
+    <div>
+      <main className="mt-[46px] grid auto-rows-auto md:auto-rows-[280px] grid-cols-[1fr_1fr_1fr] md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
+        {map(
+          (item) =>
+            map(
+              (item) => (
+                <Post
+                  key={item.data.id}
+                  url={item.data.url}
+                  isVideo={item.data.is_video}
+                  href={item.data.permalink}
+                />
+              ),
+              item.children
             ),
-            item.children
-          ),
-        pages
-      )}
-      <div ref={elementRef} />
-    </main>
+          pages
+        )}
+        <div ref={elementRef} />
+      </main>
+      {isFetchingNextPage ? (
+        <div className="fixed left-[50%] bottom-10 translate-x-[-50%]">
+          <FiLoader className="animate-spin" />
+        </div>
+      ) : null}
+    </div>
   );
 }
