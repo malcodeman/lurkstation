@@ -18,7 +18,7 @@ export function Options(props: Props) {
   };
 
   return (
-    <div className="absolute bottom-2 left-[50%] flex translate-x-[-50%] transition-opacity group-hover:opacity-100 md:bottom-10 md:opacity-0">
+    <div className="absolute bottom-2 left-[50%] flex translate-x-[-50%] rounded bg-white/50 p-2 backdrop-contrast-100 transition-opacity group-hover:opacity-100 dark:bg-black/50 md:bottom-10 md:opacity-0">
       <FiDownload className="mr-2 cursor-pointer" onClick={handleOnDownload} />
       <FiMaximize className="cursor-pointer" onClick={handleOnMaximize} />
     </div>
