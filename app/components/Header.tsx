@@ -47,21 +47,21 @@ export default function Header() {
       <div className="inline-flex">
         <Button
           as="link"
-          className="-ml-px rounded-r-none"
+          className="rounded-r-none"
           href={username ? `user/${username}?sort=hot` : `r/${subreddit}/hot`}
         >
           Hot
         </Button>
         <Button
           as="link"
-          className="-ml-px rounded-l-none rounded-r-none"
+          className="rounded-l-none rounded-r-none"
           href={username ? `user/${username}?sort=new` : `r/${subreddit}/new`}
         >
           New
         </Button>
         <Button
           as="link"
-          className="-ml-px rounded-l-none"
+          className="rounded-l-none"
           href={
             username
               ? `user/${username}?sort=top&t=all`

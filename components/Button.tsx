@@ -10,7 +10,7 @@ type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 export const Button = forwardRef(
   (props: Props, ref: ForwardedRef<HTMLButtonElement>) => {
     const { as, href, children, className, ...rest } = props;
-    const styles = `rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300  hover:bg-gray-50 dark:bg-white/10 dark:text-white dark:ring-white/10 dark:hover:bg-white/20 ${className}`;
+    const styles = `rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-shadow hover:bg-gray-50 focus:ring-2 focus:ring-blue-600 dark:bg-white/10 dark:text-white dark:ring-white/10 dark:hover:bg-white/20 ${className}`;
 
     switch (as) {
       case "link":
