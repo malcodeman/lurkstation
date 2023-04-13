@@ -30,6 +30,17 @@ export default function Post() {
     return null;
   }
 
+  const renderAuthor = (author: string) => {
+    if (author === "[deleted]") {
+      return <span className="text-xs">[deleted]</span>;
+    }
+    return (
+      <Link href={`/user/${author}`} className="text-xs">
+        {author}
+      </Link>
+    );
+  };
+
   return (
     <main className="mt-[45px] md:grid md:h-[calc(100vh_-_45px)] md:grid-cols-[1fr_365px] md:gap-2">
       <div className="group relative aspect-square h-full w-full overflow-y-hidden">
@@ -56,11 +67,7 @@ export default function Post() {
       <div className="overflow-y-auto bg-white p-2 dark:bg-[#111827]">
         <div className="mb-4 border-b pb-4 dark:border-slate-50/10">
           <div className="flex items-center">
-            {post.author === "[deleted]" ? null : (
-              <Link href={`/user/${post.author}`} className="text-xs">
-                {post.author}
-              </Link>
-            )}
+            {renderAuthor(post.author)}
             <FiX
               className="ml-auto cursor-pointer"
               onClick={() => router.back()}
@@ -75,7 +82,7 @@ export default function Post() {
             {map(
               (item) => (
                 <div key={item.data.id} className="mb-2">
-                  <span className="text-xs">{item.data.author}</span>
+                  {renderAuthor(item.data.author)}
                   <p className="break-words text-sm text-gray-500 dark:text-gray-400">
                     {item.data.body}
                   </p>
