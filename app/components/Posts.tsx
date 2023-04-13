@@ -80,11 +80,17 @@ export default function Posts(props: Props) {
     ) {
       fetchNextPage();
     }
-  }, [intersection?.isIntersecting, hasNextPage, isFetching, isError]);
+  }, [
+    intersection?.isIntersecting,
+    hasNextPage,
+    isFetching,
+    isError,
+    fetchNextPage,
+  ]);
 
   return (
     <div>
-      <main className="mt-[46px] grid auto-rows-auto md:auto-rows-[280px] grid-cols-[1fr_1fr_1fr] md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
+      <main className="mt-[45px] grid auto-rows-auto grid-cols-[1fr_1fr_1fr] md:auto-rows-[280px] md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
         {map(
           (item) =>
             map(
@@ -103,7 +109,7 @@ export default function Posts(props: Props) {
         <div ref={elementRef} />
       </main>
       {isFetchingNextPage ? (
-        <div className="fixed left-[50%] bottom-10 translate-x-[-50%]">
+        <div className="fixed bottom-10 left-[50%] translate-x-[-50%]">
           <FiLoader className="animate-spin" />
         </div>
       ) : null}

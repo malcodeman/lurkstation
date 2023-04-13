@@ -13,16 +13,16 @@ export default function Post(props: Props) {
 
   return (
     <Link href={href}>
-      <div className="relative w-full h-full aspect-square">
+      <div className="relative aspect-square h-full w-full">
         {isVideo ? (
-          <video src={url} className="w-full h-full object-cover" />
+          <video src={url} className="h-full w-full object-cover" />
         ) : (
-          <img src={url} alt="" className="w-full h-full object-cover" />
+          <img src={url} alt="" className="h-full w-full object-cover" />
         )}
         {isVideo ? (
-          <FiVideo className="absolute right-2 bottom-2" />
+          <FiVideo className="absolute bottom-2 right-2" />
         ) : (
-          <FiImage className="absolute right-2 bottom-2" />
+          <FiImage className="absolute bottom-2 right-2" />
         )}
       </div>
     </Link>

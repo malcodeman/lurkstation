@@ -23,7 +23,7 @@ export default function Post() {
   });
   const post = data?.post.data;
   const comments = data?.comments;
-  const mediaClassName = "p-2 w-full h-full object-cover md:object-contain";
+  const mediaClassName = "h-full w-full object-cover md:object-contain md:p-2";
   const router = useRouter();
 
   if (!post) {
@@ -31,8 +31,8 @@ export default function Post() {
   }
 
   return (
-    <main className="mt-[46px] md:grid md:gap-2 md:grid-cols-[1fr_365px] md:h-[calc(100vh_-_46px)]">
-      <div className="group relative w-full h-full aspect-square overflow-y-hidden">
+    <main className="mt-[45px] md:grid md:h-[calc(100vh_-_45px)] md:grid-cols-[1fr_365px] md:gap-2">
+      <div className="group relative aspect-square h-full w-full overflow-y-hidden">
         {post.is_video ? (
           <video
             src={post.url}
@@ -53,8 +53,8 @@ export default function Post() {
         )}
         <Options url={post.url} filename={post.id} />
       </div>
-      <div className="p-2 overflow-y-auto bg-white dark:bg-black">
-        <div className="mb-4 pb-4 border-b border-[#0e0f0c1f] dark:border-[#f1f0f31f]">
+      <div className="overflow-y-auto bg-white p-2 dark:bg-[#111827]">
+        <div className="mb-4 border-b pb-4 dark:border-slate-50/10">
           <div className="flex items-center">
             {post.author === "[deleted]" ? null : (
               <Link href={`/user/${post.author}`} className="text-xs">
@@ -62,7 +62,7 @@ export default function Post() {
               </Link>
             )}
             <FiX
-              className="cursor-pointer ml-auto"
+              className="ml-auto cursor-pointer"
               onClick={() => router.back()}
             />
           </div>
@@ -76,7 +76,7 @@ export default function Post() {
               (item) => (
                 <div key={item.data.id} className="mb-2">
                   <span className="text-xs">{item.data.author}</span>
-                  <p className="text-sm break-words text-[#454745] dark:text-[#bab8ba]">
+                  <p className="break-words text-sm text-gray-500 dark:text-gray-400">
                     {item.data.body}
                   </p>
                   <Details
