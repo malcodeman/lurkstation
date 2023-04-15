@@ -154,7 +154,7 @@ export default function Posts(props: Props) {
         )}
         <div ref={elementRef} />
       </main>
-      {isFetchingNextPage ? (
+      {isFetching ? (
         <div className="fixed bottom-10 left-[50%] translate-x-[-50%]">
           <FiLoader className="animate-spin" />
         </div>
