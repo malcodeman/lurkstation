@@ -7,6 +7,9 @@ import { DEFAULT_SUBREDDIT } from "../lib/constants";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
 import { GiAtSea } from "react-icons/gi";
+import { useSearchParams } from "next/navigation";
+
+import TimePopover from "./TimePopover";
 
 const defaultValues = {
   subreddit: "",
@@ -20,6 +23,8 @@ export default function Header() {
   const params = useParams();
   const subreddit = params.subreddit || DEFAULT_SUBREDDIT;
   const username = params.username;
+  const searchParams = useSearchParams();
+  const time = searchParams.get("t");
   const form = useForm({
     defaultValues,
   });
@@ -40,13 +45,13 @@ export default function Header() {
   return (
     <header className="fixed top-0 z-10 flex w-full items-center border-b bg-white p-2  dark:border-b-slate-50/10 dark:bg-gray-900">
       <Link href="/" className="mr-2 flex items-center text-sm font-semibold">
-        <GiAtSea size="16" className="mr-1" />
+        <GiAtSea className="mr-1" />
         lurkstation
       </Link>
       <form className="mr-2" onSubmit={form.handleSubmit(handleOnSubmit)}>
         <Input type="text" {...form.register("subreddit")} />
       </form>
-      <div className="inline-flex">
+      <div className="mr-2 inline-flex">
         <Button
           as="link"
           className="rounded-r-none"
@@ -67,12 +72,13 @@ export default function Header() {
           href={
             username
               ? `user/${username}?sort=top&t=all`
-              : `r/${subreddit}/top?t=all`
+              : `r/${subreddit}/top?t=day`
           }
         >
           Top
         </Button>
       </div>
+      {time ? <TimePopover /> : null}
     </header>
   );
 }

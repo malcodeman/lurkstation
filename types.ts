@@ -1,5 +1,7 @@
 export type Sort = "hot" | "new" | "top" | "controversial";
 
+export type Time = "hour" | "day" | "week" | "month" | "year" | "all";
+
 export type Post = {
   kind: string;
   data: {

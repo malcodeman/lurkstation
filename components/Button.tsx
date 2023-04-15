@@ -10,18 +10,24 @@ type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 export const Button = forwardRef(
   (props: Props, ref: ForwardedRef<HTMLButtonElement>) => {
     const { as, href, children, className, ...rest } = props;
-    const styles = `rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-shadow hover:bg-gray-50 focus:ring-2 focus:ring-blue-600 dark:bg-white/10 dark:text-white dark:ring-white/10 dark:hover:bg-white/20 ${className}`;
 
     switch (as) {
       case "link":
         return (
-          <Link className={styles} href={href || ""}>
+          <Link
+            className={`rounded bg-white px-2 py-1 text-sm text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 transition-shadow hover:bg-gray-50 focus:ring-2 focus:ring-blue-600 dark:bg-white/10 dark:text-white dark:ring-white/10 dark:hover:bg-white/20 ${className}`}
+            href={href || ""}
+          >
             {children}
           </Link>
         );
       default:
         return (
-          <button ref={ref} className={styles} {...rest}>
+          <button
+            ref={ref}
+            className={`rounded bg-white px-2 py-1 text-sm text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 transition-shadow hover:bg-gray-50 focus:ring-2 focus:ring-blue-600 dark:bg-white/10 dark:text-white dark:ring-white/10 dark:hover:bg-white/20 ${className}`}
+            {...rest}
+          >
             {children}
           </button>
         );
