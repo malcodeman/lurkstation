@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { DEFAULT_SUBREDDIT } from "../lib/constants";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
+import { GiAtSea } from "react-icons/gi";
 
 const defaultValues = {
   subreddit: "",
@@ -38,7 +39,8 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 z-10 flex w-full items-center border-b bg-white p-2  dark:border-b-slate-50/10 dark:bg-gray-900">
-      <Link href="/" className="mr-2 text-sm font-semibold">
+      <Link href="/" className="mr-2 flex items-center text-sm font-semibold">
+        <GiAtSea size="16" className="mr-1" />
         lurkstation
       </Link>
       <form className="mr-2" onSubmit={form.handleSubmit(handleOnSubmit)}>
