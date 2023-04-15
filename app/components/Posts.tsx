@@ -1,14 +1,14 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { map } from "ramda";
+import { map, toString, equals } from "ramda";
 import { useIntersectionObserver } from "@react-hookz/web";
 import Post from "@/app/components/Post";
 import { Sort } from "@/types";
 import { FiLoader } from "react-icons/fi";
 
 const getSubreddit = async (props: {
-  pageParam?: {
+  pageParam: {
     subreddit: string;
     sort: Sort;
     time: string | null;
@@ -16,17 +16,28 @@ const getSubreddit = async (props: {
   };
 }) => {
   const { pageParam } = props;
-  if (!pageParam) {
-    return { children: [], after: null };
+  const url = `/api/${pageParam.subreddit}/${pageParam.sort}`;
+  const searchParams = new URLSearchParams();
+
+  if (pageParam.time) {
+    searchParams.append("t", pageParam.time);
   }
-  const resp = await fetch(
-    `/api/${pageParam.subreddit}/${pageParam.sort}?t=${pageParam.time}&after=${pageParam.after}`
-  );
-  return resp.json();
+
+  if (pageParam.after) {
+    searchParams.append("after", pageParam.after);
+  }
+
+  if (equals(toString(searchParams), "")) {
+    const response = await fetch(url);
+    return response.json();
+  }
+
+  const response = await fetch(`${url}?${searchParams}`);
+  return response.json();
 };
 
 const getUser = async (props: {
-  pageParam?: {
+  pageParam: {
     username: string;
     sort: Sort;
     time: string | null;
@@ -34,13 +45,28 @@ const getUser = async (props: {
   };
 }) => {
   const { pageParam } = props;
-  if (!pageParam) {
-    return { children: [], after: null };
+  const url = `/api/user/${pageParam.username}/submitted`;
+  const searchParams = new URLSearchParams();
+
+  if (pageParam.sort) {
+    searchParams.append("sort", pageParam.sort);
   }
-  const resp = await fetch(
-    `/api/user/${pageParam.username}/submitted/?sort=${pageParam.sort}&t=${pageParam.time}&after=${pageParam.after}`
-  );
-  return resp.json();
+
+  if (pageParam.time) {
+    searchParams.append("t", pageParam.time);
+  }
+
+  if (pageParam.after) {
+    searchParams.append("after", pageParam.after);
+  }
+
+  if (equals(toString(searchParams), "")) {
+    const response = await fetch(url);
+    return response.json();
+  }
+
+  const response = await fetch(`${url}?${searchParams}`);
+  return response.json();
 };
 
 type Props = {
@@ -60,8 +86,28 @@ export default function Posts(props: Props) {
     fetchNextPage,
   } = useInfiniteQuery({
     queryKey,
-    queryFn: isPosts ? getSubreddit : getUser,
+    queryFn: ({ pageParam }) =>
+      isPosts
+        ? getSubreddit({
+            pageParam: {
+              subreddit: queryKey[1],
+              sort: queryKey[2],
+              time: queryKey[3],
+              ...pageParam,
+            },
+          })
+        : getUser({
+            pageParam: {
+              username: queryKey[1],
+              sort: queryKey[2],
+              time: queryKey[3],
+              ...pageParam,
+            },
+          }),
     getNextPageParam: ({ after }) => {
+      if (!after) {
+        return undefined;
+      }
       return { ...getNextPageParamReturn, after };
     },
   });
