@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { length, map } from "ramda";
 import { FiX } from "react-icons/fi";
+import { useKeyboardEvent } from "@react-hookz/web";
 import { Options } from "./Options";
 import { Details } from "./Details";
 
@@ -26,9 +27,7 @@ export default function Post() {
   const mediaClassName = "h-full w-full object-cover md:object-contain md:p-2";
   const router = useRouter();
 
-  if (!post) {
-    return null;
-  }
+  useKeyboardEvent("Escape", () => router.back(), []);
 
   const renderAuthor = (author: string) => {
     if (author === "[deleted]") {
@@ -40,6 +39,10 @@ export default function Post() {
       </Link>
     );
   };
+
+  if (!post) {
+    return null;
+  }
 
   return (
     <main className="mt-[45px] md:grid md:h-[calc(100vh_-_45px)] md:grid-cols-[1fr_365px] md:gap-2">
