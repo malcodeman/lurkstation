@@ -1,11 +1,12 @@
 import { RedditPost, RedditComment } from "@/types";
 import { parse } from "path";
-import { equals, filter, includes, replace } from "ramda";
+import { equals, filter, includes, map, replace } from "ramda";
 
 import {
   SUPPORTED_FILE_EXTENSIONS,
   SUPPORTED_VIDEO_EXTENSIONS,
 } from "./constants";
+import { getGif } from "./redgifs";
 
 export const getExtension = (path: string) => {
   return parse(path).ext;
@@ -15,25 +16,37 @@ export const parseGifv = (url: string) => {
   return replace("gifv", "mp4", url);
 };
 
-const parseVideoUrl = (url: string) => {
-  switch (getExtension(url)) {
-    case ".gifv":
-      return parseGifv(url);
-    default:
-      return url;
-  }
+const parseRedgifs = async (url: string) => {
+  const { pathname } = new URL(url);
+  const response = await getGif(replace("/watch/", "", pathname));
+  return response?.gif.urls.hd;
 };
 
-export const parsePost = (post: RedditPost) => {
+const parseVideoUrl = (url: string) => {
+  if (getExtension(url) === ".gifv") {
+    return parseGifv(url);
+  }
+
+  if (includes("https://www.redgifs.com/watch/", url)) {
+    return parseRedgifs(url);
+  }
+
+  return url;
+};
+
+export const parsePost = async (post: RedditPost) => {
   const { url } = post.data;
 
-  if (includes(getExtension(url), SUPPORTED_VIDEO_EXTENSIONS)) {
+  if (
+    includes(getExtension(url), SUPPORTED_VIDEO_EXTENSIONS) ||
+    includes("https://www.redgifs.com/watch/", url)
+  ) {
     return {
       ...post,
       data: {
         ...post.data,
         is_video: true,
-        url: parseVideoUrl(url),
+        url: await parseVideoUrl(url),
       },
     };
   }
@@ -46,6 +59,7 @@ export const parsePosts = (posts: RedditPost[]) => {
     (item) =>
       includes(getExtension(item.data.url), SUPPORTED_FILE_EXTENSIONS) ||
       equals(item.data.is_gallery, true),
+    // includes("https://www.redgifs.com/watch/", item.data.url),
     posts
   );
 };

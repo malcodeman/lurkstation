@@ -4,6 +4,7 @@ import { concat } from "ramda";
 export const REDDIT_API = "https://www.reddit.com";
 export const DEFAULT_SUBREDDIT = "Art";
 export const DEFAULT_SORT = "hot";
+export const REDGIFS_API = "https://api.redgifs.com";
 
 export const FATHOM_SITE_ID = "JKBIIIAG";
 export const FATHOM_INCLUDED_DOMAINS = [
