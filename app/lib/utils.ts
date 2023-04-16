@@ -1,4 +1,4 @@
-import { Post } from "@/types";
+import { Post, Comment } from "@/types";
 import { parse } from "path";
 import { filter, includes, replace } from "ramda";
 
@@ -43,5 +43,16 @@ export const parsePosts = (posts: Post[]) => {
   return filter(
     (item) => includes(getExtension(item.data.url), SUPPORTED_FILE_EXTENSIONS),
     posts
+  );
+};
+
+export const parseComments = (comments: Comment[]) => {
+  return filter(
+    (item) =>
+      item.kind !== "more" &&
+      item.data.author !== "AutoModerator" &&
+      item.data.body !== "[removed]" &&
+      item.data.body !== "[deleted]",
+    comments
   );
 };

@@ -1,8 +1,7 @@
 import { REDDIT_API } from "@/app/lib/constants";
-import { parsePost } from "@/app/lib/utils";
+import { parseComments, parsePost } from "@/app/lib/utils";
 import { Post, Comment } from "@/types";
 import { NextResponse } from "next/server";
-import { filter } from "ramda";
 
 type Params = {
   id: string;
@@ -22,14 +21,7 @@ export async function GET(_request: Request, { params }: { params: Params }) {
     }
 
     const post = parsePost(data[0].data.children[0]);
-    const comments = filter(
-      (item) =>
-        item.kind !== "more" &&
-        item.data.author !== "AutoModerator" &&
-        item.data.body !== "[removed]" &&
-        item.data.body !== "[deleted]",
-      data[1].data.children
-    );
+    const comments = parseComments(data[1].data.children);
 
     return NextResponse.json({ post, comments });
   } catch (error) {
