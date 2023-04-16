@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { concat } from "ramda";
 
 export const REDDIT_API = "https://www.reddit.com";
-export const DEFAULT_SUBREDDIT = "art";
+export const DEFAULT_SUBREDDIT = "Art";
 export const DEFAULT_SORT = "hot";
 
 export const FATHOM_SITE_ID = "JKBIIIAG";
