@@ -1,8 +1,8 @@
 import { REDDIT_API } from "@/app/lib/constants";
-import { getExtension, parsePost } from "@/app/lib/utils";
+import { parsePost, parsePosts } from "@/app/lib/utils";
 import { Post, Sort } from "@/types";
 import { NextResponse } from "next/server";
-import { filter, map, isEmpty, not } from "ramda";
+import { map } from "ramda";
 
 type Params = {
   username: string;
@@ -35,10 +35,7 @@ export async function GET(request: Request, { params }: { params: Params }) {
       throw new Error(data.message);
     }
 
-    const filtered = filter(
-      (item) => not(isEmpty(getExtension(item.data.url))),
-      data.data.children
-    );
+    const filtered = parsePosts(data.data.children);
     const posts = map((item) => parsePost(item), filtered);
     return NextResponse.json({ ...data.data, children: posts });
   } catch (error) {
