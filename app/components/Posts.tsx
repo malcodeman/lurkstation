@@ -77,40 +77,34 @@ type Props = {
 export default function Posts(props: Props) {
   const { queryKey, getNextPageParamReturn } = props;
   const isPosts = queryKey[0] === "posts";
-  const {
-    data,
-    hasNextPage,
-    isFetching,
-    isError,
-    isFetchingNextPage,
-    fetchNextPage,
-  } = useInfiniteQuery({
-    queryKey,
-    queryFn: ({ pageParam }) =>
-      isPosts
-        ? getSubreddit({
-            pageParam: {
-              subreddit: queryKey[1],
-              sort: queryKey[2],
-              time: queryKey[3],
-              ...pageParam,
-            },
-          })
-        : getUser({
-            pageParam: {
-              username: queryKey[1],
-              sort: queryKey[2],
-              time: queryKey[3],
-              ...pageParam,
-            },
-          }),
-    getNextPageParam: ({ after }) => {
-      if (!after) {
-        return undefined;
-      }
-      return { ...getNextPageParamReturn, after };
-    },
-  });
+  const { data, hasNextPage, isFetching, isError, fetchNextPage } =
+    useInfiniteQuery({
+      queryKey,
+      queryFn: ({ pageParam }) =>
+        isPosts
+          ? getSubreddit({
+              pageParam: {
+                subreddit: queryKey[1],
+                sort: queryKey[2],
+                time: queryKey[3],
+                ...pageParam,
+              },
+            })
+          : getUser({
+              pageParam: {
+                username: queryKey[1],
+                sort: queryKey[2],
+                time: queryKey[3],
+                ...pageParam,
+              },
+            }),
+      getNextPageParam: ({ after }) => {
+        if (!after) {
+          return undefined;
+        }
+        return { ...getNextPageParamReturn, after };
+      },
+    });
   const pages = data?.pages || [];
   const elementRef = useRef<HTMLDivElement>(null);
   const intersection = useIntersectionObserver(elementRef, {
@@ -136,7 +130,10 @@ export default function Posts(props: Props) {
 
   return (
     <div>
-      <main className="mt-[45px] grid auto-rows-auto grid-cols-[1fr_1fr_1fr] md:auto-rows-[280px] md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]">
+      <main
+        data-testid="posts-grid"
+        className="mt-[45px] grid auto-rows-auto grid-cols-[1fr_1fr_1fr] md:auto-rows-[280px] md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]"
+      >
         {map(
           (item) =>
             map(

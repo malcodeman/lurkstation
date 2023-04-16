@@ -61,7 +61,9 @@ export default function TimePopover() {
   const sortSearchParam = searchParams.get("sort");
   return (
     <Popover>
-      <PopoverButton>{renderTimeLabel(time || "")}</PopoverButton>
+      <PopoverButton data-testid="time-popover-button">
+        {renderTimeLabel(time || "")}
+      </PopoverButton>
       <PopoverPanel>
         {map(
           (item) => (
@@ -74,6 +76,7 @@ export default function TimePopover() {
                   : `r/${subreddit}/${sort}?t=${item.value}`
               }
               className="block truncate px-2 py-1 outline-none transition-all hover:text-blue-600 focus:ring-2 focus:ring-blue-600"
+              data-testid={`time-popover-panel-link-${item.value}`}
             >
               {item.label}
             </HeadlessPopover.Button>

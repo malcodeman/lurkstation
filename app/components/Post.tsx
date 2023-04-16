@@ -12,7 +12,7 @@ export default function Post(props: Props) {
   const { url, isVideo, href } = props;
 
   return (
-    <Link href={href}>
+    <Link href={href} data-testid="post">
       <div className="relative aspect-square h-full w-full">
         {isVideo ? (
           <video src={url} className="h-full w-full object-cover" />

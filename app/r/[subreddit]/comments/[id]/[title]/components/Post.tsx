@@ -72,6 +72,7 @@ export default function Post() {
           <div className="flex items-center">
             {renderAuthor(post.author)}
             <FiX
+              data-testid="x-icon"
               className="ml-auto cursor-pointer"
               onClick={() => router.back()}
             />

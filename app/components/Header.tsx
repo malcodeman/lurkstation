@@ -49,13 +49,18 @@ export default function Header() {
         lurkstation
       </Link>
       <form className="mr-2" onSubmit={form.handleSubmit(handleOnSubmit)}>
-        <Input type="text" {...form.register("subreddit")} />
+        <Input
+          type="text"
+          data-testid="subreddit-input"
+          {...form.register("subreddit")}
+        />
       </form>
       <div className="mr-2 inline-flex">
         <Button
           as="link"
           className="rounded-r-none"
           href={username ? `user/${username}?sort=hot` : `r/${subreddit}/hot`}
+          data-testid="sort-hot-link"
         >
           Hot
         </Button>
@@ -63,6 +68,7 @@ export default function Header() {
           as="link"
           className="rounded-l-none rounded-r-none"
           href={username ? `user/${username}?sort=new` : `r/${subreddit}/new`}
+          data-testid="sort-new-link"
         >
           New
         </Button>
@@ -74,6 +80,7 @@ export default function Header() {
               ? `user/${username}?sort=top&t=all`
               : `r/${subreddit}/top?t=day`
           }
+          data-testid="sort-top-link"
         >
           Top
         </Button>

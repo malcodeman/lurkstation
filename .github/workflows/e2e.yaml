@@ -1,0 +1,23 @@
+name: E2E on Chrome
+
+on:
+  pull_request:
+    types: [opened, reopened]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v5.6.1
+        with:
+          browser: chrome
+          build: yarn build
+          start: yarn start
+          wait-on: "http://localhost:3000"
