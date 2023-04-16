@@ -5,6 +5,13 @@ export const REDDIT_API = "https://www.reddit.com";
 export const DEFAULT_SUBREDDIT = "art";
 export const DEFAULT_SORT = "hot";
 
+export const FATHOM_SITE_ID = "JKBIIIAG";
+export const FATHOM_INCLUDED_DOMAINS = [
+  "lurkstation.com",
+  "www.lurkstation.com",
+];
+export const IS_PROD = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+
 const TITLE = "Lurkstation";
 const DESCRIPTION = "The best way to experience Reddit content.";
 const URL = "https://www.lurkstation.com";

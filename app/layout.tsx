@@ -5,6 +5,8 @@ import { METADATA } from "@/app/lib/constants";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import Fathom from "./components/Fathom";
+
 export const metadata = {
   ...METADATA,
 };
@@ -15,6 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
       <body className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
+        <Fathom />
         <QueryProvider>
           <Header />
           {children}
