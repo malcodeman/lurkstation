@@ -73,7 +73,7 @@ export default function TimePopover() {
                   ? `user/${username}?sort=${sortSearchParam}&t=${item.value}`
                   : `r/${subreddit}/${sort}?t=${item.value}`
               }
-              className="block truncate px-2 py-1 hover:text-blue-600"
+              className="block truncate px-2 py-1 outline-none transition-all hover:text-blue-600 focus:ring-2 focus:ring-blue-600"
             >
               {item.label}
             </HeadlessPopover.Button>
