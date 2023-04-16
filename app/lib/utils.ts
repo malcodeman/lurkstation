@@ -1,6 +1,6 @@
 import { RedditPost, RedditComment } from "@/types";
 import { parse } from "path";
-import { filter, includes, replace } from "ramda";
+import { equals, filter, includes, replace } from "ramda";
 
 import {
   SUPPORTED_FILE_EXTENSIONS,
@@ -45,7 +45,7 @@ export const parsePosts = (posts: RedditPost[]) => {
   return filter(
     (item) =>
       includes(getExtension(item.data.url), SUPPORTED_FILE_EXTENSIONS) ||
-      includes("https://www.reddit.com/gallery", item.data.url),
+      equals(item.data.is_gallery, true),
     posts
   );
 };

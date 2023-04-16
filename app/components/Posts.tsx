@@ -149,6 +149,7 @@ export default function Posts(props: Props) {
                     url={item.data.is_gallery ? gallery[0] : item.data.url}
                     isVideo={item.data.is_video}
                     href={item.data.permalink}
+                    isGallery={item.data.is_gallery}
                   />
                 );
               },
