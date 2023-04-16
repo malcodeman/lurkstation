@@ -1,20 +1,18 @@
 import { REDDIT_API } from "@/app/lib/constants";
 import { parseComments, parsePost } from "@/app/lib/utils";
-import { Post, Comment } from "@/types";
+import { CommentTree } from "@/types";
 import { NextResponse } from "next/server";
 
 type Params = {
   id: string;
 };
-type Data = [
-  { kind: string; data: { children: Post[] } },
-  { kind: string; data: { children: Comment[] } }
-];
 
 export async function GET(_request: Request, { params }: { params: Params }) {
   try {
-    const response = await fetch(`${REDDIT_API}/comments/${params.id}.json`);
-    const data: Data = await response.json();
+    const response = await fetch(
+      `${REDDIT_API}/comments/${params.id}.json?raw_json=1`
+    );
+    const data: CommentTree = await response.json();
 
     if (!response.ok) {
       throw new Error();

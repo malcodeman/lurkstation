@@ -1,10 +1,9 @@
 "use client";
-import { Post } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { length, map } from "ramda";
+import { length, map, values } from "ramda";
 import { FiX } from "react-icons/fi";
 import { useKeyboardEvent } from "@react-hookz/web";
 import { Options } from "./Options";
@@ -44,12 +43,15 @@ export default function Post() {
     return null;
   }
 
+  const gallery = map((item) => item.s.u, values(post.media_metadata));
+  const url = post.is_gallery ? gallery[0] : post.url;
+
   return (
     <main className="mt-[45px] md:grid md:h-[calc(100vh_-_45px)] md:grid-cols-[1fr_365px] md:gap-2">
       <div className="group relative aspect-square h-full w-full overflow-y-hidden">
         {post.is_video ? (
           <video
-            src={post.url}
+            src={url}
             controls
             loop
             autoPlay
@@ -57,15 +59,9 @@ export default function Post() {
             className={mediaClassName}
           />
         ) : (
-          <Image
-            src={post.url}
-            alt=""
-            fill
-            priority
-            className={mediaClassName}
-          />
+          <Image src={url} alt="" fill priority className={mediaClassName} />
         )}
-        <Options url={post.url} filename={post.id} />
+        <Options url={url} filename={post.id} />
       </div>
       <div className="overflow-y-auto bg-white p-2 dark:bg-[#111827]">
         <div className="mb-4 border-b pb-4 dark:border-slate-50/10">

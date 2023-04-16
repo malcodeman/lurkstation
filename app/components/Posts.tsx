@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { map, toString, equals } from "ramda";
+import { map, toString, equals, values } from "ramda";
 import { useIntersectionObserver } from "@react-hookz/web";
 import Post from "@/app/components/Post";
 import { Sort } from "@/types";
@@ -137,14 +137,22 @@ export default function Posts(props: Props) {
         {map(
           (item) =>
             map(
-              (item) => (
-                <Post
-                  key={item.data.id}
-                  url={item.data.url}
-                  isVideo={item.data.is_video}
-                  href={item.data.permalink}
-                />
-              ),
+              (item) => {
+                const gallery = map(
+                  (item) => item.s.u,
+                  values(item.data.media_metadata)
+                );
+
+                return (
+                  <Post
+                    key={item.data.id}
+                    url={item.data.is_gallery ? gallery[0] : item.data.url}
+                    isVideo={item.data.is_video}
+                    href={item.data.permalink}
+                  />
+                );
+              },
+
               item.children
             ),
           pages

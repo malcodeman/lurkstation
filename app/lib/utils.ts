@@ -1,4 +1,4 @@
-import { Post, Comment } from "@/types";
+import { RedditPost, RedditComment } from "@/types";
 import { parse } from "path";
 import { filter, includes, replace } from "ramda";
 
@@ -24,8 +24,9 @@ const parseVideoUrl = (url: string) => {
   }
 };
 
-export const parsePost = (post: Post): Post => {
+export const parsePost = (post: RedditPost) => {
   const { url } = post.data;
+
   if (includes(getExtension(url), SUPPORTED_VIDEO_EXTENSIONS)) {
     return {
       ...post,
@@ -36,17 +37,20 @@ export const parsePost = (post: Post): Post => {
       },
     };
   }
+
   return post;
 };
 
-export const parsePosts = (posts: Post[]) => {
+export const parsePosts = (posts: RedditPost[]) => {
   return filter(
-    (item) => includes(getExtension(item.data.url), SUPPORTED_FILE_EXTENSIONS),
+    (item) =>
+      includes(getExtension(item.data.url), SUPPORTED_FILE_EXTENSIONS) ||
+      includes("https://www.reddit.com/gallery", item.data.url),
     posts
   );
 };
 
-export const parseComments = (comments: Comment[]) => {
+export const parseComments = (comments: RedditComment[]) => {
   return filter(
     (item) =>
       item.kind !== "more" &&

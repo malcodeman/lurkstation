@@ -1,4 +1,3 @@
-import { Post } from "@/types";
 import Link from "next/link";
 import { FiVideo, FiImage } from "react-icons/fi";
 
