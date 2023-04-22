@@ -76,7 +76,7 @@ type Props = {
 
 export default function Posts(props: Props) {
   const { queryKey, getNextPageParamReturn } = props;
-  const isPosts = queryKey[0] === "posts";
+  const isPosts = equals(queryKey[0], "posts");
   const { data, hasNextPage, isFetching, isError, fetchNextPage } =
     useInfiniteQuery({
       queryKey,

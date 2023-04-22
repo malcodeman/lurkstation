@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { concat } from "ramda";
+import { concat, equals } from "ramda";
 
 export const REDDIT_API = "https://www.reddit.com";
 export const DEFAULT_SUBREDDIT = "Art";
@@ -10,7 +10,7 @@ export const FATHOM_INCLUDED_DOMAINS = [
   "lurkstation.com",
   "www.lurkstation.com",
 ];
-export const IS_PROD = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+export const IS_PROD = equals(process.env.NEXT_PUBLIC_VERCEL_ENV, "production");
 
 const TITLE = "Lurkstation";
 const DESCRIPTION = "The best way to experience Reddit content.";

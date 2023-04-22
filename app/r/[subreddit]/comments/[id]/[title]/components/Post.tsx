@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { length, map, values } from "ramda";
+import { equals, length, map, values } from "ramda";
 import { FiX } from "react-icons/fi";
 import { useKeyboardEvent } from "@react-hookz/web";
 import { Options } from "./Options";
@@ -29,7 +29,7 @@ export default function Post() {
   useKeyboardEvent("Escape", () => router.back(), []);
 
   const renderAuthor = (author: string) => {
-    if (author === "[deleted]") {
+    if (equals(author, "[deleted]")) {
       return <span className="text-xs">[deleted]</span>;
     }
     return (
