@@ -47,7 +47,7 @@ export default function Post() {
   const url = post.is_gallery ? gallery[0] : post.url;
 
   return (
-    <main className="mt-[45px] md:grid md:h-[calc(100vh_-_45px)] md:grid-cols-[1fr_365px] md:gap-2">
+    <main className="sm:mt-[45px] md:grid md:h-[calc(100vh_-_45px)] md:grid-cols-[1fr_365px] md:gap-2">
       {post.is_gallery ? (
         <div className="flex flex-col">
           {map(

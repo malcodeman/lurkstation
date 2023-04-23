@@ -43,7 +43,7 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed top-0 z-10 flex w-full items-center border-b bg-white p-2  dark:border-b-slate-50/10 dark:bg-gray-900">
+    <header className="fixed bottom-0 z-10 flex w-full items-center border-b bg-white p-2 dark:border-b-slate-50/10 dark:bg-gray-900 sm:bottom-auto sm:top-0">
       <Link href="/" className="mr-2 flex items-center text-sm font-semibold">
         <GiAtSea className="mr-1" />
         lurkstation
