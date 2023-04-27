@@ -20,7 +20,7 @@ export default function ServerError(props: Props) {
   };
 
   return (
-    <div className="flex h-[calc(100vh_-_45px)] flex-col items-center justify-center p-4">
+    <div className="flex h-[calc(100vh_-_49px)] flex-col items-center justify-center p-4">
       <h2 className="mb-4 text-lg">{getMessage(statusCode)}</h2>
       <Button as="link" href="/">
         Go home

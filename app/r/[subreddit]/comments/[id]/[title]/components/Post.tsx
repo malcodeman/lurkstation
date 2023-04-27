@@ -47,7 +47,7 @@ export default function Post() {
   const url = post.is_gallery ? gallery[0] : post.url;
 
   return (
-    <main className="sm:mt-[45px] md:grid md:h-[calc(100vh_-_45px)] md:grid-cols-[1fr_365px] md:gap-2">
+    <main className="sm:mt-[49px] md:grid md:h-[calc(100vh_-_49px)] md:grid-cols-[1fr_365px] md:gap-2">
       {post.is_gallery ? (
         <div className="flex flex-col">
           {map(
@@ -87,7 +87,7 @@ export default function Post() {
         </div>
       )}
       <div>
-        <div className="overflow-y-auto bg-white p-2 dark:bg-[#111827] md:sticky md:top-[45px] md:h-[calc(100vh_-_45px)]">
+        <div className="overflow-y-auto bg-white p-2 dark:bg-[#111827] md:sticky md:top-[49px] md:h-[calc(100vh_-_49px)]">
           <div className="mb-4 border-b pb-4 dark:border-slate-50/10">
             <div className="flex items-center">
               {renderAuthor(post.author)}
