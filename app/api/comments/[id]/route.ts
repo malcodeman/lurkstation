@@ -24,8 +24,12 @@ export async function GET(_request: Request, { params }: { params: Params }) {
     return NextResponse.json({ post, comments });
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ message: error.message, name: error.name });
+      return new Response(error.message, {
+        status: 500,
+      });
     }
-    return NextResponse.json({ message: "", name: "" });
+    return new Response("Internal", {
+      status: 500,
+    });
   }
 }

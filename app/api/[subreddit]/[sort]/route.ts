@@ -40,8 +40,12 @@ export async function GET(request: Request, { params }: { params: Params }) {
     return NextResponse.json({ ...data.data, children: posts });
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ message: error.message, name: error.name });
+      return new Response(error.message, {
+        status: 500,
+      });
     }
-    return NextResponse.json({ message: "", name: "" });
+    return new Response("Internal", {
+      status: 500,
+    });
   }
 }

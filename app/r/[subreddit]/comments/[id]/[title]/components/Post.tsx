@@ -101,7 +101,7 @@ export default function Post() {
             <Details ups={post.ups} createdAt={post.created_utc} />
           </div>
           <div>
-            <h2 className="text-l">{length(comments)} comments</h2>
+            <h2 className="text-lg">{length(comments)} comments</h2>
             <div>
               {map(
                 (item) => (
