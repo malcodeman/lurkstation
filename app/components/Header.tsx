@@ -44,7 +44,10 @@ export default function Header() {
 
   return (
     <header className="fixed bottom-0 z-10 flex w-full items-center border-t bg-white p-2 dark:border-b-slate-50/10 dark:border-t-slate-50/10 dark:bg-gray-900 sm:bottom-auto sm:top-0 sm:border-b sm:border-t-0">
-      <Link href="/" className="mr-2 flex items-center text-sm font-semibold">
+      <Link
+        href="/"
+        className="mr-2 hidden items-center text-sm font-semibold sm:flex"
+      >
         <GiAtSea className="mr-1" />
         lurkstation
       </Link>
@@ -55,7 +58,7 @@ export default function Header() {
           {...form.register("subreddit")}
         />
       </form>
-      <div className="mr-2 inline-flex">
+      <div className={time ? "mr-2 inline-flex" : "inline-flex"}>
         <Button
           as="link"
           className="rounded-r-none"
