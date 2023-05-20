@@ -44,7 +44,11 @@ export default function Header() {
 
   return (
     <header className="fixed bottom-0 z-10 flex w-full items-center border-t bg-white p-2 dark:border-b-slate-50/10 dark:border-t-slate-50/10 dark:bg-gray-900 sm:bottom-auto sm:top-0 sm:border-b sm:border-t-0">
-      <Link href="/" className="mr-2 flex items-center text-sm font-semibold">
+      <Link
+        href="/"
+        className="mr-2 flex items-center text-sm font-semibold"
+        aria-label="home"
+      >
         <GiAtSea size={16} className="sm:mr-1" />
         <span className="hidden sm:inline">lurkstation</span>
       </Link>
@@ -52,6 +56,7 @@ export default function Header() {
         <Input
           type="text"
           data-testid="subreddit-input"
+          aria-label="subreddit"
           {...form.register("subreddit")}
         />
       </form>
