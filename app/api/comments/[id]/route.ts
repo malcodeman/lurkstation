@@ -18,7 +18,7 @@ export async function GET(_request: Request, { params }: { params: Params }) {
       throw new Error();
     }
 
-    const post = parsePost(data[0].data.children[0]);
+    const post = await parsePost(data[0].data.children[0]);
     const comments = parseComments(data[1].data.children);
 
     return NextResponse.json({ post, comments });

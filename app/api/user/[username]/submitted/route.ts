@@ -36,7 +36,7 @@ export async function GET(request: Request, { params }: { params: Params }) {
     }
 
     const filtered = parsePosts(data.data.children);
-    const posts = map((item) => parsePost(item), filtered);
+    const posts = await Promise.all(map((item) => parsePost(item), filtered));
 
     return NextResponse.json({ ...data.data, children: posts });
   } catch (error) {
