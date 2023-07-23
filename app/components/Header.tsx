@@ -64,7 +64,7 @@ export default function Header() {
         <Button
           as="link"
           className="rounded-r-none"
-          href={username ? `user/${username}?sort=hot` : `r/${subreddit}/hot`}
+          href={username ? `/user/${username}?sort=hot` : `/r/${subreddit}/hot`}
           data-testid="sort-hot-link"
         >
           Hot
@@ -72,7 +72,7 @@ export default function Header() {
         <Button
           as="link"
           className="rounded-l-none rounded-r-none"
-          href={username ? `user/${username}?sort=new` : `r/${subreddit}/new`}
+          href={username ? `/user/${username}?sort=new` : `/r/${subreddit}/new`}
           data-testid="sort-new-link"
         >
           New
@@ -82,8 +82,8 @@ export default function Header() {
           className="rounded-l-none"
           href={
             username
-              ? `user/${username}?sort=top&t=all`
-              : `r/${subreddit}/top?t=day`
+              ? `/user/${username}?sort=top&t=all`
+              : `/r/${subreddit}/top?t=day`
           }
           data-testid="sort-top-link"
         >

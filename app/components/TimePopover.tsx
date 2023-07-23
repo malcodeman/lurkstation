@@ -72,8 +72,8 @@ export default function TimePopover() {
               key={item.value}
               href={
                 username
-                  ? `user/${username}?sort=${sortSearchParam}&t=${item.value}`
-                  : `r/${subreddit}/${sort}?t=${item.value}`
+                  ? `/user/${username}?sort=${sortSearchParam}&t=${item.value}`
+                  : `/r/${subreddit}/${sort}?t=${item.value}`
               }
               className="block truncate px-2.5 py-1.5 text-sm outline-none transition-all hover:text-blue-600 focus:ring-2 focus:ring-blue-600"
               data-testid={`time-popover-panel-link-${item.value}`}
