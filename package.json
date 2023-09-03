@@ -16,7 +16,7 @@
     "@headlessui/react": "^1.7.14",
     "@react-hookz/web": "^23.0.0",
     "@tanstack/react-query": "^4.28.0",
-    "date-fns": "^2.29.3",
+    "date-fns": "^2.30.0",
     "fathom-client": "^3.5.0",
     "file-saver": "^2.0.5",
     "next": "^13.4.8",
