@@ -1,6 +1,5 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { equals, length, map, values } from "ramda";
@@ -23,7 +22,8 @@ export default function Post() {
   });
   const post = data?.post.data;
   const comments = data?.comments;
-  const mediaClassName = "h-full w-full object-cover md:object-contain md:p-2";
+  const mediaClassName =
+    "absolute h-full w-full object-cover md:object-contain md:p-2";
   const router = useRouter();
 
   useKeyboardEvent("Escape", () => router.back(), []);
@@ -56,13 +56,7 @@ export default function Post() {
                 key={item}
                 className="group relative aspect-square h-full w-full overflow-y-hidden md:aspect-video"
               >
-                <Image
-                  src={item}
-                  alt=""
-                  fill
-                  priority
-                  className={mediaClassName}
-                />
+                <img src={item} alt="" className={mediaClassName} />
                 <Options url={item} filename={post.id} />
               </div>
             ),
@@ -81,7 +75,7 @@ export default function Post() {
               className={mediaClassName}
             />
           ) : (
-            <Image src={url} alt="" fill priority className={mediaClassName} />
+            <img src={url} alt="" className={mediaClassName} />
           )}
           <Options url={url} filename={post.id} />
         </div>
