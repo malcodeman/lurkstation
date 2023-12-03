@@ -15,25 +15,19 @@ export const parseGifv = (url: string) => {
   return replace("gifv", "mp4", url);
 };
 
-const parseVideoUrl = (url: string) => {
-  switch (getExtension(url)) {
-    case ".gifv":
-      return parseGifv(url);
-    default:
-      return url;
-  }
-};
-
 export const parsePost = (post: RedditPost) => {
   const { url } = post.data;
+  const extension = getExtension(url);
 
-  if (includes(getExtension(url), SUPPORTED_VIDEO_EXTENSIONS)) {
+  if (includes(extension, SUPPORTED_VIDEO_EXTENSIONS)) {
     return {
       ...post,
       data: {
         ...post.data,
         is_video: true,
-        url: parseVideoUrl(url),
+        url: equals(extension, ".gifv")
+          ? post.data.preview.reddit_video_preview?.fallback_url
+          : url,
       },
     };
   }

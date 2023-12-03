@@ -18,6 +18,20 @@ export type RedditPost = {
         };
       };
     };
+    preview: {
+      reddit_video_preview?: {
+        bitrate_kbps: number;
+        dash_url: string;
+        duration: number;
+        fallback_url: string;
+        height: number;
+        hls_url: string;
+        is_gif: boolean;
+        scrubber_media_url: string;
+        transcoding_status: string;
+        width: number;
+      };
+    };
   };
 };
 
