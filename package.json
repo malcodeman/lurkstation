@@ -28,9 +28,9 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
-    "@types/node": "^18.15.11",
+    "@types/node": "^20.10.4",
     "@types/ramda": "^0.28.24",
-    "@types/react": "^18.0.33",
+    "@types/react": "^18.2.43",
     "autoprefixer": "^10.4.14",
     "cypress": "^12.9.0",
     "eslint": "^8.38.0",
@@ -39,6 +39,6 @@
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.7",
     "tailwindcss": "^3.3.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.3.3"
   }
 }
