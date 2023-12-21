@@ -8,16 +8,7 @@ export default function Sort(props: Props) {
   const { params } = props;
   const subreddit = params.subreddit;
   const sort = "hot";
-  const getNextPageParamReturn = {
-    subreddit,
-    sort,
-  };
   const queryKey = ["posts", subreddit, sort];
 
-  return (
-    <Posts
-      queryKey={queryKey}
-      getNextPageParamReturn={getNextPageParamReturn}
-    />
-  );
+  return <Posts queryKey={queryKey} />;
 }

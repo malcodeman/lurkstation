@@ -10,17 +10,7 @@ export default function User(props: Props) {
   const username = params.username;
   const sort = searchParams.sort;
   const time = searchParams.t;
-  const getNextPageParamReturn = {
-    username,
-    sort,
-    time,
-  };
   const queryKey = ["users", username, sort, time];
 
-  return (
-    <Posts
-      queryKey={queryKey}
-      getNextPageParamReturn={getNextPageParamReturn}
-    />
-  );
+  return <Posts queryKey={queryKey} />;
 }

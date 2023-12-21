@@ -26,7 +26,7 @@ export const parsePost = (post: RedditPost) => {
         ...post.data,
         is_video: true,
         url: equals(extension, ".gifv")
-          ? post.data.preview.reddit_video_preview?.fallback_url
+          ? post.data.preview?.reddit_video_preview?.fallback_url
           : url,
       },
     };
