@@ -98,6 +98,7 @@ export default function Posts(props: Props) {
                 subreddit: queryKey[1],
                 sort: queryKey[2],
                 time: queryKey[3],
+                // @ts-ignore
                 ...pageParam,
               },
             })
@@ -106,9 +107,11 @@ export default function Posts(props: Props) {
                 username: queryKey[1],
                 sort: queryKey[2],
                 time: queryKey[3],
+                // @ts-ignore
                 ...pageParam,
               },
             }),
+      // @ts-ignore
       getNextPageParam: ({ after }) => {
         if (!after) {
           return undefined;
@@ -169,7 +172,7 @@ export default function Posts(props: Props) {
                     />
                   );
                 },
-
+                // @ts-ignore
                 item.children
               ),
             pages
