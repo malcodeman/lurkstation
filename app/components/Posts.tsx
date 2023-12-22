@@ -159,12 +159,9 @@ export default function Posts(props: Props) {
   return (
     <div>
       {isError ? (
-        <>
-          {JSON.stringify(error)}
-          <ServerError
-            statusCode={error instanceof Error ? error.message : "Internal"}
-          />
-        </>
+        <ServerError
+          statusCode={error instanceof Error ? error.message : "Internal"}
+        />
       ) : (
         <main
           data-testid="posts-grid"
