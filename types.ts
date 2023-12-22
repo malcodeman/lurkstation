@@ -18,7 +18,7 @@ export type RedditPost = {
         };
       };
     };
-    preview: {
+    preview?: {
       reddit_video_preview?: {
         bitrate_kbps: number;
         dash_url: string;
@@ -32,6 +32,7 @@ export type RedditPost = {
         width: number;
       };
     };
+    permalink: string;
   };
 };
 

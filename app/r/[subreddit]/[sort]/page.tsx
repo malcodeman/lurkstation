@@ -10,17 +10,7 @@ export default function Sort(props: Props) {
   const subreddit = params.subreddit;
   const sort = params.sort;
   const time = searchParams.t;
-  const getNextPageParamReturn = {
-    subreddit,
-    sort,
-    time,
-  };
   const queryKey = ["posts", subreddit, sort, time];
 
-  return (
-    <Posts
-      queryKey={queryKey}
-      getNextPageParamReturn={getNextPageParamReturn}
-    />
-  );
+  return <Posts queryKey={queryKey} />;
 }
