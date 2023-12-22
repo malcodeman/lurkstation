@@ -41,13 +41,13 @@ export async function GET(request: Request, { params }: { params: Params }) {
   } catch (error) {
     return NextResponse.json({ error });
 
-    if (error instanceof Error) {
-      return new Response(error.message, {
-        status: 500,
-      });
-    }
-    return new Response("Internal", {
-      status: 500,
-    });
+    // if (error instanceof Error) {
+    //   return new Response(error.message, {
+    //     status: 500,
+    //   });
+    // }
+    // return new Response("Internal", {
+    //   status: 500,
+    // });
   }
 }
