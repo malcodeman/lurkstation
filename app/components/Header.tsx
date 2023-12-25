@@ -10,6 +10,7 @@ import { GiAtSea } from "react-icons/gi";
 import { useSearchParams } from "next/navigation";
 
 import TimePopover from "./TimePopover";
+import { parseParam } from "../lib/utils";
 
 const defaultValues = {
   subreddit: "",
@@ -21,7 +22,7 @@ type Values = {
 
 export default function Header() {
   const params = useParams();
-  const subreddit = params.subreddit || DEFAULT_SUBREDDIT;
+  const subreddit = parseParam(params.subreddit) || DEFAULT_SUBREDDIT;
   const username = params.username;
   const searchParams = useSearchParams();
   const time = searchParams.get("t");

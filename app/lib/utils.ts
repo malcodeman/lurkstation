@@ -54,3 +54,7 @@ export const parseComments = (comments: RedditComment[]) => {
     comments
   );
 };
+
+export const parseParam = (param: string | string[]) => {
+  return Array.isArray(param) ? param[0] : param;
+};
