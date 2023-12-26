@@ -7,6 +7,7 @@ import { FiX } from "react-icons/fi";
 import { useKeyboardEvent } from "@react-hookz/web";
 import { Options } from "./Options";
 import { Details } from "./Details";
+import { parseParam } from "@/app/lib/utils";
 
 const getComments = async (id: string) => {
   const response = await fetch(`/api/comments/${id}`);
@@ -15,7 +16,7 @@ const getComments = async (id: string) => {
 
 export default function Post() {
   const params = useParams();
-  const id = params.id;
+  const id = parseParam(params.id);
   const { data } = useQuery({
     queryKey: ["post", id],
     queryFn: () => getComments(id),
