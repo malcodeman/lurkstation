@@ -6,8 +6,6 @@ test.describe("home", () => {
   });
 
   test("Search input", async ({ page, baseURL }) => {
-    await page.waitForResponse("**/api/Art/hot");
-
     const input = page.getByTestId("subreddit-input");
 
     await input.fill("pics");
