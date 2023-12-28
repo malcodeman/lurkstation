@@ -16,10 +16,7 @@ test.describe("home", () => {
 
   test("Time menu", async ({ page }) => {
     await page.click('[data-testid="sort-top-link"]');
-
-    const button = page.getByTestId("time-popover-button");
-
-    await expect(button).toBeVisible();
+    await expect(page.getByTestId("time-popover-button")).toBeVisible();
   });
 
   test("Time menu - hour", async ({ page, baseURL }) => {
