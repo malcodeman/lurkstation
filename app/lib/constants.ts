@@ -5,11 +5,6 @@ export const REDDIT_API = "https://old.reddit.com";
 export const DEFAULT_SUBREDDIT = "Art";
 export const DEFAULT_SORT = "hot";
 
-export const FATHOM_SITE_ID = "JKBIIIAG";
-export const FATHOM_INCLUDED_DOMAINS = [
-  "lurkstation.com",
-  "www.lurkstation.com",
-];
 export const IS_PROD = equals(process.env.NEXT_PUBLIC_VERCEL_ENV, "production");
 
 const TITLE = "Lurkstation";
