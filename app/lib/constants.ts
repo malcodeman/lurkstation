@@ -10,20 +10,49 @@ export const IS_PROD = equals(process.env.NEXT_PUBLIC_VERCEL_ENV, "production");
 const TITLE = "Lurkstation";
 const DESCRIPTION = "The best way to experience Reddit content.";
 const URL = "https://www.lurkstation.com";
+const AUTHOR = "Amer Karamustafić";
+const KEYWORDS = [
+  "Reddit client",
+  "Content-oriented",
+  "Images",
+  "Videos",
+  "Efficient browsing",
+  "Reddit content",
+  "Image gallery",
+  "Optimized viewing",
+  "Reddit media",
+  "Visual content",
+  "Reddit browsing",
+  "Content consumption",
+  "Reddit images",
+  "Reddit videos",
+  "Reddit enhancement",
+  "Content aggregation",
+  "Reddit experience",
+];
 
 export const METADATA: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
+  applicationName: "lurkstation",
+  authors: [{ name: AUTHOR, url: "https://www.malcodeman.com" }],
+  generator: "Next.js",
+  keywords: KEYWORDS,
+  referrer: "origin",
+  creator: AUTHOR,
+  publisher: AUTHOR,
   icons: {
     icon: [
       { url: "/favicon_light.ico", media: "(prefers-color-scheme: light)" },
       { url: "/favicon_dark.ico", media: "(prefers-color-scheme: dark)" },
     ],
   },
+  manifest: "/manifest.json",
   openGraph: {
+    type: "website",
+    url: URL,
     title: TITLE,
     description: DESCRIPTION,
-    url: URL,
     siteName: TITLE,
     images: [
       {
@@ -32,9 +61,20 @@ export const METADATA: Metadata = {
         height: 630,
       },
     ],
-    locale: "en-US",
-    type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [
+      {
+        url: `${URL}/opengraph.png`,
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+  category: "Social Media",
 };
 
 export const SUPPORTED_IMAGE_EXTENSIONS = [".jpeg", ".jpg", ".png", ".gif"];
