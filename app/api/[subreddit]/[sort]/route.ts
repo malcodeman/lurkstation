@@ -3,6 +3,7 @@ import { parsePost, parsePosts } from "@/app/lib/utils";
 import { RedditPost, Sort } from "@/types";
 import { NextResponse } from "next/server";
 import { map } from "ramda";
+import axios, { AxiosError } from "axios";
 
 type Params = {
   subreddit: string;
@@ -25,21 +26,16 @@ export async function GET(request: Request, { params }: { params: Params }) {
     const t = searchParams.get("t");
     const after = searchParams.get("after");
     const limit = searchParams.get("limit");
-    const response = await fetch(
+    const response = await axios.get(
       `${REDDIT_API}/r/${params.subreddit}/${params.sort}.json?t=${t}&after=${after}&limit${limit}&raw_json=1`
     );
-    const data: Data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message);
-    }
-
+    const data: Data = await response.data;
     const filtered = parsePosts(data.data.children);
     const posts = map((item) => parsePost(item), filtered);
 
     return NextResponse.json({ ...data.data, children: posts });
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof AxiosError) {
       return new Response(error.message, {
         status: 500,
       });
