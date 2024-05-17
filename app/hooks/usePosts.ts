@@ -3,6 +3,7 @@ import { equals, map, toString } from "ramda";
 import { RedditPost, Sort } from "@/types";
 import { REDDIT_API } from "../lib/constants";
 import { parsePost, parsePosts } from "../lib/utils";
+import axios from "axios";
 
 type PageParam = SubredditPageParam | UserPageParam | undefined;
 
@@ -25,28 +26,21 @@ type Data2 = {
 
 const getSubreddit = async (props: { pageParam: SubredditPageParam }) => {
   const { pageParam } = props;
-  const url = `${REDDIT_API}/r/${pageParam.subreddit}/${pageParam.sort}.json?t=${pageParam.time}&after=${pageParam.after}&raw_json=1`;
-  const searchParams = new URLSearchParams();
+  const response = await axios.get(
+    `${REDDIT_API}/r/${pageParam.subreddit}/${pageParam.sort}.json`,
+    {
+      params: {
+        t: pageParam.time,
+        after: pageParam.after,
+        raw_json: 1,
+      },
+    }
+  );
+  const data: Data2 = response.data;
+  const filtered = parsePosts(data.data.children);
+  const posts = map((item) => parsePost(item), filtered);
 
-  if (pageParam.time) {
-    searchParams.append("t", pageParam.time);
-  }
-
-  if (pageParam.after) {
-    searchParams.append("after", pageParam.after);
-  }
-
-  if (equals(toString(searchParams), "")) {
-    const response = await fetch(url);
-    const data: Data2 = await response.json();
-    const filtered = parsePosts(data.data.children);
-    const posts = map((item) => parsePost(item), filtered);
-
-    return { ...data.data, children: posts };
-  }
-
-  const response = await fetch(`${url}?${searchParams}`);
-  return response.json();
+  return { ...data.data, children: posts };
 };
 
 type UserPageParam = {
@@ -58,38 +52,22 @@ type UserPageParam = {
 
 const getUser = async (props: { pageParam: UserPageParam }) => {
   const { pageParam } = props;
-  const url = `${REDDIT_API}/user/${pageParam.username}/submitted.json?sort=${pageParam.sort}&t=${pageParam.time}&after=${pageParam.after}&raw_json=1`;
-  const searchParams = new URLSearchParams();
-
-  if (pageParam.sort) {
-    searchParams.append("sort", pageParam.sort);
-  }
-
-  if (pageParam.time) {
-    searchParams.append("t", pageParam.time);
-  }
-
-  if (pageParam.after) {
-    searchParams.append("after", pageParam.after);
-  }
-
-  if (equals(toString(searchParams), "")) {
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
+  const response = await axios.get(
+    `${REDDIT_API}/user/${pageParam.username}/submitted.json`,
+    {
+      params: {
+        sort: pageParam.sort,
+        t: pageParam.time,
+        after: pageParam.after,
+        raw_json: 1,
+      },
     }
+  );
+  const data: Data2 = response.data;
+  const filtered = parsePosts(data.data.children);
+  const posts = map((item) => parsePost(item), filtered);
 
-    return response.json();
-  }
-
-  const response = await fetch(`${url}?${searchParams}`);
-
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-
-  return response.json();
+  return { ...data.data, children: posts };
 };
 
 type Data =
