@@ -1,9 +1,9 @@
 import { useParams } from "next/navigation";
-import { parseComments, parseParam, parsePost } from "../lib/utils";
+import { parseComments, parseParam, parsePost } from "@/app/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { REDDIT_API } from "@/app/lib/constants";
-import { CommentTree, RedditPost } from "@/types";
+import { CommentTree } from "@/types";
 
 const getComments = async (id: string) => {
   const response = await axios.get(`${REDDIT_API}/comments/${id}.json`, {
