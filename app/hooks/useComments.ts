@@ -2,7 +2,7 @@ import { useParams } from "next/navigation";
 import { parseComments, parseParam, parsePost } from "../lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { REDDIT_API } from "../lib/constants";
+import { REDDIT_API } from "@/app/lib/constants";
 import { CommentTree, RedditPost } from "@/types";
 
 const getComments = async (id: string) => {

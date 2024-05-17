@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { equals, map, toString } from "ramda";
 import { RedditPost, Sort } from "@/types";
-import { REDDIT_API } from "../lib/constants";
-import { parsePost, parsePosts } from "../lib/utils";
+import { REDDIT_API } from "@/app//lib/constants";
+import { parsePost, parsePosts } from "@/app/lib/utils";
 import axios from "axios";
 
 type PageParam = SubredditPageParam | UserPageParam | undefined;
