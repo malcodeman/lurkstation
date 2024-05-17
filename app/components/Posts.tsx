@@ -5,7 +5,7 @@ import { useIntersectionObserver } from "@react-hookz/web";
 import Post from "@/app/components/Post";
 import { FiLoader } from "react-icons/fi";
 import ServerError from "@/app/components/ServerError";
-import { usePosts } from "../hooks/usePosts";
+import { usePosts } from "@/app/hooks/usePosts";
 
 type Props = {
   queryKey: string[];

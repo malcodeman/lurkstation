@@ -1,20 +1,11 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { equals, map, toString } from "ramda";
+import { equals, map } from "ramda";
 import { RedditPost, Sort } from "@/types";
 import { REDDIT_API } from "@/app//lib/constants";
 import { parsePost, parsePosts } from "@/app/lib/utils";
 import axios from "axios";
 
-type PageParam = SubredditPageParam | UserPageParam | undefined;
-
-type SubredditPageParam = {
-  subreddit: string;
-  sort: Sort;
-  time: string | null;
-  after: string | null;
-};
-
-type Data2 = {
+type JsonData = {
   data: {
     after: string;
     before: string | null;
@@ -22,6 +13,13 @@ type Data2 = {
   };
   error: string;
   message: string;
+};
+
+type SubredditPageParam = {
+  subreddit: string;
+  sort: Sort;
+  time: string | null;
+  after: string | null;
 };
 
 const getSubreddit = async (props: { pageParam: SubredditPageParam }) => {
@@ -36,7 +34,7 @@ const getSubreddit = async (props: { pageParam: SubredditPageParam }) => {
       },
     }
   );
-  const data: Data2 = response.data;
+  const data: JsonData = response.data;
   const filtered = parsePosts(data.data.children);
   const posts = map((item) => parsePost(item), filtered);
 
@@ -63,12 +61,14 @@ const getUser = async (props: { pageParam: UserPageParam }) => {
       },
     }
   );
-  const data: Data2 = response.data;
+  const data: JsonData = response.data;
   const filtered = parsePosts(data.data.children);
   const posts = map((item) => parsePost(item), filtered);
 
   return { ...data.data, children: posts };
 };
+
+type PageParam = SubredditPageParam | UserPageParam | undefined;
 
 type Data =
   | {
