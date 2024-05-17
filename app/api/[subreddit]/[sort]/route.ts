@@ -36,7 +36,7 @@ export async function GET(request: Request, { params }: { params: Params }) {
     return NextResponse.json({ ...data.data, children: posts });
   } catch (error) {
     if (error instanceof AxiosError) {
-      return new Response(error.message, {
+      return new Response(JSON.stringify(error), {
         status: 500,
       });
     }
