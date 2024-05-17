@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { concat, equals } from "ramda";
 
-export const REDDIT_API = "https://old.reddit.com";
+export const REDDIT_API = "https://api.reddit.com";
 export const DEFAULT_SUBREDDIT = "Art";
 export const DEFAULT_SORT = "hot";
 
