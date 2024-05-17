@@ -33,6 +33,11 @@ export type RedditPost = {
       };
     };
     permalink: string;
+    author: string;
+    title: string;
+    ups: number;
+    number: number;
+    created_utc: number;
   };
 };
 
@@ -42,6 +47,8 @@ export type RedditComment = {
     author: string;
     id: string;
     body: string;
+    ups: number;
+    created_utc: number;
   };
 };
 

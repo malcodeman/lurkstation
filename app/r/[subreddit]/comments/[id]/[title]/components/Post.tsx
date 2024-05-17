@@ -1,28 +1,15 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { equals, length, map, values } from "ramda";
 import { FiX } from "react-icons/fi";
 import { useKeyboardEvent } from "@react-hookz/web";
 import { Options } from "./Options";
 import { Details } from "./Details";
-import { parseParam } from "@/app/lib/utils";
-
-const getComments = async (id: string) => {
-  const response = await fetch(`/api/comments/${id}`);
-  return response.json();
-};
+import { useComments } from "@/app/hooks/useComments";
 
 export default function Post() {
-  const params = useParams();
-  const id = parseParam(params.id);
-  const { data } = useQuery({
-    queryKey: ["post", id],
-    queryFn: () => getComments(id),
-  });
-  const post = data?.post.data;
-  const comments = data?.comments;
+  const { post, comments } = useComments();
   const mediaClassName =
     "absolute h-full w-full object-cover md:object-contain md:p-2";
   const router = useRouter();
@@ -44,7 +31,7 @@ export default function Post() {
     return null;
   }
 
-  const gallery = map((item) => item.s.u, values(post.media_metadata));
+  const gallery = map((item) => item.s.u, values(post.media_metadata || {}));
   const url = post.is_gallery ? gallery[0] : post.url;
 
   return (
