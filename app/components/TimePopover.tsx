@@ -1,10 +1,7 @@
-import { PopoverButton } from "@/components/Popover/PopoverButton";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { map } from "ramda";
-import { PopoverPanel } from "@/components/Popover/PopoverPanel";
-import { Popover as HeadlessPopover } from "@headlessui/react";
-import { Popover } from "@/components/Popover/Popover";
+import { Menu, MenuButton, MenuItem, MenuList } from "@/components/Menu";
 
 const TIME = [
   {
@@ -60,30 +57,30 @@ export default function TimePopover() {
   const time = searchParams.get("t");
   const sortSearchParam = searchParams.get("sort");
   return (
-    <Popover>
-      <PopoverButton data-testid="time-popover-button">
+    <Menu>
+      <MenuButton data-testid="time-popover-button" className="w-40">
         {renderTimeLabel(time || "")}
-      </PopoverButton>
-      <PopoverPanel>
+      </MenuButton>
+      <MenuList>
         {map(
           (item) => (
-            <HeadlessPopover.Button
-              as={Link}
-              key={item.value}
-              href={
-                username
-                  ? `/user/${username}?sort=${sortSearchParam}&t=${item.value}`
-                  : `/r/${subreddit}/${sort}?t=${item.value}`
-              }
-              className="block truncate px-2.5 py-1.5 text-sm outline-none transition-all hover:text-blue-600 focus:ring-2 focus:ring-blue-600"
-              data-testid={`time-popover-panel-link-${item.value}`}
-            >
-              {item.label}
-            </HeadlessPopover.Button>
+            <MenuItem asChild key={item.value} id={item.value}>
+              <Link
+                href={
+                  username
+                    ? `/user/${username}?sort=${sortSearchParam}&t=${item.value}`
+                    : `/r/${subreddit}/${sort}?t=${item.value}`
+                }
+                className="block truncate px-2.5 py-1.5 text-sm outline-none transition-all hover:text-blue-600 focus:ring-2 focus:ring-blue-600"
+                data-testid={`time-popover-panel-link-${item.value}`}
+              >
+                {item.label}
+              </Link>
+            </MenuItem>
           ),
           TIME
         )}
-      </PopoverPanel>
-    </Popover>
+      </MenuList>
+    </Menu>
   );
 }
