@@ -1,11 +1,10 @@
 import { RedditPost, RedditComment } from "@/types";
 import { parse } from "path";
 import { equals, filter, includes, replace } from "ramda";
-
 import {
   SUPPORTED_FILE_EXTENSIONS,
   SUPPORTED_VIDEO_EXTENSIONS,
-} from "./constants";
+} from "@/app/lib/constants";
 
 export const getExtension = (path: string) => {
   return parse(path).ext;

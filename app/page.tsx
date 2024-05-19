@@ -1,5 +1,5 @@
 import Posts from "@/app/components/Posts";
-import { DEFAULT_SORT, DEFAULT_SUBREDDIT } from "./lib/constants";
+import { DEFAULT_SORT, DEFAULT_SUBREDDIT } from "@/app/lib/constants";
 
 export default function App() {
   const subreddit = DEFAULT_SUBREDDIT;
