@@ -3,13 +3,13 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { DEFAULT_SUBREDDIT } from "@/app/lib/constants";
+import { DEFAULT_SUBREDDIT } from "@/app/_lib/constants";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
 import { GiAtSea } from "react-icons/gi";
 import { useSearchParams } from "next/navigation";
-import TimePopover from "@/app/components/TimePopover";
-import { parseParam } from "@/app/lib/utils";
+import TimePopover from "@/app/_components/TimePopover";
+import { parseParam } from "@/app/_lib/utils";
 
 const defaultValues = {
   subreddit: "",

@@ -1,8 +1,8 @@
 import { useParams } from "next/navigation";
-import { parseComments, parseParam, parsePost } from "@/app/lib/utils";
+import { parseComments, parseParam, parsePost } from "@/app/_lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { REDDIT_API } from "@/app/lib/constants";
+import { REDDIT_API } from "@/app/_lib/constants";
 import { CommentTree } from "@/types";
 
 const getComments = async (id: string) => {
