@@ -1,4 +1,4 @@
-import Posts from "@/app/components/Posts";
+import Posts from "@/app/_components/Posts";
 
 type Props = {
   params: { subreddit: string; sort: string };

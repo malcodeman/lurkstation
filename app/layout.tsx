@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import QueryProvider from "@/app/components/QueryProvider";
-import Header from "@/app/components/Header";
-import { METADATA } from "@/app/lib/constants";
+import QueryProvider from "@/app/_components/QueryProvider";
+import Header from "@/app/_components/Header";
+import { METADATA } from "@/app/_lib/constants";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";

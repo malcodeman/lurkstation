@@ -1,5 +1,5 @@
 "use client";
-import ErrorComponent from "@/app/components/Error";
+import ErrorComponent from "@/app/_components/Error";
 import { type ErrorComponent as ErrorComponentType } from "@/types";
 import { Inter } from "next/font/google";
 

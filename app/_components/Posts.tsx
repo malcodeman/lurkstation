@@ -2,10 +2,10 @@
 import { useEffect, useRef } from "react";
 import { map, values } from "ramda";
 import { useIntersectionObserver } from "@react-hookz/web";
-import Post from "@/app/components/Post";
+import Post from "@/app/_components/Post";
 import { FiLoader } from "react-icons/fi";
-import ServerError from "@/app/components/ServerError";
-import { usePosts } from "@/app/hooks/usePosts";
+import ServerError from "@/app/_components/ServerError";
+import { usePosts } from "@/app/_hooks/usePosts";
 
 type Props = {
   queryKey: string[];

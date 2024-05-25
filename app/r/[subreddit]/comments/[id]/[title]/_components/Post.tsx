@@ -6,7 +6,7 @@ import { FiX } from "react-icons/fi";
 import { useKeyboardEvent } from "@react-hookz/web";
 import { Options } from "@/app/r/[subreddit]/comments/[id]/[title]/components/Options";
 import { Details } from "@/app/r/[subreddit]/comments/[id]/[title]/components/Details";
-import { useComments } from "@/app/hooks/useComments";
+import { useComments } from "@/app/_hooks/useComments";
 
 export default function Post() {
   const { post, comments } = useComments();

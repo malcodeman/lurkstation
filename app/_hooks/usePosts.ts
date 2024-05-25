@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { equals, map } from "ramda";
 import { RedditPost, Sort } from "@/types";
-import { REDDIT_API } from "@/app//lib/constants";
-import { parsePost, parsePosts } from "@/app/lib/utils";
+import { REDDIT_API } from "@/app/_lib/constants";
+import { parsePost, parsePosts } from "@/app/_lib/utils";
 import axios from "axios";
 
 type JsonData = {
