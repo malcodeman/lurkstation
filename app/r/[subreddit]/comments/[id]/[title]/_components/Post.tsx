@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { equals, length, map, values } from "ramda";
 import { FiX } from "react-icons/fi";
 import { useKeyboardEvent } from "@react-hookz/web";
-import { Options } from "@/app/r/[subreddit]/comments/[id]/[title]/components/Options";
-import { Details } from "@/app/r/[subreddit]/comments/[id]/[title]/components/Details";
+import { Options } from "@/app/r/[subreddit]/comments/[id]/[title]/_components/Options";
+import { Details } from "@/app/r/[subreddit]/comments/[id]/[title]/_components/Details";
 import { useComments } from "@/app/_hooks/useComments";
 
 export default function Post() {
