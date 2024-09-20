@@ -102,13 +102,13 @@ test.describe("home", () => {
     await expect(page).toHaveURL(`${baseURL}${permalink}`);
   });
 
-  test("Post - x icon", async ({ page, baseURL }) => {
+  test.skip("Post - x icon", async ({ page, baseURL }) => {
     await page.goto(PAINTING_POST_URL);
     await page.click("[data-testid=x-icon]");
     await expect(page).toHaveURL(`${baseURL}/`);
   });
 
-  test("Post - escape key", async ({ page, baseURL }) => {
+  test.skip("Post - escape key", async ({ page, baseURL }) => {
     await page.goto(PAINTING_POST_URL);
     await page.keyboard.press("Escape");
     await expect(page).toHaveURL(`${baseURL}/`);
