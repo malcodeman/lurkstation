@@ -64,7 +64,7 @@ export default function TimePopover() {
       <MenuList>
         {map(
           (item) => (
-            <MenuItem asChild key={item.value} id={item.value}>
+            <MenuItem asChild key={item.value} value={item.value}>
               <Link
                 href={
                   username

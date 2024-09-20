@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import QueryProvider from "@/app/_components/QueryProvider";
 import Header from "@/app/_components/Header";
 import { METADATA } from "@/app/_lib/constants";
@@ -18,7 +18,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={inter.className}>
       <body className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
         <QueryProvider>
-          <Header />
+          <Suspense>
+            <Header />
+          </Suspense>
           {children}
           <Analytics />
           <SpeedInsights />
