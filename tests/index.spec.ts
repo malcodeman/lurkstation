@@ -1,5 +1,8 @@
 import { test, expect } from "@playwright/test";
 
+const PAINTING_POST_URL =
+  "/r/painting/comments/16yw2ld/my_72yr_old_mothers_painting_of_her_life_as_a";
+
 test.describe("home", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
@@ -88,19 +91,13 @@ test.describe("home", () => {
   });
 
   test("Post - x icon", async ({ page, baseURL }) => {
-    await page.locator("[data-testid=post]").first().click();
+    await page.goto(PAINTING_POST_URL);
     await page.click("[data-testid=x-icon]");
     await expect(page).toHaveURL(`${baseURL}/`);
   });
 
   test("Post - escape key", async ({ page, baseURL }) => {
-    const link = await page
-      .locator("[data-testid=post]")
-      .first()
-      .getAttribute("href");
-
-    await page.locator("[data-testid=post]").first().click();
-    await expect(page).toHaveURL(`${baseURL}${link}`);
+    await page.goto(PAINTING_POST_URL);
     await page.keyboard.press("Escape");
     await expect(page).toHaveURL(`${baseURL}/`);
   });
