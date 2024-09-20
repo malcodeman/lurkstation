@@ -1,7 +1,15 @@
+import {
+  DEFAULT_SORT,
+  DEFAULT_SUBREDDIT,
+  REDDIT_API,
+} from "@/app/_lib/constants";
+import { parsePost, parsePosts } from "@/app/_lib/utils";
 import { test, expect } from "@playwright/test";
+import { dropLast, length, map } from "ramda";
 
 const PAINTING_POST_URL =
   "/r/painting/comments/16yw2ld/my_72yr_old_mothers_painting_of_her_life_as_a";
+const DEFAULT_REDDIT_API_URL = `${REDDIT_API}/r/${DEFAULT_SUBREDDIT}/${DEFAULT_SORT}.json?t=&raw_json=1`;
 
 test.describe("home", () => {
   test.beforeEach(async ({ page }) => {
@@ -71,23 +79,27 @@ test.describe("home", () => {
   });
 
   test("Go to first post", async ({ page, baseURL }) => {
-    const link = await page
-      .locator("[data-testid=post]")
-      .first()
-      .getAttribute("href");
+    const responsePromise = page.waitForResponse(DEFAULT_REDDIT_API_URL);
+    const response = await responsePromise;
+    const body = await response.json();
+    const filtered = parsePosts(body.data.children);
+    const posts = map((item) => parsePost(item), filtered);
+    const permalink = dropLast(1, posts[0].data.permalink);
 
     await page.locator("[data-testid=post]").first().click();
-    await expect(page).toHaveURL(`${baseURL}${link}`);
+    await expect(page).toHaveURL(`${baseURL}${permalink}`);
   });
 
   test("Go to last post", async ({ page, baseURL }) => {
-    const link = await page
-      .locator("[data-testid=post]")
-      .last()
-      .getAttribute("href");
+    const responsePromise = page.waitForResponse(DEFAULT_REDDIT_API_URL);
+    const response = await responsePromise;
+    const body = await response.json();
+    const filtered = parsePosts(body.data.children);
+    const posts = map((item) => parsePost(item), filtered);
+    const permalink = dropLast(1, posts[length(posts) - 1].data.permalink);
 
     await page.locator("[data-testid=post]").last().click();
-    await expect(page).toHaveURL(`${baseURL}${link}`);
+    await expect(page).toHaveURL(`${baseURL}${permalink}`);
   });
 
   test("Post - x icon", async ({ page, baseURL }) => {
