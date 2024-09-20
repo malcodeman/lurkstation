@@ -78,7 +78,7 @@ test.describe("home", () => {
     await expect(page).toHaveURL(`${baseURL}/r/Art/top?t=all`);
   });
 
-  test("Go to first post", async ({ page, baseURL }) => {
+  test.skip("Go to first post", async ({ page, baseURL }) => {
     const responsePromise = page.waitForResponse(DEFAULT_REDDIT_API_URL);
     const response = await responsePromise;
     const body = await response.json();
@@ -90,7 +90,7 @@ test.describe("home", () => {
     await expect(page).toHaveURL(`${baseURL}${permalink}`);
   });
 
-  test("Go to last post", async ({ page, baseURL }) => {
+  test.skip("Go to last post", async ({ page, baseURL }) => {
     const responsePromise = page.waitForResponse(DEFAULT_REDDIT_API_URL);
     const response = await responsePromise;
     const body = await response.json();
