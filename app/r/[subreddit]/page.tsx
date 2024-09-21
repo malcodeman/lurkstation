@@ -1,4 +1,15 @@
 import Posts from "@/app/_components/Posts";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { subreddit: string };
+}): Promise<Metadata> {
+  return {
+    title: `${params.subreddit} | lurkstation`,
+  };
+}
 
 type Props = {
   params: { subreddit: string };

@@ -1,22 +1,7 @@
 import { useParams } from "next/navigation";
-import { parseComments, parseParam, parsePost } from "@/app/_lib/utils";
+import { parseParam } from "@/app/_lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { REDDIT_API } from "@/app/_lib/constants";
-import { CommentTree } from "@/types";
-
-const getComments = async (id: string) => {
-  const response = await axios.get(`${REDDIT_API}/comments/${id}.json`, {
-    params: {
-      raw_json: 1,
-    },
-  });
-  const data: CommentTree = response.data;
-  const post = parsePost(data[0].data.children[0]);
-  const comments = parseComments(data[1].data.children);
-
-  return { post, comments };
-};
+import { getComments } from "@/app/_lib/queries";
 
 export const useComments = () => {
   const params = useParams();
