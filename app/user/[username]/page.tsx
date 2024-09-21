@@ -1,4 +1,15 @@
 import Posts from "@/app/_components/Posts";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { username: string };
+}): Promise<Metadata> {
+  return {
+    title: `${params.username} | lurkstation`,
+  };
+}
 
 type Props = {
   params: { username: string };
