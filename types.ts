@@ -11,9 +11,9 @@ export type RedditPost = {
     is_gallery?: boolean;
     media_metadata?: {
       [key: string]: {
-        status: string;
-        id: string;
-        s: {
+        status: 'valid' | 'failed';
+        id?: string;
+        s?: {
           u: string;
         };
       };

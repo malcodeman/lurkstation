@@ -53,7 +53,7 @@ export default function Posts(props: Props) {
             (item) =>
               map((item) => {
                 const gallery = map(
-                  (item) => item.s.u,
+                  (item) => item.s?.u || '' ,
                   values(item.data.media_metadata || {}),
                 );
 
