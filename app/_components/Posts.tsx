@@ -64,6 +64,7 @@ export default function Posts(props: Props) {
                     isVideo={item.data.is_video}
                     href={item.data.permalink}
                     isGallery={item.data.is_gallery || false}
+                    title={item.data.title}
                   />
                 );
               }, item.children),

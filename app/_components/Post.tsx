@@ -6,6 +6,7 @@ type Props = {
   isVideo: boolean;
   href: string;
   isGallery: boolean;
+  title: string;
 };
 
 const renderIcon = ({
@@ -27,10 +28,10 @@ const renderIcon = ({
 };
 
 export default function Post(props: Props) {
-  const { url, isVideo, href, isGallery } = props;
+  const { url, isVideo, href, isGallery, title } = props;
 
   return (
-    <Link href={href} data-testid="post">
+    <Link href={href} aria-label={title} data-testid="post">
       <div className="relative aspect-square h-full w-full">
         {isVideo ? (
           <video src={url} className="h-full w-full object-cover" />
