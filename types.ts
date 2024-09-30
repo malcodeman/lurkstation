@@ -54,7 +54,7 @@ export type RedditComment = {
 
 export type CommentTree = [
   { kind: string; data: { children: RedditPost[] } },
-  { kind: string; data: { children: RedditComment[] } }
+  { kind: string; data: { children: RedditComment[] } },
 ];
 
 export type ErrorComponent = {

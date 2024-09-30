@@ -54,7 +54,7 @@ export default function Posts(props: Props) {
               map((item) => {
                 const gallery = map(
                   (item) => item.s.u,
-                  values(item.data.media_metadata || {})
+                  values(item.data.media_metadata || {}),
                 );
 
                 return (
@@ -68,7 +68,7 @@ export default function Posts(props: Props) {
                   />
                 );
               }, item.children),
-            pages
+            pages,
           )}
           <div ref={elementRef} />
         </main>

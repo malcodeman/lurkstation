@@ -48,7 +48,7 @@ export default function Post() {
                 <Options url={item} filename={post.id} />
               </div>
             ),
-            gallery
+            gallery,
           )}
         </div>
       ) : (
@@ -98,7 +98,7 @@ export default function Post() {
                     />
                   </div>
                 ),
-                comments
+                comments,
               )}
             </div>
           </div>

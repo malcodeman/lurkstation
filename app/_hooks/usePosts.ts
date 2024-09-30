@@ -32,7 +32,7 @@ const getSubreddit = async (props: { pageParam: SubredditPageParam }) => {
         after: pageParam.after,
         raw_json: 1,
       },
-    }
+    },
   );
   const data: JsonData = response.data;
   const filtered = parsePosts(data.data.children);
@@ -59,7 +59,7 @@ const getUser = async (props: { pageParam: UserPageParam }) => {
         after: pageParam.after,
         raw_json: 1,
       },
-    }
+    },
   );
   const data: JsonData = response.data;
   const filtered = parsePosts(data.data.children);

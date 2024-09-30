@@ -39,7 +39,7 @@ export const parsePosts = (posts: RedditPost[]) => {
     (item) =>
       includes(getExtension(item.data.url), SUPPORTED_FILE_EXTENSIONS) ||
       equals(item.data.is_gallery, true),
-    posts
+    posts,
   );
 };
 
@@ -50,7 +50,7 @@ export const parseComments = (comments: RedditComment[]) => {
       item.data.author !== "AutoModerator" &&
       item.data.body !== "[removed]" &&
       item.data.body !== "[deleted]",
-    comments
+    comments,
   );
 };
 

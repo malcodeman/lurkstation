@@ -12,7 +12,7 @@ export const Input = forwardRef(
         {...rest}
       />
     );
-  }
+  },
 );
 
 Input.displayName = "Input";

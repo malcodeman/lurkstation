@@ -42,7 +42,7 @@ export const Button = forwardRef(
           </button>
         );
     }
-  }
+  },
 );
 
 Button.displayName = "Button";

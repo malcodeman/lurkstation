@@ -78,7 +78,7 @@ export default function TimePopover() {
               </Link>
             </MenuItem>
           ),
-          TIME
+          TIME,
         )}
       </MenuList>
     </Menu>
