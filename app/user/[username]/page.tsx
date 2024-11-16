@@ -4,23 +4,25 @@ import { Metadata } from "next";
 export async function generateMetadata({
   params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }): Promise<Metadata> {
+  const username = (await params).username;
+
   return {
-    title: `${params.username} | lurkstation`,
+    title: `${username} | lurkstation`,
   };
 }
 
 type Props = {
-  params: { username: string };
-  searchParams: { sort: string; t: string };
+  params: Promise<{ username: string }>;
+  searchParams: Promise<{ sort: string; t: string }>;
 };
 
-export default function User(props: Props) {
+export default async function User(props: Props) {
   const { params, searchParams } = props;
-  const username = params.username;
-  const sort = searchParams.sort;
-  const time = searchParams.t;
+  const username = (await params).username;
+  const sort = (await searchParams).sort;
+  const time = (await searchParams).t;
   const queryKey = ["users", username, sort, time];
 
   return <Posts queryKey={queryKey} />;

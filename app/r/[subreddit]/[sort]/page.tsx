@@ -4,23 +4,25 @@ import { Metadata } from "next";
 export async function generateMetadata({
   params,
 }: {
-  params: { subreddit: string; sort: string };
+  params: Promise<{ subreddit: string; sort: string }>;
 }): Promise<Metadata> {
+  const subreddit = (await params).subreddit;
+
   return {
-    title: `${params.subreddit} | lurkstation`,
+    title: `${subreddit} | lurkstation`,
   };
 }
 
 type Props = {
-  params: { subreddit: string; sort: string };
-  searchParams: { t: string };
+  params: Promise<{ subreddit: string; sort: string }>;
+  searchParams: Promise<{ t: string }>;
 };
 
-export default function Sort(props: Props) {
+export default async function Sort(props: Props) {
   const { params, searchParams } = props;
-  const subreddit = params.subreddit;
-  const sort = params.sort;
-  const time = searchParams.t;
+  const subreddit = (await params).subreddit;
+  const sort = (await params).sort;
+  const time = (await searchParams).t;
   const queryKey = ["posts", subreddit, sort, time];
 
   return <Posts queryKey={queryKey} />;
