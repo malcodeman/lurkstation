@@ -8,7 +8,8 @@ export const useComments = () => {
   const id = parseParam(params.id);
   const { data } = useQuery({
     queryKey: ["post", id],
-    queryFn: () => getComments(id),
+    queryFn: () => getComments(id!),
+    enabled: !!id,
   });
   const post = data?.post.data;
   const comments = data?.comments || [];

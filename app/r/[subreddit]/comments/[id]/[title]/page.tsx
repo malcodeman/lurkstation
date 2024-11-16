@@ -4,10 +4,12 @@ import { Metadata } from "next";
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string; title: string };
+  params: Promise<{ id: string; title: string }>;
 }): Promise<Metadata> {
+  const title = (await params).title;
+
   return {
-    title: `${params.title} | lurkstation`,
+    title: `${title} | lurkstation`,
   };
 }
 
