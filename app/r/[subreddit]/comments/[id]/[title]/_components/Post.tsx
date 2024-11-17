@@ -31,7 +31,10 @@ export default function Post() {
     return null;
   }
 
-  const gallery = map((item) => item.s?.u || '', values(post.media_metadata || {}));
+  const gallery = map(
+    (item) => item.s?.u || "",
+    values(post.media_metadata || {}),
+  );
   const url = post.is_gallery ? gallery[0] : post.url;
 
   return (
