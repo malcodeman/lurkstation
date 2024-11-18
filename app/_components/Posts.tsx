@@ -47,7 +47,7 @@ export default function Posts(props: Props) {
       ) : (
         <main
           data-testid="posts-grid"
-          className="grid auto-rows-auto grid-cols-[1fr_1fr_1fr] sm:mt-[49px] md:auto-rows-[280px] md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]"
+          className="grid auto-rows-auto grid-cols-[1fr_1fr] sm:mt-[49px] md:auto-rows-[280px] md:grid-cols-[repeat(auto-fit,minmax(270px,1fr))]"
         >
           {map(
             (item) =>
