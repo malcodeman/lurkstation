@@ -11,10 +11,13 @@ export type RedditPost = {
     is_gallery?: boolean;
     media_metadata?: {
       [key: string]: {
+        e?: string;
         status: "valid" | "failed";
         id?: string;
         s?: {
-          u: string;
+          mp4?: string;
+          gif?: string;
+          u?: string;
         };
       };
     };

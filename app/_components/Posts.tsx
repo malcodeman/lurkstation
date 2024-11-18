@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { map, values } from "ramda";
+import { map } from "ramda";
 import { useIntersectionObserver } from "@react-hookz/web";
 import Post from "@/app/_components/Post";
 import { FiLoader } from "react-icons/fi";
 import ServerError from "@/app/_components/ServerError";
 import { usePosts } from "@/app/_hooks/usePosts";
+import { getGalleryImages } from "@/app/_lib/utils";
 
 type Props = {
   queryKey: string[];
@@ -52,10 +53,7 @@ export default function Posts(props: Props) {
           {map(
             (item) =>
               map((item) => {
-                const gallery = map(
-                  (item) => item.s?.u || "",
-                  values(item.data.media_metadata || {}),
-                );
+                const gallery = getGalleryImages(item.data.media_metadata);
 
                 return (
                   <Post

@@ -1,12 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { equals, length, map, values } from "ramda";
+import { equals, length, map } from "ramda";
 import { FiX } from "react-icons/fi";
 import { useKeyboardEvent } from "@react-hookz/web";
 import { Options } from "@/app/r/[subreddit]/comments/[id]/[title]/_components/Options";
 import { Details } from "@/app/r/[subreddit]/comments/[id]/[title]/_components/Details";
 import { useComments } from "@/app/_hooks/useComments";
+import { getGalleryImages } from "@/app/_lib/utils";
 
 export default function Post() {
   const { post, comments } = useComments();
@@ -31,10 +32,7 @@ export default function Post() {
     return null;
   }
 
-  const gallery = map(
-    (item) => item.s?.u || "",
-    values(post.media_metadata || {}),
-  );
+  const gallery = getGalleryImages(post.media_metadata);
   const url = post.is_gallery ? gallery[0] : post.url;
 
   return (
@@ -72,7 +70,7 @@ export default function Post() {
         </div>
       )}
       <div>
-        <div className="overflow-y-auto bg-white p-2 dark:bg-[#111827] md:sticky md:top-[49px] md:h-[calc(100vh_-_49px)]">
+        <div className="overflow-y-auto bg-white p-2 md:sticky md:top-[49px] md:h-[calc(100vh_-_49px)] dark:bg-[#111827]">
           <div className="mb-4 border-b pb-4 dark:border-slate-50/10">
             <div className="flex items-center">
               {renderAuthor(post.author)}

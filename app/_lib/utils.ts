@@ -1,6 +1,16 @@
 import { RedditPost, RedditComment } from "@/types";
 import { parse } from "path";
-import { all, and, equals, filter, includes, or, replace, values } from "ramda";
+import {
+  all,
+  and,
+  equals,
+  filter,
+  includes,
+  map,
+  or,
+  replace,
+  values,
+} from "ramda";
 import {
   SUPPORTED_FILE_EXTENSIONS,
   SUPPORTED_VIDEO_EXTENSIONS,
@@ -64,4 +74,14 @@ export const parseComments = (comments: RedditComment[]) => {
 
 export const parseParam = (param: string | string[] | undefined) => {
   return Array.isArray(param) ? param[0] : param;
+};
+
+export const getGalleryImages = (
+  media_metadata: RedditPost["data"]["media_metadata"],
+) => {
+  return map(
+    (item) =>
+      equals(item.e, "AnimatedImage") ? (item.s?.gif ?? "") : (item.s?.u ?? ""),
+    values(media_metadata ?? {}),
+  );
 };
