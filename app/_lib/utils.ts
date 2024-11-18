@@ -1,6 +1,6 @@
 import { RedditPost, RedditComment } from "@/types";
 import { parse } from "path";
-import { and, equals, filter, includes, isNotNil, replace } from "ramda";
+import { all, and, equals, filter, includes, or, replace, values } from "ramda";
 import {
   SUPPORTED_FILE_EXTENSIONS,
   SUPPORTED_VIDEO_EXTENSIONS,
@@ -37,10 +37,15 @@ export const parsePost = (post: RedditPost): RedditPost => {
 export const parsePosts = (posts: RedditPost[]) => {
   return filter(
     (item) =>
-      includes(getExtension(item.data.url), SUPPORTED_FILE_EXTENSIONS) ||
-      and(
-        equals(item.data.is_gallery, true),
-        isNotNil(item.data.media_metadata),
+      or(
+        includes(getExtension(item.data.url), SUPPORTED_FILE_EXTENSIONS),
+        and(
+          equals(item.data.is_gallery, true),
+          all(
+            (item) => equals(item.status, "valid"),
+            values(item.data.media_metadata ?? {}),
+          ),
+        ),
       ),
     posts,
   );
