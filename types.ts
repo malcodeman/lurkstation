@@ -22,6 +22,11 @@ export type RedditPost = {
       };
     };
     preview?: {
+      images?: {
+        source: {
+          url: string;
+        };
+      }[];
       reddit_video_preview?: {
         bitrate_kbps: number;
         dash_url: string;

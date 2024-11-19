@@ -85,3 +85,13 @@ export const getGalleryImages = (
     values(media_metadata ?? {}),
   );
 };
+
+export const isRedgifs = (url: string) => {
+  try {
+    const hostname = new URL(url).hostname;
+
+    return includes("redgifs.com", hostname);
+  } catch {
+    return false;
+  }
+};
