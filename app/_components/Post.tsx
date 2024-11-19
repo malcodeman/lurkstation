@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRef } from "react";
 import { FcVideoCall, FcImageFile, FcGallery } from "react-icons/fc";
 
 type Props = {
@@ -29,12 +30,32 @@ const renderIcon = ({
 
 export default function Post(props: Props) {
   const { url, isVideo, href, isGallery, title } = props;
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handlePlay = () => {
+    videoRef.current?.play();
+  };
+
+  const handlePauseAndReset = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
 
   return (
     <Link href={href} aria-label={title} data-testid="post">
       <div className="relative aspect-square h-full w-full">
         {isVideo ? (
-          <video src={url} className="h-full w-full object-cover" />
+          <video
+            ref={videoRef}
+            src={url}
+            onMouseEnter={handlePlay}
+            onMouseLeave={handlePauseAndReset}
+            onTouchStart={handlePlay}
+            onTouchEnd={handlePauseAndReset}
+            className="h-full w-full object-cover"
+          />
         ) : (
           <img src={url} alt="" className="h-full w-full object-cover" />
         )}
