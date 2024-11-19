@@ -6,37 +6,55 @@ import {
   equals,
   filter,
   includes,
+  isNil,
+  isNotNil,
   map,
-  or,
+  not,
   replace,
   values,
 } from "ramda";
-import {
-  SUPPORTED_FILE_EXTENSIONS,
-  SUPPORTED_VIDEO_EXTENSIONS,
-} from "@/app/_lib/constants";
+import { SUPPORTED_FILE_EXTENSIONS } from "@/app/_lib/constants";
 
-export const getExtension = (path: string) => {
-  return parse(path).ext;
-};
-
-export const parseGifv = (url: string) => {
-  return replace("gifv", "mp4", url);
-};
-
-export const parsePost = (post: RedditPost): RedditPost => {
-  const { url } = post.data;
-  const extension = getExtension(url);
-
-  if (includes(extension, SUPPORTED_VIDEO_EXTENSIONS)) {
+export const parsePost = (post: RedditPost) => {
+  if (hasRedditVideo(post)) {
     return {
       ...post,
       data: {
         ...post.data,
         is_video: true,
-        url: equals(extension, ".gifv")
-          ? post.data.preview?.reddit_video_preview?.fallback_url || ""
-          : url,
+        url: post.data.media?.reddit_video?.fallback_url ?? "",
+      },
+    };
+  }
+
+  if (hasVideoPreview(post)) {
+    return {
+      ...post,
+      data: {
+        ...post.data,
+        is_video: true,
+        url: post.data.preview?.reddit_video_preview?.fallback_url ?? "",
+      },
+    };
+  }
+
+  if (isGifv(post)) {
+    return {
+      ...post,
+      data: {
+        ...post.data,
+        is_video: true,
+        url: parseGifv(post.data.url),
+      },
+    };
+  }
+
+  if (hasImagePreview(post)) {
+    return {
+      ...post,
+      data: {
+        ...post.data,
+        url: post.data.preview?.images?.[0].source.url ?? "",
       },
     };
   }
@@ -45,20 +63,31 @@ export const parsePost = (post: RedditPost): RedditPost => {
 };
 
 export const parsePosts = (posts: RedditPost[]) => {
-  return filter(
-    (item) =>
-      or(
-        includes(getExtension(item.data.url), SUPPORTED_FILE_EXTENSIONS),
-        and(
-          equals(item.data.is_gallery, true),
-          all(
-            (item) => equals(item.status, "valid"),
-            values(item.data.media_metadata ?? {}),
-          ),
-        ),
+  const isValidFileExtension = (url: string) =>
+    includes(getExtension(url), SUPPORTED_FILE_EXTENSIONS);
+  const isValidGallery = (item: RedditPost) =>
+    and(
+      equals(item.data.is_gallery, true),
+      all(
+        (item) => equals(item.status, "valid"),
+        values(item.data.media_metadata ?? {}),
       ),
-    posts,
-  );
+    );
+  const isImgurAndOver18 = (item: RedditPost) =>
+    and(isImgur(item.data.url), item.data.over_18);
+  const isRedgifsAndNoPreview = (item: RedditPost) =>
+    and(isRedgifs(item.data.url), isNil(item.data.preview));
+
+  return filter((item) => {
+    return and(
+      isValidFileExtension(item.data.url) ||
+        isValidGallery(item) ||
+        hasVideoPreview(item) ||
+        hasImagePreview(item) ||
+        hasRedditVideo(item),
+      not(isImgurAndOver18(item)) && not(isRedgifsAndNoPreview(item)),
+    );
+  }, posts);
 };
 
 export const parseComments = (comments: RedditComment[]) => {
@@ -86,12 +115,39 @@ export const getGalleryImages = (
   );
 };
 
-export const isRedgifs = (url: string) => {
-  try {
-    const hostname = new URL(url).hostname;
+const getExtension = (path: string) => {
+  return parse(path).ext;
+};
 
-    return includes("redgifs.com", hostname);
+const isRedgifs = (url: string) => {
+  try {
+    return includes("redgifs.com", new URL(url).hostname);
   } catch {
     return false;
   }
 };
+
+const isImgur = (url: string) => {
+  try {
+    return includes("imgur.com", new URL(url).hostname);
+  } catch {
+    return false;
+  }
+};
+
+const isGifv = (item: RedditPost) => {
+  return equals(getExtension(item.data.url), ".gifv");
+};
+
+const parseGifv = (url: string) => {
+  return replace("gifv", "mp4", url);
+};
+
+const hasVideoPreview = (item: RedditPost) =>
+  isNotNil(item.data.preview?.reddit_video_preview?.fallback_url);
+
+const hasImagePreview = (item: RedditPost) =>
+  isNotNil(item.data.preview?.images?.[0].source.url);
+
+const hasRedditVideo = (item: RedditPost) =>
+  isNotNil(item.data.media?.reddit_video?.fallback_url);

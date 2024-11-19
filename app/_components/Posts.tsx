@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { isEmpty, map, or } from "ramda";
+import { map } from "ramda";
 import { useIntersectionObserver } from "@react-hookz/web";
 import Post from "@/app/_components/Post";
 import { FiLoader } from "react-icons/fi";
 import ServerError from "@/app/_components/ServerError";
 import { usePosts } from "@/app/_hooks/usePosts";
-import { getGalleryImages, isRedgifs } from "@/app/_lib/utils";
+import { getGalleryImages } from "@/app/_lib/utils";
 
 type Props = {
   queryKey: string[];
@@ -54,16 +54,11 @@ export default function Posts(props: Props) {
             (item) =>
               map((item) => {
                 const gallery = getGalleryImages(item.data.media_metadata);
-                const previewUrl =
-                  item.data.preview?.images?.[0]?.source.url ?? "";
-                const url = or(isEmpty(item.data.url), isRedgifs(item.data.url))
-                  ? previewUrl
-                  : item.data.url;
 
                 return (
                   <Post
                     key={item.data.id}
-                    url={item.data.is_gallery ? gallery[0] : url}
+                    url={item.data.is_gallery ? gallery[0] : item.data.url}
                     isVideo={item.data.is_video}
                     href={item.data.permalink}
                     isGallery={item.data.is_gallery || false}

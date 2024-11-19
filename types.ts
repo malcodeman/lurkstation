@@ -46,6 +46,12 @@ export type RedditPost = {
     ups: number;
     number: number;
     created_utc: number;
+    over_18: boolean;
+    media: {
+      reddit_video?: {
+        fallback_url: string;
+      };
+    } | null;
   };
 };
 
