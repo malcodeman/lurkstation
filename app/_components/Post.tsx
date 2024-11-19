@@ -1,6 +1,11 @@
 import Link from "next/link";
-import { useRef } from "react";
-import { FcVideoCall, FcImageFile, FcGallery } from "react-icons/fc";
+import { useRef, useState } from "react";
+import {
+  FcVideoCall,
+  FcImageFile,
+  FcGallery,
+  FcRemoveImage,
+} from "react-icons/fc";
 
 type Props = {
   url: string;
@@ -31,6 +36,7 @@ const renderIcon = ({
 export default function Post(props: Props) {
   const { url, isVideo, href, isGallery, title } = props;
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isError, setIsError] = useState(false);
 
   const handlePlay = () => {
     videoRef.current?.play();
@@ -43,6 +49,18 @@ export default function Post(props: Props) {
     }
   };
 
+  const handleOnError = () => {
+    setIsError(true);
+  };
+
+  if (isError) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <FcRemoveImage size={64} />
+      </div>
+    );
+  }
+
   return (
     <Link href={href} aria-label={title} data-testid="post">
       <div className="relative aspect-square h-full w-full">
@@ -54,10 +72,16 @@ export default function Post(props: Props) {
             onMouseLeave={handlePauseAndReset}
             onTouchStart={handlePlay}
             onTouchEnd={handlePauseAndReset}
+            onError={handleOnError}
             className="h-full w-full object-cover"
           />
         ) : (
-          <img src={url} alt="" className="h-full w-full object-cover" />
+          <img
+            src={url}
+            alt=""
+            onError={handleOnError}
+            className="h-full w-full object-cover"
+          />
         )}
         {renderIcon({ isGallery, isVideo })}
       </div>
