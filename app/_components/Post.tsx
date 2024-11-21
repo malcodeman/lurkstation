@@ -63,15 +63,17 @@ export default function Post(props: Props) {
 
   return (
     <Link href={href} aria-label={title} data-testid="post">
-      <div className="relative aspect-square h-full w-full">
+      <div
+        className="group relative aspect-square h-full w-full"
+        onMouseEnter={handlePlay}
+        onMouseLeave={handlePauseAndReset}
+        onTouchStart={handlePlay}
+        onTouchEnd={handlePauseAndReset}
+      >
         {isVideo ? (
           <video
             ref={videoRef}
             src={url}
-            onMouseEnter={handlePlay}
-            onMouseLeave={handlePauseAndReset}
-            onTouchStart={handlePlay}
-            onTouchEnd={handlePauseAndReset}
             onError={handleOnError}
             className="h-full w-full object-cover"
           />
@@ -84,6 +86,10 @@ export default function Post(props: Props) {
           />
         )}
         {renderIcon({ isGallery, isVideo })}
+        <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 transition-opacity group-hover:opacity-100" />
+        <p className="absolute bottom-2 left-2 right-8 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+          {title}
+        </p>
       </div>
     </Link>
   );
