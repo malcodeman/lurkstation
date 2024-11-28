@@ -17,7 +17,7 @@ test.describe("home", () => {
   });
 
   test("Search input", async ({ page, baseURL }) => {
-    const input = page.getByTestId("subreddit-input");
+    const input = page.getByTestId("search-input");
 
     await input.fill("pics");
     await page.keyboard.press("Enter");

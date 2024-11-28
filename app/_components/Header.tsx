@@ -11,39 +11,37 @@ import { useSearchParams } from "next/navigation";
 import TimePopover from "@/app/_components/TimePopover";
 import { parseParam } from "@/app/_lib/utils";
 
-const defaultValues = {
-  subreddit: "",
-};
-
 type Values = {
-  subreddit: string;
+  search: string;
 };
 
 export default function Header() {
   const params = useParams();
   const subreddit = parseParam(params.subreddit) || DEFAULT_SUBREDDIT;
-  const username = params.username;
+  const username = parseParam(params.username) || "";
   const searchParams = useSearchParams();
   const time = searchParams.get("t");
   const form = useForm({
-    defaultValues,
+    defaultValues: {
+      search: "",
+    },
   });
   const { push } = useRouter();
 
   useEffect(() => {
     if (username) {
-      form.reset(defaultValues);
+      form.reset({ search: username });
     } else {
-      form.reset({ subreddit });
+      form.reset({ search: subreddit });
     }
   }, [form, subreddit, username]);
 
   const handleOnSubmit = (values: Values) => {
-    push(`/r/${values.subreddit}/hot`);
+    push(`/r/${values.search}/hot`);
   };
 
   return (
-    <header className="fixed bottom-0 z-10 flex w-full items-center border-t bg-white p-2 dark:border-b-slate-50/10 dark:border-t-slate-50/10 dark:bg-gray-900 sm:bottom-auto sm:top-0 sm:border-b sm:border-t-0">
+    <header className="fixed bottom-0 z-10 flex w-full items-center border-t bg-white p-2 sm:bottom-auto sm:top-0 sm:border-b sm:border-t-0 dark:border-b-slate-50/10 dark:border-t-slate-50/10 dark:bg-gray-900">
       <Link
         href="/"
         className="mr-2 flex items-center text-sm font-semibold"
@@ -55,9 +53,9 @@ export default function Header() {
       <form className="mr-2" onSubmit={form.handleSubmit(handleOnSubmit)}>
         <Input
           type="text"
-          data-testid="subreddit-input"
-          aria-label="subreddit"
-          {...form.register("subreddit")}
+          data-testid="search-input"
+          aria-label="search"
+          {...form.register("search")}
         />
       </form>
       <div className={time ? "mr-2 inline-flex" : "inline-flex"}>
