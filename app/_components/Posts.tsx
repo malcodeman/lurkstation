@@ -7,6 +7,7 @@ import { FiLoader } from "react-icons/fi";
 import ServerError from "@/app/_components/ServerError";
 import { usePosts } from "@/app/_hooks/usePosts";
 import { getGalleryImages } from "@/app/_lib/utils";
+import { AxiosError } from "axios";
 
 type Props = {
   queryKey: string[];
@@ -43,7 +44,9 @@ export default function Posts(props: Props) {
     <div>
       {isError ? (
         <ServerError
-          statusCode={error instanceof Error ? error.message : "Internal"}
+          reason={
+            error instanceof AxiosError ? error.response?.data.reason : ""
+          }
         />
       ) : (
         <main

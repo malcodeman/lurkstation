@@ -1,19 +1,16 @@
 import { Button } from "@/components/Button";
 
 type Props = {
-  statusCode: string;
+  reason: string;
 };
 
 export default function ServerError(props: Props) {
-  const { statusCode } = props;
+  const { reason } = props;
 
-  const getMessage = (code: string) => {
-    switch (code) {
-      case "Not Found":
-        return "This account has been banned or the username is incorrect.";
-      case "Forbidden":
-        return "This account has been suspended.";
-      case "Internal":
+  const getMessage = () => {
+    switch (reason) {
+      case "private":
+        return "This is a private community. Only approved members can view and contribute.";
       default:
         return "Internal server error";
     }
@@ -21,7 +18,7 @@ export default function ServerError(props: Props) {
 
   return (
     <div className="flex h-[calc(100vh_-_49px)] flex-col items-center justify-center p-4">
-      <h2 className="mb-4 text-lg">{getMessage(statusCode)}</h2>
+      <h2 className="mb-4 text-lg">{getMessage()}</h2>
       <Button as="link" href="/">
         Go home
       </Button>
