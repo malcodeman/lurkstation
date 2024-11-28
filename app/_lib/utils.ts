@@ -68,10 +68,12 @@ export const parsePosts = (posts: RedditPost[]) => {
   const isValidGallery = (item: RedditPost) =>
     and(
       equals(item.data.is_gallery, true),
-      all(
-        (item) => equals(item.status, "valid"),
-        values(item.data.media_metadata ?? {}),
-      ),
+      item.data.media_metadata
+        ? all(
+            (item) => equals(item.status, "valid"),
+            values(item.data.media_metadata),
+          )
+        : false,
     );
   const isImgurAndOver18 = (item: RedditPost) =>
     and(isImgur(item.data.url), item.data.over_18);
