@@ -2,12 +2,17 @@ import { Button } from "@/components/Button";
 
 type Props = {
   reason: string;
+  isForbidden: boolean;
 };
 
 export default function ServerError(props: Props) {
-  const { reason } = props;
+  const { reason, isForbidden } = props;
 
   const getMessage = () => {
+    if (isForbidden) {
+      return "This account has been suspended.";
+    }
+
     switch (reason) {
       case "private":
         return "This is a private community. Only approved members can view and contribute.";

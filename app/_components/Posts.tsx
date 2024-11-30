@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { map } from "ramda";
+import { equals, map } from "ramda";
 import { useIntersectionObserver } from "@react-hookz/web";
 import Post from "@/app/_components/Post";
 import { FiLoader } from "react-icons/fi";
@@ -46,6 +46,11 @@ export default function Posts(props: Props) {
         <ServerError
           reason={
             error instanceof AxiosError ? error.response?.data.reason : ""
+          }
+          isForbidden={
+            error instanceof AxiosError
+              ? equals(error.response?.status, 403)
+              : false
           }
         />
       ) : (
